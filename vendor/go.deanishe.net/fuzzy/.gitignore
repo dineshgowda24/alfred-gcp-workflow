@@ -1,0 +1,9 @@
+
+# created by tests
+/coverage.*
+
+# vim turds
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*~
+/tags

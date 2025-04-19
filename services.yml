@@ -1,0 +1,58 @@
+---
+- id: sql
+  name: Cloud SQL
+  description: Managed MySQL, PostgreSQL, and SQL Server databases
+  url: https://console.cloud.google.com/sql/instances?project={{ .Project }}
+  sub_services:
+    - id: instances
+      name: SQL Instances
+      description: List of Cloud SQL instances
+      url: https://console.cloud.google.com/sql/instances?project={{ .Project }}
+
+- id: memorystore
+  name: Memorystore for Redis
+  description: Fully managed Redis for GCP
+  url: https://console.cloud.google.com/memorystore?project={{ .Project }}
+  sub_services:
+    - id: redis
+      name: Redis Instances
+      description: List of Redis instances
+      url: https://console.cloud.google.com/memorystore/redis/instances?project={{ .Project }}
+    - id: redis-clusters
+      name: Redis Clusters
+      description: List of Redis clusters
+      url: https://console.cloud.google.com/memorystore/redis/clusters?project={{ .Project }}
+    - id: memcached
+      name: Memcached Instances
+      description: List of Memcached instances
+      url: https://console.cloud.google.com/memorystore/memcached/instances?project={{ .Project }}
+
+- id: pubsub
+  name: Pub/Sub
+  description: Messaging and ingestion for event-driven systems
+  url: https://console.cloud.google.com/cloudpubsub?project={{ .Project }}
+  sub_services:
+    - id: topics
+      name: Pub/Sub Topics
+      description: List of Pub/Sub topics
+      url: https://console.cloud.google.com/cloudpubsub/topic/list?project={{ .Project }}
+    - id: subscriptions
+      name: Pub/Sub Subscriptions
+      description: List of Pub/Sub subscriptions
+      url: https://console.cloud.google.com/cloudpubsub/subscription/list?project={{ .Project }}
+
+
+- id: gke
+  name: Google Kubernetes Engine
+  description: Managed Kubernetes service
+  url: https://console.cloud.google.com/kubernetes/list
+
+- id: storage
+  name: Cloud Storage
+  description: Scalable object storage for any data
+  url: https://console.cloud.google.com/storage/browser
+
+- id: bigquery
+  name: BigQuery
+  description: Serverless, highly scalable data warehouse
+  url: https://console.cloud.google.com/bigquery

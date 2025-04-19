@@ -1,0 +1,23 @@
+# github.com/deanishe/awgo v0.29.1
+## explicit; go 1.13
+github.com/deanishe/awgo
+github.com/deanishe/awgo/keychain
+github.com/deanishe/awgo/util
+# github.com/magefile/mage v1.11.0
+## explicit; go 1.12
+github.com/magefile/mage/mg
+github.com/magefile/mage/sh
+# go.deanishe.net/env v0.5.1
+## explicit; go 1.13
+go.deanishe.net/env
+# go.deanishe.net/fuzzy v1.0.0
+## explicit; go 1.13
+go.deanishe.net/fuzzy
+# golang.org/x/text v0.3.6
+## explicit; go 1.11
+golang.org/x/text/runes
+golang.org/x/text/transform
+golang.org/x/text/unicode/norm
+# gopkg.in/yaml.v2 v2.2.2
+## explicit
+gopkg.in/yaml.v2
