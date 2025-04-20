@@ -1,0 +1,14 @@
+# Deps
+/vendor/*
+
+# Created by test
+/coverage.*
+/testenv
+/info.plist
+
+
+# vim turds
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*~
+/tags

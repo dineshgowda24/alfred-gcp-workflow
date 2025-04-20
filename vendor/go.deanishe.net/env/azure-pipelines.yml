@@ -1,0 +1,90 @@
+# https://docs.microsoft.com/azure/devops/pipelines/languages/go
+
+trigger:
+  batch: true
+  paths:
+    exclude:
+      - README.md
+      - LICENCE.txt
+      - modd.conf
+      - .gitignore
+
+strategy:
+  matrix:
+    linux:
+      imageName: 'ubuntu-latest'
+      # gorootDir: /usr/local/go1.13
+    mac:
+      imageName: 'macOS-latest'
+      # gorootDir: /usr/local/opt/go/libexec
+
+pool:
+  vmImage: $(imageName)
+
+variables:
+  # GOROOT: '$(gorootDir)'
+  # GOPATH: '$(system.defaultWorkingDirectory)/gopath'
+  # GOBIN:  '$(GOPATH)/bin'
+  # modulePath: '$(GOPATH)/src/github.com/$(build.repository.name)'
+  GO111MODULE: on
+
+steps:
+  - task: GoTool@0
+    inputs:
+      version: '1.13.5'
+  - task: Go@0
+    inputs:
+      command: 'get'
+      arguments: '-d'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+  - task: Go@0
+    inputs:
+      command: 'test'
+      arguments: '-v ./...'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+
+# - script: |
+#     mkdir -p '$(GOBIN)'
+#     mkdir -p '$(GOPATH)/pkg'
+#     mkdir -p '$(modulePath)'
+#     shopt -s extglob
+#     shopt -s dotglob
+#     mv !(gopath) '$(modulePath)'
+#     echo '##vso[task.prependpath]$(GOBIN)'
+#     echo '##vso[task.prependpath]$(GOROOT)/bin'
+#   displayName: 'Set up Go Environment'
+
+# - script: |
+#     go get -v -t -d ./...
+#   workingDirectory: '$(modulePath)'
+#   displayName: 'Fetch Dependencies'
+
+# - script: |
+#     curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b '$(GOBIN)' v1.21.0
+#     golangci-lint run -c .golangci.toml
+#   workingDirectory: '$(modulePath)'
+#   displayName: 'Lint Code'
+
+# - script: |
+#     go version
+#     go test -coverprofile=coverage.out ./...
+#   workingDirectory: '$(modulePath)'
+#   displayName: 'Run Tests'
+
+# - script: |
+#     if [[ "$CODECOV_TOKEN" == "" ]]; then
+#       echo "CODECOV_TOKEN not set; skipping upload"
+#     else
+#       bash <(curl -s https://codecov.io/bash); true
+#     fi
+
+#     if [[ "$CODACY_TOKEN" == "" ]]; then
+#       echo "CODACY_TOKEN not set; skipping upload"
+#     else
+#       go run github.com/schrej/godacov -r coverage.out -t $CODACY_TOKEN -c $BUILD_SOURCEVERSION; true
+#     fi
+#   workingDirectory: '$(modulePath)'
+#   displayName: 'Upload Coverage'
+#   env:
+#     CODACY_TOKEN: '$(Codacy.Token)'
+#     CODECOV_TOKEN: '$(Codecov.Token)'

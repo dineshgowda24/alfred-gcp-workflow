@@ -1,0 +1,67 @@
+# https://docs.microsoft.com/azure/devops/pipelines/languages/go
+
+trigger:
+  batch: true
+  paths:
+    exclude:
+      - README.md
+      - LICENCE
+      - TODO
+      - icon.*
+      - env
+      - bench.py
+      - modd.conf
+      - .gitignore
+      - .travis.yml
+      - bin/*
+
+pool:
+  vmImage: 'macOS-latest'
+
+variables:
+  GOBIN:  '$(GOPATH)/bin' # Go binaries path
+  GOROOT: '/usr/local/opt/go/libexec' # Go installation path
+  GOPATH: '$(system.defaultWorkingDirectory)/gopath' # Go workspace path
+  BUILD_NUMBER: '$(Build.BuildNumber)'
+  CI_PULL_REQUEST: '$(Build.SourceBranch)'
+  CI_PKG_NAME: 'github.com/$(Build.Repository.Name)'
+  modulePath: '$(GOPATH)/src/github.com/$(build.repository.name)' # Path to the module's code
+
+steps:
+- script: |
+    mkdir -p '$(GOBIN)'
+    mkdir -p '$(GOPATH)/pkg'
+    mkdir -p '$(modulePath)'
+    shopt -s extglob
+    shopt -s dotglob
+    mv !(gopath) '$(modulePath)'
+    echo '##vso[task.prependpath]$(GOBIN)'
+    echo '##vso[task.prependpath]$(GOROOT)/bin'
+    go version
+  displayName: 'Set up Go'
+
+- script: |
+      go get -v -t -d ./...
+  workingDirectory: '$(modulePath)'
+  displayName: Fetch Code
+
+- script: |
+    go get golang.org/x/lint/golint
+    go get github.com/golangci/golangci-lint/cmd/golangci-lint
+  workingDirectory: '$(modulePath)'
+  displayName: Install Linters
+
+- script: |
+    ./run-tests.sh -l
+  workingDirectory: '$(modulePath)'
+  displayName: Lint
+
+- script: |
+    go get github.com/mfridman/tparse
+  workingDirectory: '$(modulePath)'
+  displayName: Install Test Dependences
+
+- script: |
+    ./run-tests.sh -ic ./...
+  workingDirectory: '$(modulePath)'
+  displayName: Run Tests
