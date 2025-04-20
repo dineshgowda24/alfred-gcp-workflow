@@ -3,11 +3,12 @@ package pubsub
 import (
 	aw "github.com/deanishe/awgo"
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
+	"github.com/dineshgowda24/alfred-gcp-workflow/services"
 )
 
 type SubscriptionSearcher struct{}
 
-func (s *SubscriptionSearcher) Search(wf *aw.Workflow, config *gcloud.Config, filter string) error {
+func (s *SubscriptionSearcher) Search(wf *aw.Workflow, svc *services.Service, config *gcloud.Config, filter string) error {
 	gsubs, err := gcloud.ListSubscriptions(config)
 	if err != nil {
 		wf.NewItem("❌ Error loading subscriptions").
@@ -22,6 +23,7 @@ func (s *SubscriptionSearcher) Search(wf *aw.Workflow, config *gcloud.Config, fi
 		wf.NewItem(sub.Title()).
 			Subtitle(sub.Subtitle()).
 			Arg(sub.URL(config)).
+			Icon(svc.Icon()).
 			Valid(true)
 	}
 

@@ -3,6 +3,7 @@ package services
 import (
 	"embed"
 
+	aw "github.com/deanishe/awgo"
 	"gopkg.in/yaml.v2"
 )
 
@@ -13,6 +14,13 @@ type Service struct {
 	Description string    `yaml:"description"`
 	URL         string    `yaml:"url"`
 	SubServices []Service `yaml:"sub_services"`
+	LogoPath    string    `yaml:"logo_path"`
+}
+
+func (s *Service) Icon() *aw.Icon {
+	return &aw.Icon{
+		Value: "/Users/dinesh.chikkanna/personal/alfred-gcp-workflow/" + s.LogoPath,
+	}
 }
 
 func LoadServices(file embed.FS) ([]Service, error) {

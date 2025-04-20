@@ -2,6 +2,7 @@ package memorystore
 
 import (
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
@@ -23,12 +24,19 @@ func (r RedisInstance) Title() string {
 }
 
 func (r RedisInstance) Subtitle() string {
-	if r.State == "READY" {
-		return "✅ " + r.RedisVersion + " | " + strconv.Itoa(r.Memory) + " GB | " + "replicas: " + strconv.Itoa(r.ReplicaCount)
-	} else if r.State == "CREATING" || r.State == "UPDATING" || r.State == "MAINTENANCE" {
-		return "🕒 " + r.RedisVersion + " | " + strconv.Itoa(r.Memory) + " GB | " + "replicas: " + strconv.Itoa(r.ReplicaCount)
-	} else {
-		return "❌ " + r.RedisVersion + " | " + strconv.Itoa(r.Memory) + " GB | " + "replicas: " + strconv.Itoa(r.ReplicaCount)
+	version := strings.TrimPrefix(r.RedisVersion, "REDIS_")
+	version = strings.ReplaceAll(version, "_X", ".x")
+	version = strings.ReplaceAll(version, "_", ".")
+
+	info := "version: " + version + " | " + strconv.Itoa(r.Memory) + " GB | replicas: " + strconv.Itoa(r.ReplicaCount)
+
+	switch r.State {
+	case "READY":
+		return "🟢 " + info
+	case "CREATING", "UPDATING", "MAINTENANCE":
+		return "🕒 " + info
+	default:
+		return "❌ " + info
 	}
 }
 

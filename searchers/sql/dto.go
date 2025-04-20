@@ -2,6 +2,7 @@ package sql
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 )
@@ -44,7 +45,7 @@ func (i SQLInstance) Subtitle() string {
 	var icon string
 	switch i.State {
 	case "RUNNABLE":
-		icon = "✅"
+		icon = "🟢"
 	case "PENDING_CREATE", "UPDATING", "MAINTENANCE":
 		icon = "🕒"
 	case "FAILED", "DELETING", "SUSPENDED":
@@ -63,7 +64,11 @@ func (i SQLInstance) Subtitle() string {
 		role = "Unknown"
 	}
 
-	return fmt.Sprintf("%s %s | %s | %s GB | %s", icon, role, i.DatebaseVersion, i.DiskSizeInGB, i.Tier)
+	version := strings.TrimPrefix(i.DatebaseVersion, "POSTGRES_")
+	version = strings.ReplaceAll(version, "_X", ".x")
+	version = strings.ReplaceAll(version, "_", ".")
+
+	return fmt.Sprintf("%s %s | version: %s | %s GB | %s", icon, role, version, i.DiskSizeInGB, i.Tier)
 }
 
 func (i SQLInstance) URL(config *gcloud.Config) string {

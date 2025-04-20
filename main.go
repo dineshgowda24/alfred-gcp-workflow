@@ -68,7 +68,7 @@ func run() {
 	if parsedQuery.SubService != nil {
 		key := parsedQuery.Service.ID + "_" + parsedQuery.SubService.ID
 		if searcher := searchers.SubserviceSearchers[key]; searcher != nil {
-			err := searcher.Search(wf, active, parsedQuery.Filter)
+			err := searcher.Search(wf, parsedQuery.SubService, active, parsedQuery.Filter)
 			if err != nil {
 				wf.NewItem("Error executing handler").
 					Subtitle(err.Error()).
@@ -88,6 +88,7 @@ func run() {
 			wf.NewItem(sub.Name).
 				Subtitle(sub.Description).
 				Autocomplete(parsedQuery.Service.ID + " " + sub.ID).
+				Icon(sub.Icon()).
 				Arg(url).
 				Valid(true)
 		}
@@ -104,6 +105,7 @@ func run() {
 			Autocomplete(svc.ID).
 			Subtitle(svc.Description).
 			Arg(url).
+			Icon(svc.Icon()).
 			Valid(true)
 	}
 	wf.Filter(query)
