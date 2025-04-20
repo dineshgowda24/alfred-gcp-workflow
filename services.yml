@@ -1,15 +1,175 @@
 ---
-- id: sql
-  name: Cloud SQL
-  description: Managed MySQL, PostgreSQL, and SQL Server databases
-  url: https://console.cloud.google.com/sql/instances?project={{ .Project }}
-  logo_path: images/cloud_sql.png
+- id: api
+  name: API & Services
+  description: Manage APIs and services
+  url: https://console.cloud.google.com/apis/dashboard?project={{ .Project }}
+  logo_path: images/api.png
   sub_services:
-    - id: instances
-      name: SQL Instances
-      description: List of Cloud SQL instances
-      url: https://console.cloud.google.com/sql/instances?project={{ .Project }}
-      logo_path: images/cloud_sql.png
+  - id: library
+    name: Library
+    description: Enable and disable APIs
+    url: https://console.cloud.google.com/apis/library?project={{ .Project }}
+    logo_path: images/api.png
+  - id: credentials
+    name: Credentials
+    description: Manage API keys, OAuth 2.0 client IDs, and service accounts
+    url: https://console.cloud.google.com/apis/credentials?project={{ .Project }}
+    logo_path: images/api.png
+  - id: agreements
+    name: Page usage agreements
+    description: List of agreements
+    url: https://console.cloud.google.com/apis/agreements?project={{ .Project }}
+    logo_path: images/api.png
+
+- id: auth_platform
+  name: Google Auth Platform
+  description: Manage authentication and authorization
+  url: https://console.cloud.google.com/auth?project={{ .Project }}
+  logo_path: images/auth_platform.png
+  sub_services:
+    - id: branding
+      name: Branding
+      description: Manage branding for your OAuth consent screen
+      url: https://console.cloud.google.com/auth/branding?project={{ .Project }}
+      logo_path: images/auth_platform.png
+    - id: clients
+      name: OAuth 2.0 Clients
+      description: Manage OAuth 2.0 client IDs and secrets
+      url: https://console.cloud.google.com/auth/clients?project={{ .Project }}
+      logo_path: images/auth_platform.png
+
+- id: billing
+  name: Billing
+  description: Manage billing accounts and budgets
+  url: https://console.cloud.google.com/billing?project={{ .Project }}
+  logo_path: images/billing.png
+
+- id: iam
+  name: Identity & Access Management
+  description: Manage access control
+  url: https://console.cloud.google.com/iam-admin/iam?project={{ .Project }}
+  logo_path: images/identity_and_access_management.png
+  sub_services:
+  - id: roles
+    name: Roles
+    description: Manage custom roles
+    url: https://console.cloud.google.com/iam-admin/roles?project={{ .Project }}
+    logo_path: images/identity_and_access_management.png
+  - id: service_accounts
+    name: Service Accounts
+    description: Manage service accounts
+    url: https://console.cloud.google.com/iam-admin/serviceaccounts?project={{ .Project }}
+    logo_path: images/identity_and_access_management.png
+
+- id: compute
+  name: Compute Engine
+  description: Virtual machines and infrastructure
+  url: https://console.cloud.google.com/compute/overview?project={{ .Project }}
+  logo_path: images/compute_engine.png
+  sub_services:
+  - id: instances
+    name: VM Instances
+    description: Virtual machine instances
+    url: https://console.cloud.google.com/compute/instances?project={{ .Project }}
+    logo_path: images/compute_engine.png
+  - id: instance_templates
+    name: Instance Templates
+    description: Instance templates for VM instances
+    url: https://console.cloud.google.com/compute/instanceTemplates?project={{ .Project }}
+    logo_path: images/compute_engine.png
+  - id: sole_tenancy
+    name: Sole Tenancy
+    description: Physical servers dedicated to your project
+    url: https://console.cloud.google.com/compute/soleTenancy?project={{ .Project }}
+    logo_path: images/compute_engine.png
+  - id: machine_images
+    name: Machine Images
+    description: Create, backup, and restore VM instances
+    url: https://console.cloud.google.com/compute/machineImages?project={{ .Project }}
+    logo_path: images/compute_engine.png
+  - id: disks
+    name: Disks
+    description: List of persistent disks
+    url: https://console.cloud.google.com/compute/disks?project={{ .Project }}
+    logo_path: images/compute_engine.png
+  - id: storage_pools
+    name: Storage Pools
+    description: Collection of compressed disks
+    url: https://console.cloud.google.com/compute/storagePools?project={{ .Project }}
+    logo_path: images/compute_engine.png
+  - id: snapshots
+    name: Snapshots
+    description: Backups of persistent disks
+    url: https://console.cloud.google.com/compute/snapshots?project={{ .Project }}
+    logo_path: images/compute_engine.png
+  - id: images
+    name: Images
+    description: Replica of a disk that contains the applications and OS needed to start a VM
+    url: https://console.cloud.google.com/compute/images?project={{ .Project }}
+    logo_path: images/compute_engine.png
+  - id: instance_groups
+    name: Instance Groups
+    description: Collections of instances for load balancing and automated services.
+    url: https://console.cloud.google.com/compute/instanceGroups?project={{ .Project }}
+    logo_path: images/compute_engine.png
+  - id: health_checks
+    name: Health Checks
+    description: List of health checks
+    url: https://console.cloud.google.com/compute/healthChecks?project={{ .Project }}
+    logo_path: images/compute_engine.png
+
+- id: gke
+  name: Kubernetes Engine
+  description: Managed Kubernetes service
+  url: https://console.cloud.google.com/kubernetes/overview?project={{ .Project }}
+  logo_path: images/google_kubernetes_engine.png
+  sub_services:
+  - id: clusters
+    name: Clusters
+    description: List of Kubernetes clusters
+    url: https://console.cloud.google.com/kubernetes/clusters?project={{ .Project }}
+    logo_path: images/google_kubernetes_engine.png
+  - id: workloads
+    name: Workloads
+    description: List of workloads
+    url: https://console.cloud.google.com/kubernetes/workloads/overview?project={{ .Project }}
+    logo_path: images/google_kubernetes_engine.png
+  - id: secrets
+    name: Secrets and ConfigMaps
+    description: Manage secrets and ConfigMaps in Kubernetes
+    url: https://console.cloud.google.com/kubernetes/secrets?project={{ .Project }}
+    logo_path: images/google_kubernetes_engine.png
+  - id: storage
+    name: Storage
+    description: Persistent storage for Kubernetes
+    url: https://console.cloud.google.com/kubernetes/persistentvolumeclaim?project={{ .Project }}
+    logo_path: images/google_kubernetes_engine.png
+  - id: gateways
+    name: Gateways
+    description: Manage gateways for Kubernetes
+    url: https://console.cloud.google.com/kubernetes/gateways?project={{ .Project }}
+    logo_path: images/google_kubernetes_engine.png
+  - id: routes
+    name: Routes
+    description: Manage routes for Kubernetes
+    url: https://console.cloud.google.com/kubernetes/httproutes?project={{ .Project }}
+    logo_path: images/google_kubernetes_engine.png
+  - id: services
+    name: Services
+    description: Set of Pods with a network endpoint that can be used for discovery and load balancing
+    url: https://console.cloud.google.com/kubernetes/discovery?project={{ .Project }}
+    logo_path: images/google_kubernetes_engine.png
+  - id: ingress
+    name: Ingress
+    description: Collection of rules that allow inbound connections
+    url: https://console.cloud.google.com/kubernetes/ingresses?project={{ .Project }}
+    logo_path: images/google_kubernetes_engine.png
+  
+- id: bigquery
+  name: BigQuery
+  description: Serverless, highly scalable data warehouse
+  url: https://console.cloud.google.com/bigquery
+  logo_path: images/bigquery.png
 
 - id: memorystore
   name: Memorystore for Redis
@@ -17,60 +177,61 @@
   url: https://console.cloud.google.com/memorystore?project={{ .Project }}
   logo_path: images/memorystore.png
   sub_services:
-    - id: redis
-      name: Redis Instances
-      description: List of Redis instances
-      url: https://console.cloud.google.com/memorystore/redis/instances?project={{ .Project }}
-      logo_path: images/memorystore.png
-    - id: redis-clusters
-      name: Redis Clusters
-      description: List of Redis clusters
-      url: https://console.cloud.google.com/memorystore/redis/clusters?project={{ .Project }}
-      logo_path: images/memorystore.png
-    - id: memcached
-      name: Memcached Instances
-      description: List of Memcached instances
-      url: https://console.cloud.google.com/memorystore/memcached/instances?project={{ .Project }}
-      logo_path: images/memorystore.png
-
+  - id: redis
+    name: Redis Instances
+    description: List of Redis instances
+    url: https://console.cloud.google.com/memorystore/redis/instances?project={{ .Project
+      }}
+    logo_path: images/memorystore.png
+  - id: redis-clusters
+    name: Redis Clusters
+    description: List of Redis clusters
+    url: https://console.cloud.google.com/memorystore/redis/clusters?project={{ .Project
+      }}
+    logo_path: images/memorystore.png
+  - id: memcached
+    name: Memcached Instances
+    description: List of Memcached instances
+    url: https://console.cloud.google.com/memorystore/memcached/instances?project={{
+      .Project }}
+    logo_path: images/memorystore.png
 - id: pubsub
   name: Pub/Sub
   description: Messaging and ingestion for event-driven systems
   url: https://console.cloud.google.com/cloudpubsub?project={{ .Project }}
   logo_path: images/pubsub.png
   sub_services:
-    - id: topics
-      name: Pub/Sub Topics
-      description: List of Pub/Sub topics
-      url: https://console.cloud.google.com/cloudpubsub/topic/list?project={{ .Project }}
-      logo_path: images/pubsub.png
-    - id: subscriptions
-      name: Pub/Sub Subscriptions
-      description: List of Pub/Sub subscriptions
-      url: https://console.cloud.google.com/cloudpubsub/subscription/list?project={{ .Project }}
-      logo_path: images/pubsub.png
-
-
-- id: gke
-  name: Google Kubernetes Engine
-  description: Managed Kubernetes service
-  url: https://console.cloud.google.com/kubernetes/list
-  logo_path: images/google_kubernetes_engine.png
-
+  - id: topics
+    name: Pub/Sub Topics
+    description: List of Pub/Sub topics
+    url: https://console.cloud.google.com/cloudpubsub/topic/list?project={{ .Project
+      }}
+    logo_path: images/pubsub.png
+  - id: subscriptions
+    name: Pub/Sub Subscriptions
+    description: List of Pub/Sub subscriptions
+    url: https://console.cloud.google.com/cloudpubsub/subscription/list?project={{
+      .Project }}
+    logo_path: images/pubsub.png
+- id: sql
+  name: Cloud SQL
+  description: Managed MySQL, PostgreSQL, and SQL Server databases
+  url: https://console.cloud.google.com/sql/instances?project={{ .Project }}
+  logo_path: images/cloud_sql.png
+  sub_services:
+  - id: instances
+    name: SQL Instances
+    description: List of Cloud SQL instances
+    url: https://console.cloud.google.com/sql/instances?project={{ .Project }}
+    logo_path: images/cloud_sql.png
 - id: storage
   name: Cloud Storage
   description: Scalable object storage for any data
   url: https://console.cloud.google.com/storage/browser
   logo_path: images/cloud_storage.png
   sub_services:
-    - id: buckets
-      name: Storage Buckets
-      description: List of Cloud Storage buckets
-      url: https://console.cloud.google.com/storage/browser?project={{ .Project }}
-      logo_path: images/cloud_storage.png
-
-- id: bigquery
-  name: BigQuery
-  description: Serverless, highly scalable data warehouse
-  url: https://console.cloud.google.com/bigquery
-  logo_path: images/bigquery.png
+  - id: buckets
+    name: Storage Buckets
+    description: List of Cloud Storage buckets
+    url: https://console.cloud.google.com/storage/browser?project={{ .Project }}
+    logo_path: images/cloud_storage.png
