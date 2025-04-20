@@ -1,12 +1,10 @@
 package main
 
 import (
-	"bytes"
 	"embed"
 	"flag"
 	"log"
 	"strings"
-	"text/template"
 
 	aw "github.com/deanishe/awgo"
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
@@ -16,9 +14,10 @@ import (
 )
 
 var (
-	wf         *aw.Workflow
-	query      string
-	forceFetch bool
+	wf           *aw.Workflow
+	query        string
+	forceFetch   bool
+	activeConfig *gcloud.Config
 	//go:embed services.yml
 	servicesFile embed.FS
 )
@@ -39,13 +38,21 @@ func run() {
 	log.Printf("Running with query: %q", query)
 
 	if query == "" {
-		wf.NewItem("Search for a GCP Service ...").
-			Subtitle("e.g., sql, redis, gke ...").
+		wf.NewItem("🔍 Search GCP Services").
+			Subtitle("Try keywords like: sql, redis, storage").
+			Icon(aw.IconHelp).
 			Valid(false)
 
-		if active := gcloud.GetActiveConfig(wf); active != nil {
-			wf.NewItem("✅ Using config: " + active.Name).
-				Subtitle("This is your currently active gcloud config").
+		wf.NewItem("🧭 Open Console").
+			Subtitle("Go to https://console.cloud.google.com/").
+			Icon(aw.IconHome).
+			Arg("https://console.cloud.google.com/").
+			Valid(true)
+
+		if activeConfig := getActiveConfig(wf); activeConfig != nil {
+			wf.NewItem("☁️ Active gcloud config: " + activeConfig.Name).
+				Subtitle("Currently selected gcloud configuration").
+				Icon(aw.IconInfo).
 				Valid(false)
 		}
 
@@ -62,7 +69,7 @@ func run() {
 		return
 	}
 
-	active := gcloud.GetActiveConfig(wf)
+	active := getActiveConfig(wf)
 	parsedQuery := parser.Parse(query, svcList)
 
 	if parsedQuery.SubService != nil {
@@ -74,6 +81,8 @@ func run() {
 					Subtitle(err.Error()).
 					Valid(false)
 			}
+
+			wf.Filter(parsedQuery.Filter)
 			wf.SendFeedback()
 			return
 		}
@@ -81,7 +90,7 @@ func run() {
 
 	if parsedQuery.Service != nil {
 		for _, sub := range parsedQuery.Service.SubServices {
-			url, err := RenderURL(sub.URL, active)
+			url, err := sub.Url(active)
 			if err != nil {
 				log.Println("LOG: error rendering subservice URL:", err)
 			}
@@ -97,7 +106,7 @@ func run() {
 	}
 
 	for _, svc := range svcList {
-		url, err := RenderURL(svc.URL, active)
+		url, err := svc.Url(active)
 		if err != nil {
 			log.Println("LOG: error rendering URL:", err)
 		}
@@ -112,14 +121,20 @@ func run() {
 	wf.SendFeedback()
 }
 
-func RenderURL(tmpl string, cfg *gcloud.Config) (string, error) {
-	t, err := template.New("url").Parse(tmpl)
-	if err != nil {
-		return "", err
+func getActiveConfig(wf *aw.Workflow) *gcloud.Config {
+	if activeConfig != nil {
+		return activeConfig
 	}
-	var buf bytes.Buffer
-	if err := t.Execute(&buf, cfg); err != nil {
-		return "", err
+
+	activeConfig = gcloud.GetActiveConfig(wf)
+	if activeConfig == nil {
+		wf.NewItem("No active gcloud config found").
+			Subtitle("Please set up a gcloud config").
+			Icon(aw.IconWarning).
+			Valid(false)
+		wf.SendFeedback()
+		return nil
 	}
-	return buf.String(), nil
+
+	return activeConfig
 }
