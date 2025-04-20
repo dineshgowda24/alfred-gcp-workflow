@@ -63,7 +63,7 @@
 
 - id: compute
   name: Compute Engine
-  description: Virtual machines and infrastructure
+  description: VMs, GPUs, TPUs, disks
   url: https://console.cloud.google.com/compute/overview?project={{ .Project }}
   logo_path: images/compute_engine.png
   sub_services:
@@ -120,7 +120,7 @@
 
 - id: gke
   name: Kubernetes Engine
-  description: Managed Kubernetes service
+  description: Managed Kubernetes / containers
   url: https://console.cloud.google.com/kubernetes/overview?project={{ .Project }}
   logo_path: images/google_kubernetes_engine.png
   sub_services:
@@ -164,7 +164,19 @@
     description: Collection of rules that allow inbound connections
     url: https://console.cloud.google.com/kubernetes/ingresses?project={{ .Project }}
     logo_path: images/google_kubernetes_engine.png
-  
+
+- id: vmware
+  name: VMware Engine
+  description: VMware as a Service
+  url: https://console.cloud.google.com/vmwareengine?project={{ .Project }}
+  logo_path: images/vmware_engine.png
+
+- id: batch
+  name: Batch
+  description: Jobs as a service
+  url: https://console.cloud.google.com/batch/jobs?project={{ .Project }}
+  logo_path: images/batch.png
+
 - id: bigquery
   name: BigQuery
   description: Serverless, highly scalable data warehouse
@@ -180,21 +192,19 @@
   - id: redis
     name: Redis Instances
     description: List of Redis instances
-    url: https://console.cloud.google.com/memorystore/redis/instances?project={{ .Project
-      }}
+    url: https://console.cloud.google.com/memorystore/redis/instances?project={{ .Project }}
     logo_path: images/memorystore.png
   - id: redis-clusters
     name: Redis Clusters
     description: List of Redis clusters
-    url: https://console.cloud.google.com/memorystore/redis/clusters?project={{ .Project
-      }}
+    url: https://console.cloud.google.com/memorystore/redis/clusters?project={{ .Project }}
     logo_path: images/memorystore.png
   - id: memcached
     name: Memcached Instances
     description: List of Memcached instances
-    url: https://console.cloud.google.com/memorystore/memcached/instances?project={{
-      .Project }}
+    url: https://console.cloud.google.com/memorystore/memcached/instances?project={{ .Project }}
     logo_path: images/memorystore.png
+
 - id: pubsub
   name: Pub/Sub
   description: Messaging and ingestion for event-driven systems
@@ -204,15 +214,14 @@
   - id: topics
     name: Pub/Sub Topics
     description: List of Pub/Sub topics
-    url: https://console.cloud.google.com/cloudpubsub/topic/list?project={{ .Project
-      }}
+    url: https://console.cloud.google.com/cloudpubsub/topic/list?project={{ .Project }}
     logo_path: images/pubsub.png
   - id: subscriptions
     name: Pub/Sub Subscriptions
     description: List of Pub/Sub subscriptions
-    url: https://console.cloud.google.com/cloudpubsub/subscription/list?project={{
-      .Project }}
+    url: https://console.cloud.google.com/cloudpubsub/subscription/list?project={{ .Project }}
     logo_path: images/pubsub.png
+
 - id: sql
   name: Cloud SQL
   description: Managed MySQL, PostgreSQL, and SQL Server databases
@@ -224,9 +233,10 @@
     description: List of Cloud SQL instances
     url: https://console.cloud.google.com/sql/instances?project={{ .Project }}
     logo_path: images/cloud_sql.png
+
 - id: storage
   name: Cloud Storage
-  description: Scalable object storage for any data
+  description: Enterprise-ready object storage
   url: https://console.cloud.google.com/storage/browser
   logo_path: images/cloud_storage.png
   sub_services:
@@ -235,3 +245,63 @@
     description: List of Cloud Storage buckets
     url: https://console.cloud.google.com/storage/browser?project={{ .Project }}
     logo_path: images/cloud_storage.png
+  - id: monitoring
+    name: Monitoring
+    description: Monitor and manage your Cloud Storage buckets
+    url: https://console.cloud.google.com/storage/monitoring?project={{ .Project }}
+    logo_path: images/cloud_storage.png
+
+- id: filestore
+  name: Filestore
+  description: Fully managed NFS server
+  url: https://console.cloud.google.com/filestore?project={{ .Project }}
+  logo_path: images/filestore.png
+  sub_services:
+  - id: instances
+    name: Instances
+    description: List of instances
+    url: https://console.cloud.google.com/filestore/instances?project={{ .Project }}
+    logo_path: images/filestore.png
+  - id: backups
+    name: Backups
+    description: List of backups
+    url: https://console.cloud.google.com/filestore/backups?project={{ .Project }}
+    logo_path: images/filestore.png
+  - id: replication
+    name: Replication
+    description: List of replications
+    url: https://console.cloud.google.com/filestore/replications?project={{ .Project }}
+    logo_path: images/filestore.png
+  
+- id: bigquery
+  name: BigQuery
+  description: Data warehouse/analytics
+  url: https://console.cloud.google.com/bigquery?project={{ .Project }}
+  logo_path: images/bigquery.png
+
+- id: dataflow
+  name: Dataflow
+  description: Streaming analytics service
+  url: https://console.cloud.google.com/dataflow/jobs?project={{ .Project }}
+  logo_path: images/dataflow.png
+  sub_services:
+  - id: jobs
+    name: Jobs
+    description: List of Dataflow jobs
+    url: https://console.cloud.google.com/dataflow/jobs?project={{ .Project }}
+    logo_path: images/dataflow.png
+  - id: pipelines
+    name: Pipelines
+    description: List of Dataflow pipelines
+    url: https://console.cloud.google.com/dataflow/pipelines?project={{ .Project }}
+    logo_path: images/dataflow.png
+  - id: workbench
+    name: Workbench
+    description: Dataflow workbench
+    url: https://console.cloud.google.com/dataflow/workbench/legacy?project={{ .Project }}
+    logo_path: images/dataflow.png
+  - id: snapshots
+    name: Snapshots
+    description: List of Dataflow snapshots
+    url: https://console.cloud.google.com/dataflow/snapshots?project={{ .Project }}
+    logo_path: images/dataflow.png
