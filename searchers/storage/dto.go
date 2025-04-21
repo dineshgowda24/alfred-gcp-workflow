@@ -23,7 +23,7 @@ func (b Bucket) Title() string {
 
 func (b Bucket) Subtitle() string {
 	localTime := b.UpdateTime.Local()
-	return b.LocationType + " Region | " + b.DefaultStorageClass + " | LastUpdated: " + localTime.Format("Jan 2, 2006 15:04 MST")
+	return b.LocationType + " | " + b.DefaultStorageClass + " | LastUpdated: " + localTime.Format("Jan 2, 2006 15:04 MST")
 }
 
 func (b Bucket) URL(config *gcloud.Config) string {
