@@ -604,3 +604,155 @@
   description: App latency insights
   url: https://console.cloud.google.com/trace?project={{ .Project }}
   logo_path: images/trace.png
+
+- id: profiler
+  name: Profiler
+  description: CPU and heap profiling
+  url: https://console.cloud.google.com/profiler?project={{ .Project }}
+  logo_path: images/profiler.png
+
+- id: security
+  name: Security
+  description: Security management controls and capabilities
+  url: https://console.cloud.google.com/security/command-center?project={{ .Project }}
+  logo_path: images/security.png
+  sub_services:
+  - id: threats
+    name: Threats
+    description: List of detected threats
+    url: https://console.cloud.google.com/security/command-center/threats?project={{ .Project }}
+    logo_path: images/security.png
+  - id: vulnerabilities
+    name: Vulnerabilities
+    description: List of detected vulnerabilities
+    url: https://console.cloud.google.com/security/command-center/vulnerabilities?project={{ .Project }}
+    logo_path: images/security.png
+  - id: compliance
+    name: Compliance
+    description: List of compliance findings
+    url: https://console.cloud.google.com/security/command-center/compliance?project={{ .Project }}
+    logo_path: images/security.png
+  - id: recaptcha
+    name: reCAPTCHA
+    description: List of reCAPTCHA keys
+    url: https://console.cloud.google.com/security/recaptcha?project={{ .Project }}
+    logo_path: images/security.png
+  - id: secret_manager
+    name: Secret Manager
+    description: List of secrets
+    url: https://console.cloud.google.com/security/secret-manager?project={{ .Project }}
+    logo_path: images/security.png
+  - id: key_management
+    name: Key Management
+    description: List of encryption keys
+    url: https://console.cloud.google.com/security/kms/keyrings?project={{ .Project }}
+    logo_path: images/security.png
+  - id: certificate_manager
+    name: Certificate Manager
+    description: List of SSL certificates
+    url: https://console.cloud.google.com/security/certificate-manager?project={{ .Project }}
+    logo_path: images/security.png
+
+- id: cloud_build
+  name: Cloud Build
+  description: Continuous integration delivery platform
+  url: https://console.cloud.google.com/cloud-build?project={{ .Project }}
+  logo_path: images/cloud_build.png
+  sub_services:
+  - id: triggers
+    name: Triggers
+    description: List of build triggers
+    url: https://console.cloud.google.com/cloud-build/triggers?project={{ .Project }}
+    logo_path: images/cloud_build.png
+  - id: repositories
+    name: Repositories
+    description: List of build repositories
+    url: https://console.cloud.google.com/cloud-build/repositories/2nd-gen?project={{ .Project }}
+    logo_path: images/cloud_build.png
+  - id: builds
+    name: Builds
+    description: List of builds
+    url: https://console.cloud.google.com/cloud-build/builds?project={{ .Project }}
+    logo_path: images/cloud_build.png
+
+- id: gcr
+  name: Container Registry
+  description: Private container registry storage
+  url: https://console.cloud.google.com/gcr?project={{ .Project }}
+  logo_path: images/container_registry.png
+
+- id: artifact_registry
+  name: Artifact Registry
+  description: Universal build artifact management
+  url: https://console.cloud.google.com/artifacts?project={{ .Project }}
+  logo_path: images/artifact_registry.png
+  sub_services:
+  - id: repositories
+    name: Repositories
+    description: List of artifact repositories
+    url: https://console.cloud.google.com/artifacts?project={{ .Project }}
+    logo_path: images/artifact_registry.png
+
+- id: cloud_deploy
+  name: Cloud Deploy
+  description: Continuous delivery to GKE and Cloud Run
+  url: https://console.cloud.google.com/deploy?project={{ .Project }}
+  logo_path: images/cloud_deploy.png
+
+- id: vertexai
+  name: Vertex AI
+  description: One AI platform, every ML tool you need
+  url: https://console.cloud.google.com/vertex-ai?project={{ .Project }}
+  logo_path: images/vertexai.png
+  sub_services:
+  - id: model_garden
+    name: Model Garden
+    description: List of models
+    url: https://console.cloud.google.com/vertex-ai/model-garden?project={{ .Project }}
+    logo_path: images/vertexai.png
+  - id: pipelines
+    name: Pipelines
+    description: List of pipelines
+    url: https://console.cloud.google.com/vertex-ai/pipelines?project={{ .Project }}
+    logo_path: images/vertexai.png
+  - id: workbench
+    name: Workbench
+    description: List of workbenches
+    url: https://console.cloud.google.com/vertex-ai/workbench?project={{ .Project }}
+    logo_path: images/vertexai.png
+
+- id: translation
+  name: Translation
+  description: Language detection and translation
+  url: https://console.cloud.google.com/translation?project={{ .Project }}
+  logo_path: images/cloud_translation_api.png
+
+- id: document_ai
+  name: Document AI
+  description: Document analysis, classification, and searches
+  url: https://console.cloud.google.com/ai/document-ai?project={{ .Project }}
+  logo_path: images/document_ai.png
+
+- id: retail
+  name: Search for commerce
+  description: Data-driven solutions for commerce
+  url: https://console.cloud.google.com/ai/retail?project={{ .Project }}
+  logo_path: images/retail_api.png
+
+- id: ccai
+  name:  CCAI Platform 
+  description: Contact Center As A Service (CCaaS)
+  url: https://console.cloud.google.com/contact-center-ai?project={{ .Project }}
+  logo_path: images/contact_center_ai.png
+
+- id: discovery_engine
+  name: Discovery Engine
+  description: Cross-industry discovery solutions
+  url: https://console.cloud.google.com/ai/discovery?project={{ .Project }}
+  logo_path: images/service_discovery.png
+
+- id: speech
+  name: Speech
+  description: Audio-to-text & text-to-audio conversion
+  url: https://console.cloud.google.com/speech?project={{ .Project }}
+  logo_path: images/speech-to-text.png
