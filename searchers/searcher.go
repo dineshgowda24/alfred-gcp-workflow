@@ -3,6 +3,7 @@ package searchers
 import (
 	aw "github.com/deanishe/awgo"
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
+	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/compute"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/memorystore"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/pubsub"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/sql"
@@ -15,9 +16,10 @@ type Searcher interface {
 }
 
 var SubserviceSearchers = map[string]Searcher{
-	"sql_instances":        &sql.InstanceSearcher{},
-	"memorystore_redis":    &memorystore.RedisInstanceSearcher{},
-	"pubsub_topics":        &pubsub.TopicSearcher{},
-	"pubsub_subscriptions": &pubsub.SubscriptionSearcher{},
-	"storage_buckets":      &storage.BucketSearcher{},
+	"sql/instances":        &sql.InstanceSearcher{},
+	"memorystore/redis":    &memorystore.RedisInstanceSearcher{},
+	"pubsub/topics":        &pubsub.TopicSearcher{},
+	"pubsub/subscriptions": &pubsub.SubscriptionSearcher{},
+	"storage/buckets":      &storage.BucketSearcher{},
+	"compute/instances":    &compute.InstanceSearcher{},
 }

@@ -75,3 +75,11 @@ type Bucket struct {
 	StorageURL          string `json:"storage_url"`
 	UpdateTime          string `json:"update_time"` // Format 2020-09-28T09:24:57+0000 unparsable to time.Time
 }
+
+type ComputeInstance struct {
+	CPUPlatform       string `json:"cpuPlatform"`
+	CreationTimestamp string `json:"creationTimestamp"` // Format 2018-11-06T01:59:29.838-08:00
+	Name              string `json:"name"`
+	Status            string `json:"status"`
+	Zone              string `json:"zone"` // Format: projects/{project}/zones/{zone}
+}

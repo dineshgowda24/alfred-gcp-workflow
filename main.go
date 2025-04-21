@@ -56,7 +56,7 @@ func run() {
 
 	if parsedQuery.SubService != nil {
 		log.Println("LOG: subservice found:", parsedQuery.SubService.Name)
-		key := parsedQuery.Service.ID + "_" + parsedQuery.SubService.ID
+		key := parsedQuery.Service.ID + "/" + parsedQuery.SubService.ID
 		if searcher := searchers.SubserviceSearchers[key]; searcher != nil {
 			log.Println("LOG: executing searcher for subservice:", parsedQuery.SubService.Name)
 			err := searcher.Search(wf, parsedQuery.SubService, active, parsedQuery.Filter)
@@ -82,7 +82,7 @@ func run() {
 			}
 
 			subtitle := sub.Description
-			key := parsedQuery.Service.ID + "_" + sub.ID
+			key := parsedQuery.Service.ID + "/" + sub.ID
 			_, defined := searchers.SubserviceSearchers[key]
 			if defined {
 				subtitle = "🔍 " + subtitle
