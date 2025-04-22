@@ -22,4 +22,5 @@ var SubserviceSearchers = map[string]Searcher{
 	"pubsub/subscriptions": &pubsub.SubscriptionSearcher{},
 	"storage/buckets":      &storage.BucketSearcher{},
 	"compute/instances":    &compute.InstanceSearcher{},
+	"compute/disks":        &compute.DiskSearcher{},
 }
