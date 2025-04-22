@@ -191,8 +191,16 @@ func displayHome(wf *aw.Workflow) {
 
 	wf.NewItem("🧭 Open Console").
 		Subtitle("Go to https://console.cloud.google.com").
-		Icon(aw.IconAccount).
+		Icon(aw.IconHome).
 		Arg("https://console.cloud.google.com").
+		Valid(true)
+
+	wf.NewItem("🩺 GCP Health Status").
+		Subtitle("Check service availability across regions").
+		Icon(&aw.Icon{
+			Value: "/Users/dinesh.chikkanna/personal/alfred-gcp-workflow/images/heartbeat.png",
+		}).
+		Arg("https://status.cloud.google.com").
 		Valid(true)
 
 	if activeConfig := getActiveConfig(wf); activeConfig != nil {
