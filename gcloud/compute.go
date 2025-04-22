@@ -27,6 +27,14 @@ type ComputeImage struct {
 	Status            string `json:"status"` // one of [FAILED, PENDING, READY]
 }
 
+type ComputeInstanceTemplate struct {
+	CreationTimestamp string `json:"creationTimestamp"` // Format 2018-11-06T01:59:29.838-08:00
+	Name              string `json:"name"`
+	Properties        struct {
+		MachineType string `json:"machineType"`
+	} `json:"properties"`
+}
+
 func ListComputeInstances(config *Config) ([]ComputeInstance, error) {
 	return runGCloudCmd[[]ComputeInstance](config, "compute", "instances", "list")
 }
@@ -37,4 +45,8 @@ func ListComputeDisks(config *Config) ([]ComputeDisk, error) {
 
 func ListComputeImages(config *Config) ([]ComputeImage, error) {
 	return runGCloudCmd[[]ComputeImage](config, "compute", "images", "list")
+}
+
+func ListComputeInstanceTemplates(config *Config) ([]ComputeInstanceTemplate, error) {
+	return runGCloudCmd[[]ComputeInstanceTemplate](config, "compute", "instance-templates", "list")
 }

@@ -201,3 +201,35 @@ func (i ComputeImage) Subtitle() string {
 func (i ComputeImage) URL(config *gcloud.Config) string {
 	return fmt.Sprintf("https://console.cloud.google.com/compute/imagesDetail/projects/%s/global/images/%s?project=%s", config.Project, i.Name, config.Project)
 }
+
+type ComputeInstanceTemplate struct {
+	CreationTimestamp time.Time
+	Name              string
+	MachineType       string
+}
+
+func FromGCloudComputeInstanceTemplate(template *gcloud.ComputeInstanceTemplate) ComputeInstanceTemplate {
+	creationTime, err := time.Parse("2006-01-02T15:04:05.000-07:00", template.CreationTimestamp)
+	if err != nil {
+		log.Println("LOG: compute: Error parsing creation time:", err)
+		creationTime = time.Time{}
+	}
+
+	return ComputeInstanceTemplate{
+		CreationTimestamp: creationTime,
+		Name:              template.Name,
+		MachineType:       template.Properties.MachineType,
+	}
+}
+
+func (t ComputeInstanceTemplate) Title() string {
+	return t.Name
+}
+
+func (t ComputeInstanceTemplate) Subtitle() string {
+	return t.MachineType + " | Created: " + t.CreationTimestamp.Local().Format("Jan 2, 2006 15:04 MST")
+}
+
+func (t ComputeInstanceTemplate) URL(config *gcloud.Config) string {
+	return fmt.Sprintf("https://console.cloud.google.com/compute/instanceTemplates/details/%s?project=%s", t.Name, config.Project)
+}
