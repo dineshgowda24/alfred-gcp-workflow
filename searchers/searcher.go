@@ -16,12 +16,13 @@ type Searcher interface {
 }
 
 var SubserviceSearchers = map[string]Searcher{
-	"sql/instances":        &sql.InstanceSearcher{},
-	"memorystore/redis":    &memorystore.RedisInstanceSearcher{},
-	"pubsub/topics":        &pubsub.TopicSearcher{},
-	"pubsub/subscriptions": &pubsub.SubscriptionSearcher{},
-	"storage/buckets":      &storage.BucketSearcher{},
-	"compute/instances":    &compute.InstanceSearcher{},
-	"compute/disks":        &compute.DiskSearcher{},
-	"compute/images":       &compute.ImageSearcher{},
+	"sql/instances":              &sql.InstanceSearcher{},
+	"memorystore/redis":          &memorystore.RedisInstanceSearcher{},
+	"pubsub/topics":              &pubsub.TopicSearcher{},
+	"pubsub/subscriptions":       &pubsub.SubscriptionSearcher{},
+	"storage/buckets":            &storage.BucketSearcher{},
+	"compute/instances":          &compute.InstanceSearcher{},
+	"compute/disks":              &compute.DiskSearcher{},
+	"compute/images":             &compute.ImageSearcher{},
+	"compute/instance_templates": &compute.InstanceTemplateSearcher{},
 }

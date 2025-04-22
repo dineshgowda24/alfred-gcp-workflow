@@ -55,11 +55,12 @@ func run() {
 	parsedQuery := parser.Parse(query, svcList)
 
 	if parsedQuery.SubService != nil {
-		log.Println("LOG: subservice found:", parsedQuery.SubService.Name)
-		key := parsedQuery.Service.ID + "/" + parsedQuery.SubService.ID
+		subService := parsedQuery.SubService
+		log.Println("LOG: subservice found:", subService.Name)
+		key := parsedQuery.Service.ID + "/" + subService.ID
 		if searcher := searchers.SubserviceSearchers[key]; searcher != nil {
-			log.Println("LOG: executing searcher for subservice:", parsedQuery.SubService.Name)
-			err := searcher.Search(wf, parsedQuery.SubService, active, parsedQuery.Filter)
+			log.Println("LOG: executing searcher for subservice:", subService.Name)
+			err := searcher.Search(wf, subService, active, parsedQuery.Filter)
 			if err != nil {
 				wf.NewItem("Error executing handler").
 					Subtitle(err.Error()).
@@ -67,6 +68,21 @@ func run() {
 			}
 
 			wf.Filter(parsedQuery.Filter)
+			wf.SendFeedback()
+			return
+		} else {
+			wf.NewItem(subService.Name).
+				Subtitle(subService.Description).
+				Autocomplete(parsedQuery.Service.ID + " " + subService.ID).
+				Icon(subService.Icon()).
+				Arg(subService.URL).
+				Valid(true)
+
+			wf.NewFileItem(parsedQuery.SubService.Name + " has no searcher (yet)").
+				Subtitle("Open contributing guide to add them").
+				Arg("https://github.com/dineshgowda24/alfred-gcp-workflow").
+				Icon(aw.IconNote).
+				Valid(true)
 			wf.SendFeedback()
 			return
 		}
