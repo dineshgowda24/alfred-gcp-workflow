@@ -8,13 +8,31 @@ import (
 	aw "github.com/deanishe/awgo"
 )
 
-const gcloudPath = "/Users/dinesh.chikkanna/google-cloud-sdk/bin/gcloud"
+type Config struct {
+	Name    string
+	Project string
+}
+
+type GCloudConfig struct {
+	Name       string `json:"name"`
+	Properties struct {
+		Core struct {
+			Project string `json:"project"`
+		} `json:"core"`
+	} `json:"properties"`
+}
+
+func (g *GCloudConfig) ToConfig() *Config {
+	return &Config{
+		Name:    g.Name,
+		Project: g.Properties.Core.Project,
+	}
+}
 
 func ListConfigs() ([]*Config, string, error) {
-	out, err := exec.Command(gcloudPath,
-		"config", "configurations", "list", "--format=json").Output()
+	out, err := exec.Command(gcloudPath, "config", "configurations", "list", "--format=json").Output()
 	if err != nil {
-		log.Println("LOG: error in gcloud command", err)
+		log.Println("LOG: error in gcloud config list command", err)
 		return nil, "", err
 	}
 
@@ -24,7 +42,7 @@ func ListConfigs() ([]*Config, string, error) {
 		return nil, "", err
 	}
 
-	log.Println("LOG: rawConfigs", rawConfigs)
+	log.Println("LOG: found configs", rawConfigs)
 
 	var configs []*Config
 	var active string
@@ -41,10 +59,9 @@ func ListConfigs() ([]*Config, string, error) {
 }
 
 func GetActiveConfig(wf *aw.Workflow) *Config {
-	out, err := exec.Command(gcloudPath,
-		"config", "configurations", "list", "--filter=is_active:true", "--format=json").Output()
+	out, err := exec.Command(gcloudPath, "config", "configurations", "list", "--filter=is_active:true", "--format=json").Output()
 	if err != nil {
-		log.Println("LOG: error in gcloud command", err)
+		log.Println("LOG: error executing gcloud config command", err)
 		return nil
 	}
 
@@ -54,7 +71,7 @@ func GetActiveConfig(wf *aw.Workflow) *Config {
 		return nil
 	}
 
-	log.Println("LOG: active config", configs[0])
+	log.Println("LOG: found active config", configs[0])
 
 	return configs[0].ToConfig()
 }

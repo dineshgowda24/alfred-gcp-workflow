@@ -139,3 +139,65 @@ func (d ComputeDisk) Subtitle() string {
 func (d ComputeDisk) URL(config *gcloud.Config) string {
 	return fmt.Sprintf("https://console.cloud.google.com/compute/disksDetail/zones/%s/disks/%s?project=%s", d.Zone, d.Name, config.Project)
 }
+
+type ComputeImage struct {
+	Architecture      string
+	ArchiveSizeBytes  int
+	CreationTimestamp time.Time
+	Name              string
+	DiskSizeGb        int
+	Status            string
+}
+
+func FromGCloudComputeImage(image *gcloud.ComputeImage) ComputeImage {
+	creationTime, err := time.Parse("2006-01-02T15:04:05.000-07:00", image.CreationTimestamp)
+	if err != nil {
+		log.Println("LOG: compute: Error parsing creation time:", err)
+		creationTime = time.Time{}
+	}
+
+	size, err := strconv.Atoi(image.DiskSizeGb)
+	if err != nil {
+		log.Println("LOG: compute: Error parsing size:", err)
+		size = 0
+	}
+
+	archiveSize, err := strconv.Atoi(image.ArchiveSizeBytes)
+	if err != nil {
+		log.Println("LOG: compute: Error parsing archive size:", err)
+		archiveSize = 0
+	}
+
+	return ComputeImage{
+		Architecture:      image.Architecture,
+		ArchiveSizeBytes:  archiveSize,
+		Name:              image.Name,
+		DiskSizeGb:        size,
+		Status:            image.Status,
+		CreationTimestamp: creationTime,
+	}
+}
+
+func (i ComputeImage) Title() string {
+	return i.Name
+}
+
+func (i ComputeImage) Subtitle() string {
+	var icon string
+	switch i.Status {
+	case "READY":
+		icon = "🟢"
+	case "PENDING":
+		icon = "🕒"
+	case "FAILED":
+		icon = "❌"
+	default:
+		icon = "❓"
+	}
+
+	return icon + "  " + strconv.Itoa(i.DiskSizeGb) + " GB | Created: " + i.CreationTimestamp.Local().Format("Jan 2, 2006 15:04 MST")
+}
+
+func (i ComputeImage) URL(config *gcloud.Config) string {
+	return fmt.Sprintf("https://console.cloud.google.com/compute/imagesDetail/projects/%s/global/images/%s?project=%s", config.Project, i.Name, config.Project)
+}

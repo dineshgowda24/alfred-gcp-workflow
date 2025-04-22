@@ -23,4 +23,5 @@ var SubserviceSearchers = map[string]Searcher{
 	"storage/buckets":      &storage.BucketSearcher{},
 	"compute/instances":    &compute.InstanceSearcher{},
 	"compute/disks":        &compute.DiskSearcher{},
+	"compute/images":       &compute.ImageSearcher{},
 }

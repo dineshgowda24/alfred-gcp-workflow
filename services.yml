@@ -756,3 +756,166 @@
   description: Audio-to-text & text-to-audio conversion
   url: https://console.cloud.google.com/speech?project={{ .Project }}
   logo_path: images/speech-to-text.png
+
+- id: cloud_scheduler
+  name: Cloud Scheduler
+  description: Managed cron job service
+  url: https://console.cloud.google.com/cloudscheduler?project={{ .Project }}
+  logo_path: images/cloud_scheduler.png
+
+- id: cloud_tasks
+  name: Cloud Tasks
+  description: Asynchronous task execution
+  url: https://console.cloud.google.com/cloudtasks?project={{ .Project }}
+  logo_path: images/cloud_tasks.png
+
+- id: workflows
+  name: Workflows
+  description: HTTP services orchestration
+  url: https://console.cloud.google.com/workflows?project={{ .Project }}
+  logo_path: images/workflows.png
+
+- id: eventarc
+  name: Eventarc
+  description: Modern event delivery
+  url: https://console.cloud.google.com/eventarc?project={{ .Project }}
+  logo_path: images/eventarc.png
+  sub_services:
+  - id: triggers
+    name: Triggers
+    description: List of event triggers
+    url: https://console.cloud.google.com/eventarc/triggers?project={{ .Project }}
+    logo_path: images/eventarc.png
+  - id: channels
+    name: Channels
+    description: List of event channels
+    url: https://console.cloud.google.com/eventarc/channels?project={{ .Project }}
+    logo_path: images/eventarc.png
+  - id: bus
+    name: Buses
+    description: List of event buses
+    url: https://console.cloud.google.com/eventarc/buses?project={{ .Project }}
+    logo_path: images/eventarc.png
+  - id: pipelines
+    name: Pipelines
+    description: List of event pipelines
+    url: https://console.cloud.google.com/eventarc/pipelines?project={{ .Project }}
+    logo_path: images/eventarc.png
+
+- id: apigee
+  name: Apigee
+  description: API management platform
+  url: https://console.cloud.google.com/apigee?project={{ .Project }}
+  logo_path: images/apigee.png
+  sub_services:
+  - id: api_proxies
+    name: API Proxies
+    description: List of API proxies
+    url: https://console.cloud.google.com/apigee/proxies?project={{ .Project }}
+    logo_path: images/apigee.png
+  - id: shared_flows
+    name: Shared Flows
+    description: List of shared flows
+    url: https://console.cloud.google.com/apigee/sharedflows?project={{ .Project }}
+    logo_path: images/apigee.png
+  - id: integrations
+    name: Integrations
+    description: List of integrations
+    url: https://console.cloud.google.com/apigee/integrations?project={{ .Project }}
+    logo_path: images/apigee.png
+  - id: offline_debug
+    name: Offline Debug
+    description: List of offline debug sessions
+    url: https://console.cloud.google.com/apigee/offline-debug?project={{ .Project }}
+    logo_path: images/apigee.png
+  - id: api_monitoring
+    name: API Monitoring
+    description: List of API monitoring reports
+    url: https://console.cloud.google.com/apigee/apimonitoring?project={{ .Project }}
+    logo_path: images/apigee.png
+
+- id: identity_platform
+  name: Identity Platform
+  description: Google-grade identity and access management
+  url: https://console.cloud.google.com/customer-identity?project={{ .Project }}
+  logo_path: images/identity_platform.png
+
+- id: service_catalog
+  name: Service Catalog
+  description: Internal solutions catalog
+  url: https://console.cloud.google.com/catalog?project={{ .Project }}
+  logo_path: images/catalog.png
+
+- id: google_maps_platform
+  name: Google Maps Platform
+  description: Real-world insights and location experiences
+  url: https://console.cloud.google.com/google/maps-apis?project={{ .Project }}
+  logo_path: images/google_maps_platform.png
+  sub_services:
+  - id: api
+    name: APIs
+    description: List of Google Maps APIs
+    url: https://console.cloud.google.com/google/maps-apis/api-list?project={{ .Project }}
+    logo_path: images/google_maps_platform.png
+  - id: metrics
+    name: Metrics
+    description: List of Google Maps metrics
+    url: https://console.cloud.google.com/google/maps-apis/metrics?project={{ .Project }}
+    logo_path: images/google_maps_platform.png
+  - id: quotas
+    name: Quotas
+    description: List of Google Maps quotas
+    url: https://console.cloud.google.com/google/maps-apis/quotas?project={{ .Project }}
+    logo_path: images/google_maps_platform.png
+  - id: credentials
+    name: Keys and Credentials
+    description: List of Google Maps credentials
+    url: https://console.cloud.google.com/google/maps-apis/credentials?project={{ .Project }}
+    logo_path: images/google_maps_platform.png
+  - id: support
+    name: Support
+    description: List of Google Maps support options
+    url: https://console.cloud.google.com/google/maps-apis/support?project={{ .Project }}
+    logo_path: images/google_maps_platform.png
+  - id: sol_library
+    name: Solutions Library
+    description: List of Google Maps solutions
+    url: https://console.cloud.google.com/google/maps-apis/build?project={{ .Project }}
+    logo_path: images/google_maps_platform.png
+  - id: map_management
+    name: Map Management
+    description: List of Google Maps management options
+    url: https://console.cloud.google.com/google/maps-apis/studio?project={{ .Project }}
+    logo_path: images/google_maps_platform.png
+  - id: datasets
+    name: Datasets
+    description: List of Google Maps datasets
+    url: https://console.cloud.google.com/google/maps-apis/datasets?project={{ .Project }}
+    logo_path: images/google_maps_platform.png
+
+- id: support
+  name: Support
+  description: Google Cloud support
+  url: https://console.cloud.google.com/support?project={{ .Project }}
+  logo_path: images/support.png
+  sub_services:
+  - id: cases
+    name: Support Cases
+    description: List of support cases
+    url: https://console.cloud.google.com/support/cases?project={{ .Project }}
+    logo_path: images/support.png
+  - id: billing
+    name: Billing Support
+    description: List of billing support cases
+    url: https://console.cloud.google.com/support/chat?project={{ .Project }}
+    logo_path: images/support.png
+  - id: phone_support
+    name: Phone Support
+    description: List of phone support cases
+    url: https://console.cloud.google.com/support/phone?project={{ .Project }}
+    logo_path: images/support.png
+  - id: community
+    name: Community Support
+    description: List of community support cases
+    url: https://console.cloud.google.com/support/community?project={{ .Project }}
+    logo_path: images/support.png

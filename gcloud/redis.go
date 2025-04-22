@@ -1,27 +1,18 @@
 package gcloud
 
-import (
-	"encoding/json"
-	"os/exec"
-)
+import "time"
+
+type RedisInstance struct {
+	CreatedAt    time.Time `json:"createTime"`
+	Name         string    `json:"displayName"`
+	Region       string    `json:"currentLocationId"`
+	State        string    `json:"state"`
+	Tier         string    `json:"tier"`
+	Memory       int       `json:"memorySizeGb"`
+	RedisVersion string    `json:"redisVersion"`
+	ReplicaCount int       `json:"replicaCount"`
+}
 
 func ListRedisInstances(config *Config) ([]RedisInstance, error) {
-	cmd := exec.Command(
-		gcloudPath,
-		"redis", "instances", "list",
-		"--format=json",
-		"--project="+config.Project,
-		"--region=-", // Needed to avoid region error, or use loop for all regions
-	)
-	output, err := cmd.Output()
-	if err != nil {
-		return nil, err
-	}
-
-	var instances []RedisInstance
-	err = json.Unmarshal(output, &instances)
-	if err != nil {
-		return nil, err
-	}
-	return instances, nil
+	return runGCloudCmd[[]RedisInstance](config, "redis", "instances", "list", "--region=-")
 }
