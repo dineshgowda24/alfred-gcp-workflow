@@ -1,44 +1,21 @@
 package gcloud
 
-import (
-	"encoding/json"
-	"os/exec"
-)
+type PubSubTopic struct {
+	Name string `json:"name"` // Format: projects/{project}/topics/{topic-id}
+}
+
+type PubSubSubscription struct {
+	AckDeadlineSeconds       int    `json:"ackDeadlineSeconds"`
+	MessageRetentionDuration string `json:"messageRetentionDuration"`
+	Name                     string `json:"name"` // Format: projects/{project}/subscriptions/{subscription-id}
+	State                    string `json:"state"`
+	Topic                    string `json:"topic"` // Format: projects/{project}/topics/{topic-id}
+}
 
 func ListTopics(config *Config) ([]PubSubTopic, error) {
-	cmd := exec.Command(
-		gcloudPath,
-		"pubsub", "topics", "list",
-		"--format=json",
-		"--project="+config.Project,
-	)
-	output, err := cmd.Output()
-	if err != nil {
-		return nil, err
-	}
-
-	var topics []PubSubTopic
-	if err := json.Unmarshal(output, &topics); err != nil {
-		return nil, err
-	}
-	return topics, nil
+	return runGCloudCmd[[]PubSubTopic](config, "pubsub", "topics", "list")
 }
 
 func ListSubscriptions(config *Config) ([]PubSubSubscription, error) {
-	cmd := exec.Command(
-		gcloudPath,
-		"pubsub", "subscriptions", "list",
-		"--format=json",
-		"--project="+config.Project,
-	)
-	output, err := cmd.Output()
-	if err != nil {
-		return nil, err
-	}
-
-	var subs []PubSubSubscription
-	if err := json.Unmarshal(output, &subs); err != nil {
-		return nil, err
-	}
-	return subs, nil
+	return runGCloudCmd[[]PubSubSubscription](config, "pubsub", "subscriptions", "list")
 }
