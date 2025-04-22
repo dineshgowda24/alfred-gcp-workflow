@@ -18,10 +18,23 @@ type ComputeDisk struct {
 	Zone                   string `json:"zone"`   // Format: url/zones/{zone}
 }
 
+type ComputeImage struct {
+	Architecture      string `json:"architecture"`
+	ArchiveSizeBytes  string `json:"archiveSizeBytes"`
+	CreationTimestamp string `json:"creationTimestamp"` // Format 2018-11-06T01:59:29.838-08:00
+	Name              string `json:"name"`
+	DiskSizeGb        string `json:"diskSizeGb"`
+	Status            string `json:"status"` // one of [FAILED, PENDING, READY]
+}
+
 func ListComputeInstances(config *Config) ([]ComputeInstance, error) {
 	return runGCloudCmd[[]ComputeInstance](config, "compute", "instances", "list")
 }
 
 func ListComputeDisks(config *Config) ([]ComputeDisk, error) {
 	return runGCloudCmd[[]ComputeDisk](config, "compute", "disks", "list")
+}
+
+func ListComputeImages(config *Config) ([]ComputeImage, error) {
+	return runGCloudCmd[[]ComputeImage](config, "compute", "images", "list")
 }
