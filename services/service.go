@@ -38,7 +38,16 @@ func (s *Service) Url(config *gcloud.Config) (string, error) {
 	return buf.String(), nil
 }
 
-func LoadServices(file embed.FS) ([]Service, error) {
+func (s *Service) Subtitle() string {
+	if len(s.SubServices) > 0 {
+		return "📁 " + s.Description
+	}
+
+	return s.Description
+}
+
+// Load reads the services from an embedded YAML file
+func Load(file embed.FS) ([]Service, error) {
 	data, err := file.ReadFile("services.yml")
 	if err != nil {
 		return nil, err
