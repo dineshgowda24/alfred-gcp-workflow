@@ -9,10 +9,11 @@ import (
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/sql"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/storage"
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow"
 )
 
 type Searcher interface {
-	Search(wf *aw.Workflow, svc *services.Service, config *gcloud.Config, filter string) error
+	Search(wf *aw.Workflow, svc *services.Service, config *gcloud.Config, args workflow.SearchArgs) error
 }
 
 type Registry struct {

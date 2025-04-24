@@ -40,7 +40,7 @@ func NewOrchestrator(home, service, subService, fallback, error Handler, service
 // Run is the main entrypoint called by wf.Run(...)
 func (o *Orchestrator) Run(wf *aw.Workflow, args *workflow.SearchArgs) {
 	log.Println("LOG: orchestrator run with query:", args.Query)
-	o.ctx = &Context{Workflow: wf, RawQuery: args.Query, args: args}
+	o.ctx = &Context{Workflow: wf, RawQuery: args.Query, Args: args}
 	o.buildCtx()
 
 	if o.ctx.Err != nil {

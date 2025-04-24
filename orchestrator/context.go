@@ -11,7 +11,7 @@ import (
 
 // Context holds the context for the workflow execution.
 type Context struct {
-	args           *workflow.SearchArgs
+	Args           *workflow.SearchArgs
 	Workflow       *aw.Workflow
 	RawQuery       string
 	ParsedQuery    *parser.Result
