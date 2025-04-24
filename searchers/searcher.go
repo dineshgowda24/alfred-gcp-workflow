@@ -4,6 +4,7 @@ import (
 	aw "github.com/deanishe/awgo"
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/compute"
+	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/k8s"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/memorystore"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/pubsub"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/sql"
@@ -44,7 +45,8 @@ func GetDefaultRegistry() *Registry {
 			"compute/instances":          &compute.InstanceSearcher{},
 			"compute/disks":              &compute.DiskSearcher{},
 			"compute/images":             &compute.ImageSearcher{},
-			"compute/instance_templates": &compute.InstanceTemplateSearcher{},
+			"compute/instance_templates": &compute.InstanceTmplSearcher{},
+			"gke/clusters":               &k8s.ClusterSearcher{},
 		},
 	}
 }
