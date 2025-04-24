@@ -8,6 +8,7 @@ import (
 	"github.com/dineshgowda24/alfred-gcp-workflow/parser"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers"
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow"
 )
 
 // Handler represents a query handler like home/service/subservice.
@@ -37,9 +38,9 @@ func NewOrchestrator(home, service, subService, fallback, error Handler, service
 }
 
 // Run is the main entrypoint called by wf.Run(...)
-func (o *Orchestrator) Run(wf *aw.Workflow, query string) {
-	log.Println("LOG: orchestrator run with query:", query)
-	o.ctx = &Context{Workflow: wf, RawQuery: query}
+func (o *Orchestrator) Run(wf *aw.Workflow, args *workflow.SearchArgs) {
+	log.Println("LOG: orchestrator run with query:", args.Query)
+	o.ctx = &Context{Workflow: wf, RawQuery: args.Query, Args: args}
 	o.buildCtx()
 
 	if o.ctx.Err != nil {
@@ -77,8 +78,8 @@ func (o *Orchestrator) buildCtx() {
 		return
 	}
 
-	o.ctx.Services = servicesList
 	o.ctx.ParsedQuery = parser.Parse(o.ctx.RawQuery, servicesList)
+	o.ctx.Services = servicesList
 	o.ctx.SearchRegistry = searchers.GetDefaultRegistry()
 }
 

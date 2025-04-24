@@ -14,6 +14,18 @@ type Result struct {
 	RemainingQuery string
 }
 
+func (r *Result) IsEmptyQuery() bool {
+	return r.RawQuery == ""
+}
+
+func (r *Result) HasServiceOnly() bool {
+	return r.Service != nil && r.SubService == nil
+}
+
+func (r *Result) HasSubService() bool {
+	return r.Service != nil && r.SubService != nil
+}
+
 func Parse(input string, svcList []services.Service) *Result {
 	words := strings.Fields(strings.ToLower(strings.TrimSpace(input)))
 	pq := &Result{RawQuery: input}

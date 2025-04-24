@@ -13,6 +13,10 @@ type Config struct {
 	Project string
 }
 
+func (c *Config) CacheKey(prefix string) string {
+	return prefix + "_" + c.Name + "_" + c.Project
+}
+
 type GCloudConfig struct {
 	Name       string `json:"name"`
 	Properties struct {

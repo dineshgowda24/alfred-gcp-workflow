@@ -9,17 +9,18 @@ import (
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/sql"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/storage"
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow"
 )
 
 type Searcher interface {
-	Search(wf *aw.Workflow, svc *services.Service, config *gcloud.Config, filter string) error
+	Search(wf *aw.Workflow, svc *services.Service, config *gcloud.Config, args workflow.SearchArgs) error
 }
 
-type Registery struct {
+type Registry struct {
 	lookup map[string]Searcher
 }
 
-func (r *Registery) Get(parent, child *services.Service) Searcher {
+func (r *Registry) Get(parent, child *services.Service) Searcher {
 	searcher, ok := r.lookup[r.key(parent, child)]
 	if !ok {
 		return nil
@@ -28,12 +29,12 @@ func (r *Registery) Get(parent, child *services.Service) Searcher {
 	return searcher
 }
 
-func (r *Registery) key(parent, child *services.Service) string {
+func (r *Registry) key(parent, child *services.Service) string {
 	return parent.ID + "/" + child.ID
 }
 
-func GetDefaultRegistry() *Registery {
-	return &Registery{
+func GetDefaultRegistry() *Registry {
+	return &Registry{
 		lookup: map[string]Searcher{
 			"sql/instances":              &sql.InstanceSearcher{},
 			"memorystore/redis":          &memorystore.RedisInstanceSearcher{},
