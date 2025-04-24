@@ -15,16 +15,16 @@ func (s *InstanceSearcher) Search(
 	config *gcloud.Config,
 	args workflow.SearchArgs,
 ) error {
-	return workflow.LoadFromCache(
-		wf,
-		config.CacheKey("compute_instances"),
-		config,
-		&args,
-		s.fetch,
-		func(wf *aw.Workflow, entity gcloud.ComputeInstance) {
+	return workflow.ResolveAndRender(workflow.RenderRequest[gcloud.ComputeInstance]{
+		Key:    "compute_instances",
+		Wf:     wf,
+		Config: config,
+		Args:   &args,
+		Fetch:  s.fetch,
+		Render: func(wf *aw.Workflow, entity gcloud.ComputeInstance) {
 			s.render(wf, svc, config, entity)
 		},
-	)
+	})
 }
 
 func (s *InstanceSearcher) fetch(config *gcloud.Config) ([]gcloud.ComputeInstance, error) {

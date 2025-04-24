@@ -10,16 +10,16 @@ import (
 type DiskSearcher struct{}
 
 func (s *DiskSearcher) Search(wf *aw.Workflow, svc *services.Service, config *gcloud.Config, args workflow.SearchArgs) error {
-	return workflow.LoadFromCache(
-		wf,
-		config.CacheKey("compute_disks"),
-		config,
-		&args,
-		s.fetch,
-		func(wf *aw.Workflow, entity gcloud.ComputeDisk) {
+	return workflow.ResolveAndRender(workflow.RenderRequest[gcloud.ComputeDisk]{
+		Key:    "compute_disks",
+		Wf:     wf,
+		Config: config,
+		Args:   &args,
+		Fetch:  s.fetch,
+		Render: func(wf *aw.Workflow, entity gcloud.ComputeDisk) {
 			s.render(wf, svc, config, entity)
 		},
-	)
+	})
 }
 
 func (s *DiskSearcher) fetch(config *gcloud.Config) ([]gcloud.ComputeDisk, error) {

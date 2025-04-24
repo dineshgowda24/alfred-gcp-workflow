@@ -10,16 +10,16 @@ import (
 type SubscriptionSearcher struct{}
 
 func (s *SubscriptionSearcher) Search(wf *aw.Workflow, svc *services.Service, config *gcloud.Config, args workflow.SearchArgs) error {
-	return workflow.LoadFromCache(
-		wf,
-		config.CacheKey("pubsub_subscriptions"),
-		config,
-		&args,
-		s.fetch,
-		func(wf *aw.Workflow, entity gcloud.PubSubSubscription) {
+	return workflow.ResolveAndRender(workflow.RenderRequest[gcloud.PubSubSubscription]{
+		Key:    "pubsub_subscriptions",
+		Wf:     wf,
+		Config: config,
+		Args:   &args,
+		Fetch:  s.fetch,
+		Render: func(wf *aw.Workflow, entity gcloud.PubSubSubscription) {
 			s.render(wf, svc, config, entity)
 		},
-	)
+	})
 }
 
 func (s *SubscriptionSearcher) fetch(config *gcloud.Config) ([]gcloud.PubSubSubscription, error) {
