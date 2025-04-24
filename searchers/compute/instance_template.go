@@ -10,16 +10,16 @@ import (
 type InstanceTemplateSearcher struct{}
 
 func (s *InstanceTemplateSearcher) Search(wf *aw.Workflow, svc *services.Service, config *gcloud.Config, args workflow.SearchArgs) error {
-	return workflow.LoadFromCache(
-		wf,
-		config.CacheKey("compute_instance_templates"),
-		config,
-		&args,
-		s.fetch,
-		func(wf *aw.Workflow, entity gcloud.ComputeInstanceTemplate) {
+	return workflow.ResolveAndRender(workflow.RenderRequest[gcloud.ComputeInstanceTemplate]{
+		Key:    "compute_instance_templates",
+		Wf:     wf,
+		Config: config,
+		Args:   &args,
+		Fetch:  s.fetch,
+		Render: func(wf *aw.Workflow, entity gcloud.ComputeInstanceTemplate) {
 			s.render(wf, svc, config, entity)
 		},
-	)
+	})
 }
 
 func (s *InstanceTemplateSearcher) fetch(config *gcloud.Config) ([]gcloud.ComputeInstanceTemplate, error) {

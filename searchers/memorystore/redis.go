@@ -10,16 +10,16 @@ import (
 type RedisInstanceSearcher struct{}
 
 func (s *RedisInstanceSearcher) Search(wf *aw.Workflow, svc *services.Service, config *gcloud.Config, args workflow.SearchArgs) error {
-	return workflow.LoadFromCache(
-		wf,
-		config.CacheKey("redis_instances"),
-		config,
-		&args,
-		s.fetch,
-		func(wf *aw.Workflow, entity gcloud.RedisInstance) {
+	return workflow.ResolveAndRender(workflow.RenderRequest[gcloud.RedisInstance]{
+		Key:    "memorystore_redis_instances",
+		Wf:     wf,
+		Config: config,
+		Args:   &args,
+		Fetch:  s.fetch,
+		Render: func(wf *aw.Workflow, entity gcloud.RedisInstance) {
 			s.render(wf, svc, config, entity)
 		},
-	)
+	})
 }
 
 func (s *RedisInstanceSearcher) fetch(config *gcloud.Config) ([]gcloud.RedisInstance, error) {

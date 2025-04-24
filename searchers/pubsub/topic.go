@@ -10,16 +10,16 @@ import (
 type TopicSearcher struct{}
 
 func (s *TopicSearcher) Search(wf *aw.Workflow, svc *services.Service, config *gcloud.Config, args workflow.SearchArgs) error {
-	return workflow.LoadFromCache(
-		wf,
-		config.CacheKey("pubsub_topics"),
-		config,
-		&args,
-		s.fetch,
-		func(wf *aw.Workflow, entity gcloud.PubSubTopic) {
+	return workflow.ResolveAndRender(workflow.RenderRequest[gcloud.PubSubTopic]{
+		Key:    "pubsub_topics",
+		Wf:     wf,
+		Config: config,
+		Args:   &args,
+		Fetch:  s.fetch,
+		Render: func(wf *aw.Workflow, entity gcloud.PubSubTopic) {
 			s.render(wf, svc, config, entity)
 		},
-	)
+	})
 }
 
 func (s *TopicSearcher) fetch(config *gcloud.Config) ([]gcloud.PubSubTopic, error) {

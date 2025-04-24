@@ -9,53 +9,76 @@ import (
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 )
 
-const bgName = "alfred-gcp-workflow-bg"
+const bgJobName = "alfred-gcp-workflow-bg"
 
 type (
 	FetchFunc[T any]  func(config *gcloud.Config) ([]T, error)
 	RenderFunc[T any] func(wf *aw.Workflow, entity T)
 )
 
-func LoadFromCache[T any](
-	wf *aw.Workflow,
-	cacheKey string,
-	config *gcloud.Config,
-	args *SearchArgs,
-	fetcher FetchFunc[T],
-	render RenderFunc[T],
-) error {
-	if args.RebuildCache {
-		data, err := fetcher(config)
-		if err != nil {
-			return err
-		}
-		return wf.Cache.StoreJSON(cacheKey, data)
+type RenderRequest[T any] struct {
+	Wf     *aw.Workflow
+	Config *gcloud.Config
+	Args   *SearchArgs
+	Key    string
+	Fetch  FetchFunc[T]
+	Render RenderFunc[T]
+}
+
+func ResolveAndRender[T any](req RenderRequest[T]) error {
+	if req.Args.RebuildCache {
+		return fetchAndStore(req)
+	}
+
+	if tryRenderFromCache(req) {
+		return nil
+	}
+
+	showLoadingState(req)
+	triggerBgJob(req)
+
+	req.Wf.Rerun(0.5)
+	return nil
+}
+
+func fetchAndStore[T any](req RenderRequest[T]) error {
+	data, err := req.Fetch(req.Config)
+	if err != nil {
+		return err
+	}
+	return req.Wf.Cache.StoreJSON(req.Config.CacheKey(req.Key), data)
+}
+
+func tryRenderFromCache[T any](req RenderRequest[T]) bool {
+	cacheKey := req.Config.CacheKey(req.Key)
+	maxAge := 5 * time.Minute
+
+	if req.Wf.Cache.Expired(cacheKey, maxAge) {
+		return false
 	}
 
 	var results []T
-	maxAge := 5 * time.Minute
-	if !wf.Cache.Expired(cacheKey, maxAge) {
-		if err := wf.Cache.LoadJSON(cacheKey, &results); err == nil {
-			for _, item := range results {
-				render(wf, item)
-			}
-			return nil
-		}
+	if err := req.Wf.Cache.LoadJSON(cacheKey, &results); err != nil {
+		return false
 	}
 
-	// Cache miss: show loading + trigger fetch
-	wf.NewItem("Loading...").
+	for _, item := range results {
+		req.Render(req.Wf, item)
+	}
+	return true
+}
+
+func showLoadingState[T any](req RenderRequest[T]) {
+	req.Wf.NewItem("Loading...").
 		Subtitle("Fetching GCP resources").
 		Icon(aw.IconInfo).
 		Valid(false)
+}
 
-	if !wf.IsRunning(bgName) {
-		cmd := exec.Command(os.Args[0], "--query="+args.Query, "--rebuild-cache")
-		if err := wf.RunInBackground(bgName, cmd); err != nil {
-			panic(err)
-		}
+func triggerBgJob[T any](req RenderRequest[T]) {
+	if req.Wf.IsRunning(bgJobName) {
+		return
 	}
-
-	wf.Rerun(0.5)
-	return nil
+	cmd := exec.Command(os.Args[0], "--query="+req.Args.Query, "--rebuild-cache")
+	_ = req.Wf.RunInBackground(bgJobName, cmd) // handle/log error if needed
 }
