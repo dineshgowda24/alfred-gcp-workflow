@@ -31,6 +31,7 @@ func (s *Service) Url(config *gcloud.Config) (string, error) {
 	if err != nil {
 		return "", err
 	}
+
 	var buf bytes.Buffer
 	if err := t.Execute(&buf, config); err != nil {
 		return "", err

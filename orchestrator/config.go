@@ -5,27 +5,25 @@ import (
 	"log"
 
 	aw "github.com/deanishe/awgo"
-	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
+	gc "github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 )
 
 var ErrNoActiveConfig = errors.New("no active gcloud config found")
 
 const configCacheKey = "gcloud_config"
 
-func getActiveConfig(ctx *Context, overrideCache bool) *gcloud.Config {
+func getActiveConfig(ctx *Context, overrideCache bool) *gc.Config {
 	wf := ctx.Workflow
 	if !overrideCache && wf.Cache.Exists(configCacheKey) {
 		log.Println("LOG: loading active config from cache")
-		var cached gcloud.Config
+		var cached gc.Config
 		if err := wf.Cache.LoadJSON(configCacheKey, &cached); err == nil {
 			return &cached
 		}
 	}
 
 	log.Println("LOG: loading active config from gcloud")
-
-	// load active config from gcloud
-	active := gcloud.GetActiveConfig(wf)
+	active := gc.GetActiveConfig(wf)
 	if active == nil {
 		return nil
 	}

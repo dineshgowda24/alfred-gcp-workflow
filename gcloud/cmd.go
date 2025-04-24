@@ -1,43 +1,41 @@
 package gcloud
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 	"os/exec"
 )
 
 const gcloudPath = "/Users/dinesh.chikkanna/google-cloud-sdk/bin/gcloud"
 
-func runGCloudCmd[T any](config *Config, subcommand string, args ...string) (T, error) {
-	var result T
-	cmdArgs := buildGCloudArgs(subcommand, config, args...)
+func runGCloudCmd[T any](cfg *Config, cmd string, extraArgs ...string) (T, error) {
+	var out T
+	args := buildArgs(cmd, cfg, extraArgs...)
 
-	output, err := exec.Command(gcloudPath, cmdArgs...).Output()
+	var stderr bytes.Buffer
+	cmdExec := exec.Command(gcloudPath, args...)
+	cmdExec.Stderr = &stderr
+
+	raw, err := cmdExec.Output()
 	if err != nil {
-		return result, err
+		return out, fmt.Errorf("gcloud command failed: %w\nstderr: %s", err, stderr.String())
 	}
 
-	err = json.Unmarshal(output, &result)
-	return result, err
-}
-
-func buildGCloudArgs(subcommand string, config *Config, args ...string) []string {
-	cmdArgs := []string{subcommand}
-	cmdArgs = append(cmdArgs, args...)
-
-	cmdArgs = addConfigFlag(cmdArgs, config)
-	cmdArgs = addFormatFlag(cmdArgs)
-
-	return cmdArgs
-}
-
-func addConfigFlag(args []string, config *Config) []string {
-	if config != nil && config.Name != "" {
-		args = append(args, "--configuration="+config.Name)
+	if err := json.Unmarshal(raw, &out); err != nil {
+		return out, fmt.Errorf("failed to parse gcloud JSON output: %w", err)
 	}
-	return args
+
+	return out, nil
 }
 
-func addFormatFlag(args []string) []string {
+func buildArgs(cmd string, cfg *Config, extra ...string) []string {
+	args := append([]string{cmd}, extra...)
+
+	if cfg != nil && cfg.Name != "" {
+		args = append(args, "--configuration="+cfg.Name)
+	}
+
 	args = append(args, "--format=json")
 	return args
 }
