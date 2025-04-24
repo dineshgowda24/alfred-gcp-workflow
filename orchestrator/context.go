@@ -6,21 +6,23 @@ import (
 	"github.com/dineshgowda24/alfred-gcp-workflow/parser"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers"
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow"
 )
 
 // Context holds the context for the workflow execution.
 type Context struct {
+	args           *workflow.SearchArgs
 	Workflow       *aw.Workflow
 	RawQuery       string
 	ParsedQuery    *parser.Result
 	ActiveConfig   *gcloud.Config
 	Services       []services.Service
 	Err            error
-	SearchRegistry *searchers.Registery
+	SearchRegistry *searchers.Registry
 }
 
 func (ctx *Context) IsHomeQuery() bool {
-	return ctx.ParsedQuery.IsEmptyQuery()
+	return ctx.RawQuery == ""
 }
 
 func (ctx *Context) IsServiceQuery() bool {
