@@ -1,6 +1,7 @@
 package orchestrator
 
 import (
+	"fmt"
 	"log"
 
 	aw "github.com/deanishe/awgo"
@@ -11,39 +12,37 @@ var _ Handler = (*SubServiceHandler)(nil)
 type SubServiceHandler struct{}
 
 func (h *SubServiceHandler) Handle(ctx *Context) error {
-	log.Println("LOG: run subservice handler")
+	log.Println("LOG: SubServiceHandler started")
+
 	query := ctx.ParsedQuery
-	wf := ctx.Workflow
-	active := ctx.ActiveConfig
 	parent := query.Service
 	child := query.SubService
-
 	searcher := ctx.GetSearcher(parent, child)
+
 	if searcher != nil {
-		log.Println("LOG: executing searcher for subservice:", child.Name)
-		err := searcher.Search(wf, child, active, query.RemainingQuery)
-		if err != nil {
+		log.Printf("LOG: Found searcher for subservice: %s\n", child.Name)
+		if err := searcher.Search(ctx.Workflow, child, ctx.ActiveConfig, query.RemainingQuery); err != nil {
 			return err
 		}
-		wf.Filter(query.RemainingQuery)
-
+		ctx.Workflow.Filter(query.RemainingQuery)
 	} else {
-		wf.NewItem(child.Name).
+		log.Printf("LOG: No searcher found for subservice: %s\n", child.Name)
+
+		ctx.Workflow.NewItem(child.Name).
 			Subtitle(child.Description).
-			Autocomplete(query.Service.ID + " " + child.ID).
+			Autocomplete(fmt.Sprintf("%s %s", parent.ID, child.ID)).
 			Icon(child.Icon()).
 			Arg(child.URL).
 			Valid(true)
 
-		wf.NewFileItem(child.Name + " has no searcher (yet)").
+		ctx.Workflow.NewFileItem(fmt.Sprintf("%s has no searcher (yet)", child.Name)).
 			Subtitle("Open contributing guide to add them").
 			Arg("https://github.com/dineshgowda24/alfred-gcp-workflow").
 			Icon(aw.IconNote).
 			Valid(true)
-
 	}
 
-	log.Println("LOG: run subservice handler complete")
-	wf.SendFeedback()
+	log.Println("LOG: SubServiceHandler completed")
+	ctx.Workflow.SendFeedback()
 	return nil
 }

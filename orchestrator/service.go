@@ -1,9 +1,11 @@
 package orchestrator
 
 import (
+	"fmt"
 	"log"
 
 	aw "github.com/deanishe/awgo"
+	"github.com/dineshgowda24/alfred-gcp-workflow/services"
 )
 
 var _ Handler = (*ServiceHandler)(nil)
@@ -11,55 +13,63 @@ var _ Handler = (*ServiceHandler)(nil)
 type ServiceHandler struct{}
 
 func (h *ServiceHandler) Handle(ctx *Context) error {
-	parsedQuery := ctx.ParsedQuery
+	service := ctx.ParsedQuery.Service
 	wf := ctx.Workflow
 	active := ctx.ActiveConfig
-	parent := parsedQuery.Service
 
-	log.Println("LOG: service found:", parent.Name)
-	log.Println("LOG: listing subservices for service:", parent.Name)
+	log.Printf("LOG: Handling service: %s\n", service.Name)
 
-	for _, child := range parent.SubServices {
+	if len(service.SubServices) == 0 {
+		log.Printf("LOG: No subservices for service: %s\n", service.Name)
+
+		url, err := service.Url(active)
+		if err != nil {
+			log.Println("LOG: Error generating service URL:", err)
+		}
+
+		wf.NewItem(service.Name).
+			Subtitle(service.Description).
+			Autocomplete(service.ID).
+			Arg(url).
+			Icon(service.Icon()).
+			Valid(true)
+
+		addMissingSubServiceItem(wf, service)
+
+		wf.SendFeedback()
+		return nil
+	}
+
+	log.Printf("LOG: Listing %d subservices for: %s\n", len(service.SubServices), service.Name)
+
+	for _, child := range service.SubServices {
 		url, err := child.Url(active)
 		if err != nil {
-			log.Println("LOG: error rendering subservice URL:", err)
+			log.Printf("LOG: Error generating URL for subservice %s: %v\n", child.Name, err)
+			continue
 		}
 
 		subtitle := child.Description
-		searcher := ctx.GetSearcher(parent, &child)
-		if searcher != nil {
+		if ctx.GetSearcher(service, &child) != nil {
 			subtitle = "🔍 " + subtitle
 		}
 
 		wf.NewItem(child.Name).
 			Subtitle(subtitle).
-			Autocomplete(parent.ID + " " + child.ID).
+			Autocomplete(fmt.Sprintf("%s %s", service.ID, child.ID)).
 			Icon(child.Icon()).
 			Arg(url).
 			Valid(true)
 	}
 
-	if len(parsedQuery.Service.SubServices) == 0 {
-		log.Println("LOG: no subservices found for service:", parsedQuery.Service.Name)
-		url, err := parent.Url(active)
-		if err != nil {
-			log.Println("LOG: error rendering URL:", err)
-		}
-		wf.NewItem(parent.Name).
-			Autocomplete(parent.ID).
-			Subtitle(parent.Description).
-			Arg(url).
-			Icon(parent.Icon()).
-			Valid(true)
-
-		wf.NewFileItem(parent.Name + " has no sub-services (yet)").
-			Subtitle("Open contributing guide to add them").
-			Arg("https://github.com/dineshgowda24/alfred-gcp-workflow").
-			Icon(aw.IconNote).
-			Valid(true)
-
-	}
-
 	wf.SendFeedback()
 	return nil
+}
+
+func addMissingSubServiceItem(wf *aw.Workflow, service *services.Service) {
+	wf.NewItem(fmt.Sprintf("%s has no sub-services (yet)", service.Name)).
+		Subtitle("Open contributing guide to add them").
+		Arg("https://github.com/dineshgowda24/alfred-gcp-workflow").
+		Icon(aw.IconNote).
+		Valid(true)
 }

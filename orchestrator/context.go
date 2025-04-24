@@ -20,15 +20,15 @@ type Context struct {
 }
 
 func (ctx *Context) IsHomeQuery() bool {
-	return ctx.RawQuery == ""
+	return ctx.ParsedQuery.IsEmptyQuery()
 }
 
 func (ctx *Context) IsServiceQuery() bool {
-	return ctx.ParsedQuery.Service != nil && ctx.ParsedQuery.SubService == nil
+	return ctx.ParsedQuery.HasServiceOnly()
 }
 
 func (ctx *Context) IsSubServiceQuery() bool {
-	return ctx.ParsedQuery.Service != nil && ctx.ParsedQuery.SubService != nil
+	return ctx.ParsedQuery.HasSubService()
 }
 
 func (ctx *Context) SendFeedback() {
