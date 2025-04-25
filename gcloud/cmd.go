@@ -7,9 +7,11 @@ import (
 	"log"
 	"os/exec"
 	"strings"
+
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/env"
 )
 
-const gcloudPath = "/Users/dinesh.chikkanna/google-cloud-sdk/bin/gcloud"
+var gcloudPath = env.GCloudCliPath()
 
 func runGCloudCmd[T any](cfg *Config, cmd string, extraArgs ...string) (T, error) {
 	var out T

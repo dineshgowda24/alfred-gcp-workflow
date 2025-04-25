@@ -11,13 +11,13 @@ import (
 	"github.com/dineshgowda24/alfred-gcp-workflow/workflow"
 )
 
-// Handler represents a query handler like home/service/subservice.
 type Handler interface {
 	Handle(ctx *Context) error
 }
 
 type Orchestrator struct {
 	ctx               *Context
+	dependencyHandler Handler
 	homeHandler       Handler
 	serviceHandler    Handler
 	subServiceHandler Handler
@@ -26,8 +26,9 @@ type Orchestrator struct {
 	servicesFS        embed.FS
 }
 
-func NewOrchestrator(home, service, subService, fallback, error Handler, servicesFS embed.FS) *Orchestrator {
+func NewOrchestrator(dep, home, service, subService, fallback, error Handler, servicesFS embed.FS) *Orchestrator {
 	return &Orchestrator{
+		dependencyHandler: dep,
 		homeHandler:       home,
 		serviceHandler:    service,
 		subServiceHandler: subService,
@@ -37,7 +38,6 @@ func NewOrchestrator(home, service, subService, fallback, error Handler, service
 	}
 }
 
-// Run is the main entrypoint called by wf.Run(...)
 func (o *Orchestrator) Run(wf *aw.Workflow, args *workflow.SearchArgs) {
 	log.Println("LOG: orchestrator run with query:", args.Query)
 	o.ctx = &Context{Workflow: wf, RawQuery: args.Query, Args: args}
@@ -47,8 +47,11 @@ func (o *Orchestrator) Run(wf *aw.Workflow, args *workflow.SearchArgs) {
 		o.handleErr()
 		return
 	}
-
 	log.Println("LOG: build context complete", o.ctx.ActiveConfig, o.ctx.ParsedQuery)
+
+	if !o.validDependencies() {
+		return
+	}
 
 	switch {
 	case o.ctx.IsHomeQuery():
@@ -87,4 +90,14 @@ func (o *Orchestrator) handleErr() {
 	if o.ctx.Err != nil {
 		o.errorHandler.Handle(o.ctx)
 	}
+}
+
+func (o *Orchestrator) validDependencies() bool {
+	err := o.dependencyHandler.Handle(o.ctx)
+	if err != nil {
+		log.Println("LOG: Error handling dependencies:", err)
+		return false
+	}
+
+	return true
 }

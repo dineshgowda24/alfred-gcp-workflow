@@ -11,6 +11,7 @@ import (
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/pubsub"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/sql"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/storage"
+	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/vpc"
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
 	"github.com/dineshgowda24/alfred-gcp-workflow/workflow"
 )
@@ -56,6 +57,7 @@ func GetDefaultRegistry() *Registry {
 			"gke/clusters":               &k8s.ClusterSearcher{},
 			"filestore/instances":        &filestore.InstanceSearcher{},
 			"net_svc/cloud_dns":          &netservices.DNSZoneSearcher{},
+			"vpc/networks":               &vpc.NetworkSearcher{},
 		},
 	}
 }
