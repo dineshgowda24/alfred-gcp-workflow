@@ -613,7 +613,7 @@
       url: https://console.cloud.google.com/net-services/loadbalancing?project={{ .Project }}
       logo_path: images/cloud_load_balancing.png
     - id: cloud_dns
-      name: Cloud DNS
+      name: Cloud DNS Zones
       description: List of DNS zones
       url: https://console.cloud.google.com/net-services/dns/zones?project={{ .Project }}
       logo_path: images/cloud_dns.png

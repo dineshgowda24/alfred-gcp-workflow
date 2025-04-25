@@ -51,7 +51,7 @@ func (h *ServiceHandler) Handle(ctx *Context) error {
 
 		subtitle := child.Description
 		if ctx.SearchRegistry.Exists(service, &child) {
-			subtitle = "🔍✨⚡️ " + subtitle
+			subtitle = "🔍⚡️ " + subtitle
 		}
 
 		wf.NewItem(child.Name).
@@ -62,6 +62,7 @@ func (h *ServiceHandler) Handle(ctx *Context) error {
 			Valid(true)
 	}
 
+	wf.Filter(ctx.ParsedQuery.RemainingQuery)
 	wf.SendFeedback()
 	return nil
 }
