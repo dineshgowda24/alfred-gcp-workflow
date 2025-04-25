@@ -34,7 +34,7 @@ func RunWorkflow(wf *aw.Workflow, servicesFs embed.FS, args *workflow.SearchArgs
 
 func buildOrch(servicesFs embed.FS) *ors.Orchestrator {
 	return ors.NewOrchestrator(
-		&ors.DependencyHandler{},
+		&ors.PreFlightCheckHandler{},
 		&ors.HomeHandler{},
 		&ors.ServiceHandler{},
 		&ors.SubServiceHandler{},

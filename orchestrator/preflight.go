@@ -8,9 +8,9 @@ import (
 	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/env"
 )
 
-type DependencyHandler struct{}
+type PreFlightCheckHandler struct{}
 
-func (h *DependencyHandler) Handle(ctx *Context) error {
+func (h *PreFlightCheckHandler) Handle(ctx *Context) error {
 	wf := ctx.Workflow
 
 	if env.GCloudCliPath() == "" {

@@ -17,7 +17,7 @@ type Handler interface {
 
 type Orchestrator struct {
 	ctx               *Context
-	dependencyHandler Handler
+	preflightHandler  Handler
 	homeHandler       Handler
 	serviceHandler    Handler
 	subServiceHandler Handler
@@ -26,9 +26,9 @@ type Orchestrator struct {
 	servicesFS        embed.FS
 }
 
-func NewOrchestrator(dep, home, service, subService, fallback, error Handler, servicesFS embed.FS) *Orchestrator {
+func NewOrchestrator(preflight, home, service, subService, fallback, error Handler, servicesFS embed.FS) *Orchestrator {
 	return &Orchestrator{
-		dependencyHandler: dep,
+		preflightHandler:  preflight,
 		homeHandler:       home,
 		serviceHandler:    service,
 		subServiceHandler: subService,
@@ -40,16 +40,15 @@ func NewOrchestrator(dep, home, service, subService, fallback, error Handler, se
 
 func (o *Orchestrator) Run(wf *aw.Workflow, args *workflow.SearchArgs) {
 	log.Println("LOG: orchestrator run with query:", args.Query)
-	o.ctx = &Context{Workflow: wf, RawQuery: args.Query, Args: args}
-	o.buildCtx()
 
+	o.buildCtx(wf, args)
 	if o.ctx.Err != nil {
 		o.handleErr()
 		return
 	}
 	log.Println("LOG: build context complete", o.ctx.ActiveConfig, o.ctx.ParsedQuery)
 
-	if !o.validDependencies() {
+	if !o.preflightCheck() {
 		return
 	}
 
@@ -67,7 +66,8 @@ func (o *Orchestrator) Run(wf *aw.Workflow, args *workflow.SearchArgs) {
 	o.handleErr()
 }
 
-func (o *Orchestrator) buildCtx() {
+func (o *Orchestrator) buildCtx(wf *aw.Workflow, args *workflow.SearchArgs) {
+	o.ctx = &Context{Workflow: wf, RawQuery: args.Query, Args: args}
 	config := getActiveConfig(o.ctx, o.ctx.IsHomeQuery())
 	if config == nil {
 		o.ctx.Err = ErrNoActiveConfig
@@ -92,12 +92,11 @@ func (o *Orchestrator) handleErr() {
 	}
 }
 
-func (o *Orchestrator) validDependencies() bool {
-	err := o.dependencyHandler.Handle(o.ctx)
+func (o *Orchestrator) preflightCheck() bool {
+	err := o.preflightHandler.Handle(o.ctx)
 	if err != nil {
-		log.Println("LOG: Error handling dependencies:", err)
+		log.Println("LOG: preflight check failed:", err)
 		return false
 	}
-
 	return true
 }
