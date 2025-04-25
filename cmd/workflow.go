@@ -6,7 +6,7 @@ import (
 
 	aw "github.com/deanishe/awgo"
 	ors "github.com/dineshgowda24/alfred-gcp-workflow/orchestrator"
-	"github.com/dineshgowda24/alfred-gcp-workflow/workflow"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/arg"
 )
 
 var (
@@ -14,18 +14,18 @@ var (
 	rebuildCache bool
 )
 
-func ParseArgs() *workflow.SearchArgs {
+func ParseArgs() *arg.SearchArgs {
 	flag.StringVar(&query, "query", "", "Query to use")
 	flag.BoolVar(&rebuildCache, "rebuild-cache", false, "Rebuild the disk cache")
 	flag.Parse()
 
-	return &workflow.SearchArgs{
+	return &arg.SearchArgs{
 		Query:        query,
 		RebuildCache: rebuildCache,
 	}
 }
 
-func RunWorkflow(wf *aw.Workflow, servicesFs embed.FS, args *workflow.SearchArgs) {
+func RunWorkflow(wf *aw.Workflow, servicesFs embed.FS, args *arg.SearchArgs) {
 	orch := buildOrch(servicesFs)
 	wf.Run(func() {
 		orch.Run(wf, args)

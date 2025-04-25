@@ -3,6 +3,7 @@ package searchers
 import (
 	aw "github.com/deanishe/awgo"
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
+	"github.com/dineshgowda24/alfred-gcp-workflow/parser"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/compute"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/filestore"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/k8s"
@@ -13,11 +14,10 @@ import (
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/storage"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/vpc"
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
-	"github.com/dineshgowda24/alfred-gcp-workflow/workflow"
 )
 
 type Searcher interface {
-	Search(wf *aw.Workflow, svc *services.Service, config *gcloud.Config, args workflow.SearchArgs) error
+	Search(wf *aw.Workflow, svc *services.Service, config *gcloud.Config, pq *parser.Result) error
 }
 
 type Registry struct {

@@ -8,6 +8,7 @@ import (
 
 	aw "github.com/deanishe/awgo"
 	gc "github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
+	"github.com/dineshgowda24/alfred-gcp-workflow/parser"
 )
 
 const (
@@ -24,28 +25,28 @@ type RenderRequest[T any] struct {
 	Key string
 
 	Wf     *aw.Workflow
-	Args   *SearchArgs
 	Config *gc.Config
 
 	Fetch  FetchFunc[T]
 	Render RenderFunc[T]
+	Pq     *parser.Result
 }
 
 func NewRenderRequest[T any](
-	key string, wf *aw.Workflow, cfg *gc.Config, args *SearchArgs, fetch FetchFunc[T], render RenderFunc[T],
+	key string, wf *aw.Workflow, cfg *gc.Config, pq *parser.Result, fetch FetchFunc[T], render RenderFunc[T],
 ) RenderRequest[T] {
 	return RenderRequest[T]{
 		Key:    key,
 		Wf:     wf,
 		Config: cfg,
-		Args:   args,
+		Pq:     pq,
 		Fetch:  fetch,
 		Render: render,
 	}
 }
 
 func ResolveAndRender[T any](r RenderRequest[T]) error {
-	if r.Args.RebuildCache {
+	if r.Pq.SearchArgs.RebuildCache {
 		return store(r)
 	}
 
@@ -97,7 +98,7 @@ func spawnBgJob[T any](r RenderRequest[T]) {
 	if r.Wf.IsRunning(bgJobName) {
 		return
 	}
-	cmd := exec.Command(os.Args[0], "--query="+r.Args.Query, "--rebuild-cache")
+	cmd := exec.Command(os.Args[0], "--query="+r.Pq.SearchArgs.Query, "--rebuild-cache")
 	if err := r.Wf.RunInBackground(bgJobName, cmd); err != nil {
 		panic(err) // should never happen
 	}

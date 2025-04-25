@@ -3,18 +3,19 @@ package vpc
 import (
 	aw "github.com/deanishe/awgo"
 	gc "github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
+	"github.com/dineshgowda24/alfred-gcp-workflow/parser"
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
 	"github.com/dineshgowda24/alfred-gcp-workflow/workflow"
 )
 
 type RouteSearcher struct{}
 
-func (r *RouteSearcher) Search(wf *aw.Workflow, svc *services.Service, config *gc.Config, args workflow.SearchArgs) error {
+func (r *RouteSearcher) Search(wf *aw.Workflow, svc *services.Service, config *gc.Config, pq *parser.Result) error {
 	return workflow.ResolveAndRender(workflow.NewRenderRequest(
 		"vpc_routes",
 		wf,
 		config,
-		&args,
+		pq,
 		r.fetch,
 		func(wf *aw.Workflow, entity gc.VPCRoute) {
 			r.render(wf, svc, config, entity)

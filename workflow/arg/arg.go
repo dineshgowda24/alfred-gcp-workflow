@@ -1,4 +1,4 @@
-package workflow
+package arg
 
 type SearchArgs struct {
 	Query        string

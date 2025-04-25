@@ -28,7 +28,7 @@ func (h *FallbackHandler) Handle(ctx *Context) error {
 			Valid(true)
 	}
 
-	wf.Filter(ctx.RawQuery)
+	wf.Filter(ctx.Args.Query)
 	wf.SendFeedback()
 
 	log.Println("LOG: FallbackHandler complete")

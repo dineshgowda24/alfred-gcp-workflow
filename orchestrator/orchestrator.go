@@ -8,7 +8,7 @@ import (
 	"github.com/dineshgowda24/alfred-gcp-workflow/parser"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers"
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
-	"github.com/dineshgowda24/alfred-gcp-workflow/workflow"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/arg"
 )
 
 type Handler interface {
@@ -38,7 +38,7 @@ func NewOrchestrator(preflight, home, service, subService, fallback, error Handl
 	}
 }
 
-func (o *Orchestrator) Run(wf *aw.Workflow, args *workflow.SearchArgs) {
+func (o *Orchestrator) Run(wf *aw.Workflow, args *arg.SearchArgs) {
 	log.Println("LOG: orchestrator run with query:", args.Query)
 
 	o.buildCtx(wf, args)
@@ -66,8 +66,8 @@ func (o *Orchestrator) Run(wf *aw.Workflow, args *workflow.SearchArgs) {
 	o.handleErr()
 }
 
-func (o *Orchestrator) buildCtx(wf *aw.Workflow, args *workflow.SearchArgs) {
-	o.ctx = &Context{Workflow: wf, RawQuery: args.Query, Args: args}
+func (o *Orchestrator) buildCtx(wf *aw.Workflow, args *arg.SearchArgs) {
+	o.ctx = &Context{Workflow: wf, Args: args}
 	config := getActiveConfig(o.ctx, o.ctx.IsHomeQuery())
 	if config == nil {
 		o.ctx.Err = ErrNoActiveConfig
@@ -81,7 +81,7 @@ func (o *Orchestrator) buildCtx(wf *aw.Workflow, args *workflow.SearchArgs) {
 		return
 	}
 
-	o.ctx.ParsedQuery = parser.Parse(o.ctx.RawQuery, servicesList)
+	o.ctx.ParsedQuery = parser.Parse(args, servicesList)
 	o.ctx.Services = servicesList
 	o.ctx.SearchRegistry = searchers.GetDefaultRegistry()
 }

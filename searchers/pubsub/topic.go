@@ -3,18 +3,19 @@ package pubsub
 import (
 	aw "github.com/deanishe/awgo"
 	gc "github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
+	"github.com/dineshgowda24/alfred-gcp-workflow/parser"
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
 	"github.com/dineshgowda24/alfred-gcp-workflow/workflow"
 )
 
 type TopicSearcher struct{}
 
-func (s *TopicSearcher) Search(wf *aw.Workflow, svc *services.Service, config *gc.Config, args workflow.SearchArgs) error {
+func (s *TopicSearcher) Search(wf *aw.Workflow, svc *services.Service, config *gc.Config, pq *parser.Result) error {
 	return workflow.ResolveAndRender(workflow.NewRenderRequest(
 		"pubsub_topics",
 		wf,
 		config,
-		&args,
+		pq,
 		s.fetch,
 		func(wf *aw.Workflow, entity gc.PubSubTopic) {
 			s.render(wf, svc, config, entity)
