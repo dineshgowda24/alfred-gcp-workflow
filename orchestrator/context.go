@@ -1,19 +1,20 @@
 package orchestrator
 
 import (
+	"strings"
+
 	aw "github.com/deanishe/awgo"
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 	"github.com/dineshgowda24/alfred-gcp-workflow/parser"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers"
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
-	"github.com/dineshgowda24/alfred-gcp-workflow/workflow"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/arg"
 )
 
 // Context holds the context for the workflow execution.
 type Context struct {
-	Args           *workflow.SearchArgs
+	Args           *arg.SearchArgs
 	Workflow       *aw.Workflow
-	RawQuery       string
 	ParsedQuery    *parser.Result
 	ActiveConfig   *gcloud.Config
 	Services       []services.Service
@@ -22,7 +23,7 @@ type Context struct {
 }
 
 func (ctx *Context) IsHomeQuery() bool {
-	return ctx.RawQuery == ""
+	return strings.TrimSpace(ctx.Args.Query) == ""
 }
 
 func (ctx *Context) IsServiceQuery() bool {

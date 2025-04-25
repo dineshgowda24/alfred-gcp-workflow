@@ -5,17 +5,18 @@ import (
 	"strings"
 
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/arg"
 )
 
 type Result struct {
-	RawQuery       string
+	SearchArgs     *arg.SearchArgs
 	Service        *services.Service
 	SubService     *services.Service
 	RemainingQuery string
 }
 
 func (r *Result) IsEmptyQuery() bool {
-	return r.RawQuery == ""
+	return strings.TrimSpace(r.SearchArgs.Query) == ""
 }
 
 func (r *Result) HasServiceOnly() bool {
@@ -26,9 +27,9 @@ func (r *Result) HasSubService() bool {
 	return r.Service != nil && r.SubService != nil
 }
 
-func Parse(input string, svcList []services.Service) *Result {
-	words := strings.Fields(strings.ToLower(strings.TrimSpace(input)))
-	pq := &Result{RawQuery: input}
+func Parse(searchArgs *arg.SearchArgs, svcList []services.Service) *Result {
+	words := strings.Fields(strings.ToLower(strings.TrimSpace(searchArgs.Query)))
+	pq := &Result{SearchArgs: searchArgs}
 
 	if len(words) == 0 {
 		return pq

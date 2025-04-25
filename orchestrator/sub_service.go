@@ -21,7 +21,7 @@ func (h *SubServiceHandler) Handle(ctx *Context) error {
 
 	if searcher != nil {
 		log.Printf("LOG: Found searcher for subservice: %s\n", child.Name)
-		if err := searcher.Search(ctx.Workflow, child, ctx.ActiveConfig, *ctx.Args); err != nil {
+		if err := searcher.Search(ctx.Workflow, child, ctx.ActiveConfig, ctx.ParsedQuery); err != nil {
 			return err
 		}
 		ctx.Workflow.Filter(query.RemainingQuery)
