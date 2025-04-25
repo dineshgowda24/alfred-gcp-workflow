@@ -20,7 +20,7 @@ func (h *FallbackHandler) Handle(ctx *Context) error {
 			log.Printf("LOG: Error generating URL for service %s: %v\n", svc.Name, err)
 		}
 
-		wf.NewItem(svc.Name).
+		wf.NewItem(svc.ID).
 			Subtitle(svc.Subtitle()).
 			Autocomplete(svc.ID).
 			Arg(url).

@@ -28,9 +28,9 @@ func (h *SubServiceHandler) Handle(ctx *Context) error {
 	} else {
 		log.Printf("LOG: No searcher found for subservice: %s\n", child.Name)
 
-		ctx.Workflow.NewItem(child.Name).
-			Subtitle(child.Description).
-			Autocomplete(fmt.Sprintf("%s %s", parent.ID, child.ID)).
+		ctx.Workflow.NewItem(child.Title()).
+			Subtitle(child.Subtitle()).
+			Autocomplete(child.Autocomplete()).
 			Icon(child.Icon()).
 			Arg(child.URL).
 			Valid(true)
