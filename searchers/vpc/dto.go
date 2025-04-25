@@ -2,6 +2,7 @@ package vpc
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	gc "github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
@@ -39,5 +40,51 @@ func NetworkFromGCloud(network *gc.VPCNetwork) Network {
 		Description:  network.Description,
 		CreationTime: createdAt.Local(),
 		RoutingMode:  network.XCloudBgpRoutingMode,
+	}
+}
+
+type Route struct {
+	Id           string
+	Name         string
+	Network      string
+	Priority     int
+	CreationTime time.Time
+}
+
+func (r Route) Title() string {
+	return r.Name
+}
+
+func (r Route) Subtitle() string {
+	return fmt.Sprintf(" %s | Priority: %d | Created: %s", r.Network, r.Priority, r.CreationTime.Format("Jan 2, 2006 15:04 MST"))
+}
+
+func (r Route) URL(config *gc.Config) string {
+	return fmt.Sprintf("https://console.cloud.google.com/networking/routes/details/%s?project=%s", r.Name, config.Project)
+}
+
+func RouteFromGCloud(route *gc.VPCRoute) Route {
+	createdAt, err := time.Parse(time.RFC3339, route.CreationTime)
+	if err != nil {
+		createdAt = time.Time{}
+	}
+
+	var network string
+	if route.Network != "" {
+		parts := strings.Split(route.Network, "/")
+		for i, part := range parts {
+			if part == "networks" && i+1 < len(parts) {
+				network = parts[i+1]
+				break
+			}
+		}
+	}
+
+	return Route{
+		Id:           route.Id,
+		Name:         route.Name,
+		Network:      network,
+		Priority:     route.Priority,
+		CreationTime: createdAt.Local(),
 	}
 }
