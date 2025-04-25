@@ -58,6 +58,7 @@ func GetDefaultRegistry() *Registry {
 			"filestore/instances":        &filestore.InstanceSearcher{},
 			"net_svc/cloud_dns":          &netservices.DNSZoneSearcher{},
 			"vpc/networks":               &vpc.NetworkSearcher{},
+			"vpc/routes":                 &vpc.RouteSearcher{},
 		},
 	}
 }
