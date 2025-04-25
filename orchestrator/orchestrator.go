@@ -11,13 +11,13 @@ import (
 	"github.com/dineshgowda24/alfred-gcp-workflow/workflow"
 )
 
-// Handler represents a query handler like home/service/subservice.
 type Handler interface {
 	Handle(ctx *Context) error
 }
 
 type Orchestrator struct {
 	ctx               *Context
+	preflightHandler  Handler
 	homeHandler       Handler
 	serviceHandler    Handler
 	subServiceHandler Handler
@@ -26,8 +26,9 @@ type Orchestrator struct {
 	servicesFS        embed.FS
 }
 
-func NewOrchestrator(home, service, subService, fallback, error Handler, servicesFS embed.FS) *Orchestrator {
+func NewOrchestrator(preflight, home, service, subService, fallback, error Handler, servicesFS embed.FS) *Orchestrator {
 	return &Orchestrator{
+		preflightHandler:  preflight,
 		homeHandler:       home,
 		serviceHandler:    service,
 		subServiceHandler: subService,
@@ -37,18 +38,19 @@ func NewOrchestrator(home, service, subService, fallback, error Handler, service
 	}
 }
 
-// Run is the main entrypoint called by wf.Run(...)
 func (o *Orchestrator) Run(wf *aw.Workflow, args *workflow.SearchArgs) {
 	log.Println("LOG: orchestrator run with query:", args.Query)
-	o.ctx = &Context{Workflow: wf, RawQuery: args.Query, Args: args}
-	o.buildCtx()
 
+	o.buildCtx(wf, args)
 	if o.ctx.Err != nil {
 		o.handleErr()
 		return
 	}
-
 	log.Println("LOG: build context complete", o.ctx.ActiveConfig, o.ctx.ParsedQuery)
+
+	if !o.preflightCheck() {
+		return
+	}
 
 	switch {
 	case o.ctx.IsHomeQuery():
@@ -64,7 +66,8 @@ func (o *Orchestrator) Run(wf *aw.Workflow, args *workflow.SearchArgs) {
 	o.handleErr()
 }
 
-func (o *Orchestrator) buildCtx() {
+func (o *Orchestrator) buildCtx(wf *aw.Workflow, args *workflow.SearchArgs) {
+	o.ctx = &Context{Workflow: wf, RawQuery: args.Query, Args: args}
 	config := getActiveConfig(o.ctx, o.ctx.IsHomeQuery())
 	if config == nil {
 		o.ctx.Err = ErrNoActiveConfig
@@ -87,4 +90,13 @@ func (o *Orchestrator) handleErr() {
 	if o.ctx.Err != nil {
 		o.errorHandler.Handle(o.ctx)
 	}
+}
+
+func (o *Orchestrator) preflightCheck() bool {
+	err := o.preflightHandler.Handle(o.ctx)
+	if err != nil {
+		log.Println("LOG: preflight check failed:", err)
+		return false
+	}
+	return true
 }

@@ -5,7 +5,7 @@ import (
 	"flag"
 
 	aw "github.com/deanishe/awgo"
-	"github.com/dineshgowda24/alfred-gcp-workflow/orchestrator"
+	ors "github.com/dineshgowda24/alfred-gcp-workflow/orchestrator"
 	"github.com/dineshgowda24/alfred-gcp-workflow/workflow"
 )
 
@@ -32,13 +32,14 @@ func RunWorkflow(wf *aw.Workflow, servicesFs embed.FS, args *workflow.SearchArgs
 	})
 }
 
-func buildOrch(servicesFs embed.FS) *orchestrator.Orchestrator {
-	return orchestrator.NewOrchestrator(
-		&orchestrator.HomeHandler{},
-		&orchestrator.ServiceHandler{},
-		&orchestrator.SubServiceHandler{},
-		&orchestrator.FallbackHandler{},
-		&orchestrator.ErrorHandler{},
+func buildOrch(servicesFs embed.FS) *ors.Orchestrator {
+	return ors.NewOrchestrator(
+		&ors.PreFlightCheckHandler{},
+		&ors.HomeHandler{},
+		&ors.ServiceHandler{},
+		&ors.SubServiceHandler{},
+		&ors.FallbackHandler{},
+		&ors.ErrorHandler{},
 		servicesFs,
 	)
 }
