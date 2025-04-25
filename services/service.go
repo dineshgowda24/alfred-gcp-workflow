@@ -41,7 +41,7 @@ func (s *Service) Url(config *gcloud.Config) (string, error) {
 
 func (s *Service) Subtitle() string {
 	if len(s.SubServices) > 0 {
-		return "📁 " + s.Description
+		return "🗂️⬇️ " + s.Description
 	}
 
 	return s.Description

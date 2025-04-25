@@ -20,21 +20,21 @@ type HomeHandler struct{}
 func (h *HomeHandler) Handle(ctx *Context) error {
 	items := []homeItem{
 		{
-			Title:    "🔍 Search GCP Services",
-			Subtitle: "Try keywords like: sql, redis, storage",
-			Icon:     &aw.Icon{Value: "/Users/dinesh.chikkanna/personal/alfred-gcp-workflow/images/gcp.png"},
+			Title:    "Search Services",
+			Subtitle: "🔍 Try keywords like: sql, memorystore, storage",
+			Icon:     aw.IconWorkflow,
 			Valid:    false,
 		},
 		{
-			Title:    "🧭 Open Console",
-			Subtitle: "Go to " + gcloud.ConsoleURL,
+			Title:    "Open Cloud Console",
+			Subtitle: "🌐 Launch: " + gcloud.ConsoleURL,
 			Arg:      gcloud.ConsoleURL,
-			Icon:     aw.IconWeb,
+			Icon:     aw.IconHome,
 			Valid:    true,
 		},
 		{
-			Title:    "🩺 GCP Health Status",
-			Subtitle: "Check service availability across regions",
+			Title:    "Health Dashboard",
+			Subtitle: "🏥 View service availability by region",
 			Arg:      gcloud.HealthStatusURL,
 			Icon:     &aw.Icon{Value: "/Users/dinesh.chikkanna/personal/alfred-gcp-workflow/images/heartbeat.png"},
 			Valid:    true,
@@ -43,14 +43,15 @@ func (h *HomeHandler) Handle(ctx *Context) error {
 
 	if ctx.ActiveConfig != nil {
 		items = append(items, homeItem{
-			Title:    "☁️ Active gcloud config: " + ctx.ActiveConfig.Name,
-			Subtitle: "Currently selected gcloud configuration",
+			Title:    "Active gcloud config: " + ctx.ActiveConfig.Name,
+			Subtitle: "🔐 Currently selected configuration",
+			Icon:     aw.IconSettings,
 			Valid:    false,
 		})
 	} else {
 		items = append(items, homeItem{
-			Title:    "⚠️ No active gcloud config found",
-			Subtitle: "Click to open gcloud quickstart guide",
+			Title:    "No active gcloud config found",
+			Subtitle: "⚠️ Click to open the gcloud quickstart guide",
 			Icon:     aw.IconError,
 			Arg:      gcloud.QuickStartURL,
 			Valid:    false,
@@ -61,6 +62,7 @@ func (h *HomeHandler) Handle(ctx *Context) error {
 		it := ctx.Workflow.NewItem(item.Title).
 			Subtitle(item.Subtitle).
 			Valid(item.Valid)
+
 		if item.Arg != "" {
 			it.Arg(item.Arg)
 		}
