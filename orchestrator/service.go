@@ -27,9 +27,9 @@ func (h *ServiceHandler) Handle(ctx *Context) error {
 			log.Println("LOG: Error generating service URL:", err)
 		}
 
-		wf.NewItem(service.Name).
-			Subtitle(service.Description).
-			Autocomplete(service.ID).
+		wf.NewItem(service.Autocomplete()).
+			Subtitle(service.Subtitle()).
+			Autocomplete(service.Autocomplete()).
 			Arg(url).
 			Icon(service.Icon()).
 			Valid(true)
@@ -49,14 +49,14 @@ func (h *ServiceHandler) Handle(ctx *Context) error {
 			continue
 		}
 
-		subtitle := child.Description
+		subtitle := child.Subtitle()
 		if ctx.SearchRegistry.Exists(service, &child) {
 			subtitle = "🔍⚡️ " + subtitle
 		}
 
-		wf.NewItem(child.Name).
+		wf.NewItem(child.Title()).
 			Subtitle(subtitle).
-			Autocomplete(fmt.Sprintf("%s %s", service.ID, child.ID)).
+			Autocomplete(child.Autocomplete()).
 			Icon(child.Icon()).
 			Arg(url).
 			Valid(true)
