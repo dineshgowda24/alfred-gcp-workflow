@@ -72,12 +72,10 @@ func RouteFromGCloud(route *gc.VPCRoute) Route {
 	var network string
 	if route.Network != "" {
 		parts := strings.Split(route.Network, "/")
-		if len(parts) > 0 {
-			for i := range len(parts) {
-				if parts[i] == "networks" && i+1 < len(parts) {
-					network = parts[i+1]
-					break
-				}
+		for i, part := range parts {
+			if part == "networks" && i+1 < len(parts) {
+				network = parts[i+1]
+				break
 			}
 		}
 	}
