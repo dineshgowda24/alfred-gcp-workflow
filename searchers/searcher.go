@@ -35,6 +35,11 @@ func (r *Registry) key(parent, child *services.Service) string {
 	return parent.ID + "/" + child.ID
 }
 
+func (r *Registry) Exists(parent, child *services.Service) bool {
+	_, ok := r.lookup[r.key(parent, child)]
+	return ok
+}
+
 func GetDefaultRegistry() *Registry {
 	return &Registry{
 		lookup: map[string]Searcher{

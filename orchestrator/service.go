@@ -50,8 +50,8 @@ func (h *ServiceHandler) Handle(ctx *Context) error {
 		}
 
 		subtitle := child.Description
-		if ctx.GetSearcher(service, &child) != nil {
-			subtitle = "🔍 " + subtitle
+		if ctx.SearchRegistry.Exists(service, &child) {
+			subtitle = "🔍✨⚡️ " + subtitle
 		}
 
 		wf.NewItem(child.Name).
