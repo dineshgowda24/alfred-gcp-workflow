@@ -28,7 +28,7 @@ func (h *ServiceHandler) Handle(ctx *Context) error {
 		}
 
 		wf.NewItem(service.Autocomplete()).
-			Subtitle(service.Subtitle()).
+			Subtitle(service.Subtitle(nil)).
 			Autocomplete(service.Autocomplete()).
 			Arg(url).
 			Icon(service.Icon()).
@@ -49,13 +49,8 @@ func (h *ServiceHandler) Handle(ctx *Context) error {
 			continue
 		}
 
-		subtitle := child.Subtitle()
-		if ctx.SearchRegistry.Exists(service, &child) {
-			subtitle = "🔍⚡️ " + subtitle
-		}
-
 		wf.NewItem(child.Title()).
-			Subtitle(subtitle).
+			Subtitle(child.Subtitle(ctx.SearchRegistry)).
 			Autocomplete(child.Autocomplete()).
 			Icon(child.Icon()).
 			Arg(url).
