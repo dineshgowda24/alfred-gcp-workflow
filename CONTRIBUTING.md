@@ -10,6 +10,7 @@ This document will guide you through setting up, understanding the design, and a
   - [Table of Contents](#table-of-contents)
   - [Requirements](#requirements)
     - [Installation](#installation)
+  - [Finding Something to Work On](#finding-something-to-work-on)
   - [Design](#design)
   - [Adding a New Service or Subservice](#adding-a-new-service-or-subservice)
   - [Adding a New Searcher](#adding-a-new-searcher)
@@ -38,6 +39,16 @@ This document will guide you through setting up, understanding the design, and a
     - Click on the **Script Filter** block.
     - Update the script path to point to your built binary.
 
+
+## Finding Something to Work On
+
+We welcome contributions of all kinds — whether it's a small fix, a new feature, or just an idea! ✨
+If you're looking for something to work on:
+- Check out the [Issues tab](https://github.com/dineshgowda24/alfred-gcp-workflow/issues) on GitHub.
+- If you are a first-time contributor, checkout some of the [good first issues](https://github.com/dineshgowda24/alfred-gcp-workflow/labels/good%20first%20issue)
+- If you’d like to work on an issue, please leave a comment to let others know you're taking it.
+- This helps avoid duplication and allows maintainers to assist you if needed!
+
 ## Design
 
 The workflow is organized around three main concepts:
@@ -65,8 +76,8 @@ The workflow is organized around three main concepts:
 
 ## Adding a New Searcher
 1. Create a new file in the [gcloud/](gcloud/) folder:
-   - The file should define the gcloud command to list resources for a Subservice.
-   - Only include fields that are absolutely necessary — avoid listing sensitive information.
+   - The file should define the gcloud command to list resources for a subservice.
+   - Only include necessary fields, and avoid listing sensitive information.
    - Example: See [firestore.go](gcloud/filestore.go).
 2. Implement a new Searcher:
    - Create a struct that implements the Searcher interface.
@@ -84,7 +95,6 @@ The workflow is organized around three main concepts:
 
 ## Thank You! ♥️
 
-*Every contribution, big or small, helps improve the Alfred GCP Workflow. 
-Excited to see what you build! 🚀*
+*Every contribution, no matter how small, really helps us improve this workflow. We appreciate your time and effort—thank you so much!*
 
 ---
