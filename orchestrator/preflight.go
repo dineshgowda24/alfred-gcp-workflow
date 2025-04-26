@@ -15,7 +15,7 @@ func (h *PreFlightCheckHandler) Handle(ctx *Context) error {
 
 	if env.GCloudCliPath() == "" {
 		wf.NewItem("gcloud path not set").
-			Subtitle(fmt.Sprintf("Please set %s in alfred", env.EnvGCloudCliPath)).
+			Subtitle(fmt.Sprintf("Please set %s in alfred", env.GCloudCliPathEnv)).
 			Icon(aw.IconError).
 			Valid(false)
 		wf.SendFeedback()

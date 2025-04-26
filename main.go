@@ -11,5 +11,9 @@ import (
 var servicesFs embed.FS
 
 func main() {
-	cmd.RunWorkflow(aw.New(), servicesFs, cmd.ParseArgs())
+	wf := aw.New(aw.MagicPrefix(cmd.MagicPrefix))
+	cmd.NewRunner(wf, servicesFs).
+		RewireMagicQuery().
+		ParseFlags().
+		Run()
 }

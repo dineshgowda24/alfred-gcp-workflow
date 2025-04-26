@@ -9,11 +9,18 @@ import (
 	aw "github.com/deanishe/awgo"
 	gc "github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 	"github.com/dineshgowda24/alfred-gcp-workflow/parser"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/env"
 )
 
 const (
-	bgJobName   = "alfred-gcp-workflow-background-job"
-	cacheMaxAge = 5 * time.Minute
+	bgJobName               = "alfred-gcp-workflow-background-job"
+	spinnerIdxKey           = "spinner-index"
+	defaultCacheTTLDuration = 7 * 24 * time.Hour
+)
+
+var (
+	cacheTTLDuration = env.CacheTTLDuration(defaultCacheTTLDuration)
+	spinnerFrames    = []string{"⏳", "⌛", "⏳", "⌛"}
 )
 
 type (
@@ -71,7 +78,7 @@ func store[T any](r RenderRequest[T]) error {
 func renderCache[T any](r RenderRequest[T]) bool {
 	cacheKey := r.Config.CacheKey(r.Key)
 
-	if r.Wf.Cache.Expired(cacheKey, cacheMaxAge) {
+	if r.Wf.Cache.Expired(cacheKey, cacheTTLDuration) {
 		return false
 	}
 
@@ -87,13 +94,6 @@ func renderCache[T any](r RenderRequest[T]) bool {
 	return true
 }
 
-func loadingItem[T any](r RenderRequest[T]) {
-	r.Wf.NewItem("🔄 Loading GCP resources...").
-		Subtitle("Fetching data and preparing results. Please wait 🙏").
-		Icon(aw.IconSync).
-		Valid(false)
-}
-
 func spawnBgJob[T any](r RenderRequest[T]) {
 	if r.Wf.IsRunning(bgJobName) {
 		return
@@ -102,4 +102,31 @@ func spawnBgJob[T any](r RenderRequest[T]) {
 	if err := r.Wf.RunInBackground(bgJobName, cmd); err != nil {
 		panic(err) // should never happen
 	}
+}
+
+func loadingItem[T any](r RenderRequest[T]) {
+	frame := nextSpinnerFrame(r.Wf)
+	r.Wf.NewItem(frame + " Fetching resources").
+		Subtitle("Hang tight 🙏").
+		Icon(aw.IconInfo).
+		Valid(false)
+}
+
+func nextSpinnerFrame(wf *aw.Workflow) string {
+	var idx int
+	if wf.Cache.Exists(spinnerIdxKey) {
+		err := wf.Cache.LoadJSON(spinnerIdxKey, &idx)
+		if err != nil {
+			log.Println("LOG: error loading index from cache:", err)
+		}
+	}
+
+	spinner := spinnerFrames[idx%len(spinnerFrames)]
+
+	nextIdx := (idx + 1) % len(spinnerFrames)
+	err := wf.Cache.StoreJSON(spinnerIdxKey, nextIdx)
+	if err != nil {
+		log.Println("LOG: error storing index to cache:", err)
+	}
+	return spinner
 }
