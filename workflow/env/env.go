@@ -9,26 +9,24 @@ import (
 )
 
 const (
-	EnvGCloudCliPath   = "ALFRED_GCP_WORKFLOW_GCLOUD_PATH"
-	EnvCacheTTLSeconds = "ALFRED_GCP_WORKFLOW_CACHE_TTL_SECONDS"
+	GCloudCliPathEnv = "ALFRED_GCP_WORKFLOW_GCLOUD_PATH"
+	CacheTTLEnv      = "ALFRED_GCP_WORKFLOW_CACHE_TTL_SECONDS"
 )
 
 func GCloudCliPath() string {
-	val := os.Getenv(EnvGCloudCliPath)
+	val := os.Getenv(GCloudCliPathEnv)
 	return strings.TrimSpace(val)
 }
 
 func CacheTTLDuration(defaultTTL time.Duration) time.Duration {
-	val := os.Getenv(EnvCacheTTLSeconds)
+	val := os.Getenv(CacheTTLEnv)
 	if val == "" {
-		log.Println("LOG: Cache TTL not set, using default value:", defaultTTL)
 		return defaultTTL
 	}
 
-	parsed, err := strconv.Atoi(val)
+	ttl, err := strconv.Atoi(val)
 	if err != nil {
-		log.Println("LOG: Error parsing cache TTL, using default value:", err)
 		return defaultTTL
 	}
-	return time.Duration(parsed) * time.Second
+	return time.Second * time.Duration(ttl)
 }
