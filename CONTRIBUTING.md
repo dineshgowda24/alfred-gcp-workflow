@@ -25,8 +25,8 @@ This document will guide you through setting up, understanding the design, and a
 
 ### Installation
 
-1. **Fork** this repository.
-2. **Clone** your fork locally:
+1. Fork this repository.
+2. Clone your fork locally:
    ```bash
    git clone github.com:<your-username>/alfred-gcp-workflow.git
    ```
@@ -71,7 +71,7 @@ The workflow is organized around three main concepts:
    - Use existing icons in the [images](images/) folder if available.
    - To add a new icon:
       - Place the image in [images](images/).
-      - Reference the path inside services.yml.
+      - Reference the path inside `services.yml`.
    - Official GCP service icons can be found [here](https://cloud.google.com/icons).
 3. **Sort Services Alphabetically**:
    - To keep `services.yml` clean and consistent, sort services by `id` after your changes.
@@ -88,7 +88,7 @@ The workflow is organized around three main concepts:
    - Only include necessary fields, and avoid listing sensitive information.
    - Example: See [firestore.go](gcloud/filestore.go).
 2. Implement a new Searcher:
-   - Create a struct that implements the Searcher interface.
+   - Create a struct that implements the `Searcher` interface.
    - Place it inside the [searchers](searchers/) folder.
 3. Register the Searcher:
    - Update [searcher.go](searchers/searcher.go).
