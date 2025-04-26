@@ -10,7 +10,7 @@ This document will guide you through setting up, understanding the design, and a
   - [Table of Contents](#table-of-contents)
   - [Requirements](#requirements)
     - [Installation](#installation)
-  - [Finding Something to Work On](#finding-something-to-work-on)
+  - [Finding Something to Work On 💡](#finding-something-to-work-on-)
   - [Design](#design)
   - [Adding a New Service or Subservice](#adding-a-new-service-or-subservice)
   - [Adding a New Searcher](#adding-a-new-searcher)
@@ -35,12 +35,12 @@ This document will guide you through setting up, understanding the design, and a
    go build -o alfred-gcp-workflow
    ```
 4. Update the Script Filter in Alfred:
-    - Open your Alfred GCP Workflow.
+    - Open Alfred GCP Workflow in Alfred.
     - Click on the **Script Filter** block.
     - Update the script path to point to your built binary.
 
 
-## Finding Something to Work On
+## Finding Something to Work On 💡
 
 We welcome contributions of all kinds — whether it's a small fix, a new feature, or just an idea! ✨
 If you're looking for something to work on:
