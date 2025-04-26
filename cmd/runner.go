@@ -59,9 +59,8 @@ func (r *Runner) ParseFlags() *Runner {
 
 func (r *Runner) Run() {
 	r.interceptMagicArgs()
-	orch := r.defaultOrchestrator()
 	r.wf.Run(func() {
-		orch.Run(r.wf, r.args)
+		r.defaultOrchestrator().Run(r.wf, r.args)
 	})
 }
 

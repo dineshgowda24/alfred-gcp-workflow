@@ -65,7 +65,7 @@ func (h *ServiceHandler) Handle(ctx *Context) error {
 func addMissingSubServiceItem(wf *aw.Workflow, service *services.Service) {
 	wf.NewItem(fmt.Sprintf("%s has no sub-services (yet)", service.Name)).
 		Subtitle("Open contributing guide to add them").
-		Arg("https://github.com/dineshgowda24/alfred-gcp-workflow").
+		Arg("https://github.com/dineshgowda24/alfred-gcp-workflow/CONTRIBUTING.md").
 		Icon(aw.IconNote).
 		Valid(true)
 }

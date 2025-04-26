@@ -13,9 +13,15 @@ type PubSubSubscription struct {
 }
 
 func ListTopics(config *Config) ([]PubSubTopic, error) {
-	return runGCloudCmd[[]PubSubTopic](config, "pubsub", "topics", "list")
+	return runGCloudCmd[[]PubSubTopic](
+		config, "pubsub", "topics", "list",
+		"--format=json(name)",
+	)
 }
 
 func ListSubscriptions(config *Config) ([]PubSubSubscription, error) {
-	return runGCloudCmd[[]PubSubSubscription](config, "pubsub", "subscriptions", "list")
+	return runGCloudCmd[[]PubSubSubscription](
+		config, "pubsub", "subscriptions", "list",
+		"--format=json(ackDeadlineSeconds,messageRetentionDuration,name,state,topic)",
+	)
 }

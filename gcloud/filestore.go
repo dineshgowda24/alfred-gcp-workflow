@@ -16,6 +16,6 @@ func ListFilestoreInstances(config *Config) ([]FilestoreInstance, error) {
 	return runGCloudCmd[[]FilestoreInstance](
 		config,
 		"filestore", "instances", "list",
-		"--format=json(name, state, tier, createTime, fileShares)",
+		"--format=json(name,state,tier,createTime,fileShares)",
 	)
 }
