@@ -14,5 +14,10 @@ type RedisInstance struct {
 }
 
 func ListRedisInstances(config *Config) ([]RedisInstance, error) {
-	return runGCloudCmd[[]RedisInstance](config, "redis", "instances", "list", "--region=-")
+	return runGCloudCmd[[]RedisInstance](
+		config,
+		"redis", "instances", "list",
+		"--region=-",
+		"--format=json(name,displayName,currentLocationId,state,tier,memorySizeGb,redisVersion,replicaCount)",
+	)
 }

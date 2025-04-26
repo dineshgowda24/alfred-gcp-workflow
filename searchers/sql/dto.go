@@ -8,32 +8,22 @@ import (
 )
 
 type SQLInstance struct {
-	Name                       string
-	DatebaseVersion            string
-	Region                     string
-	InstanceType               string
-	Project                    string
-	State                      string
-	DiskSizeInGB               string
-	DatabaseReplicationEnabled bool
-	StorageAutoResize          bool
-	StorageAutoResizeLimit     string
-	Tier                       string
+	Name            string
+	DatebaseVersion string
+	InstanceType    string
+	State           string
+	DiskSizeInGB    string
+	Tier            string
 }
 
 func FromGCloudSQLInstance(instance *gcloud.SQLInstance) SQLInstance {
 	return SQLInstance{
-		Name:                       instance.Name,
-		DatebaseVersion:            instance.DatabaseVersion,
-		Region:                     instance.Region,
-		InstanceType:               instance.InstanceType,
-		Project:                    instance.Project,
-		State:                      instance.State,
-		DiskSizeInGB:               instance.Settings.DataDiskSizeGb,
-		DatabaseReplicationEnabled: instance.Settings.DatabaseReplicationEnabled,
-		StorageAutoResize:          instance.Settings.StorageAutoResize,
-		StorageAutoResizeLimit:     instance.Settings.StorageAutoResizeLimit,
-		Tier:                       instance.Settings.Tier,
+		Name:            instance.Name,
+		DatebaseVersion: instance.DatabaseVersion,
+		InstanceType:    instance.InstanceType,
+		State:           instance.State,
+		DiskSizeInGB:    instance.Settings.DataDiskSizeGb,
+		Tier:            instance.Settings.Tier,
 	}
 }
 

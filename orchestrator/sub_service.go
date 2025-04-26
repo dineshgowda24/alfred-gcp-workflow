@@ -37,7 +37,7 @@ func (h *SubServiceHandler) Handle(ctx *Context) error {
 
 		ctx.Workflow.NewFileItem(fmt.Sprintf("%s has no searcher (yet)", child.Name)).
 			Subtitle("Open contributing guide to add them").
-			Arg("https://github.com/dineshgowda24/alfred-gcp-workflow").
+			Arg("https://github.com/dineshgowda24/alfred-gcp-workflow/CONTRIBUTING.md").
 			Icon(aw.IconNote).
 			Valid(true)
 	}
