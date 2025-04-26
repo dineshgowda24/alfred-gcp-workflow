@@ -21,7 +21,7 @@ func (h *FallbackHandler) Handle(ctx *Context) error {
 		}
 
 		wf.NewItem(svc.ID).
-			Subtitle(svc.Subtitle()).
+			Subtitle(svc.Subtitle(nil)).
 			Autocomplete(svc.ID).
 			Arg(url).
 			Icon(svc.Icon()).

@@ -29,7 +29,7 @@ func (h *SubServiceHandler) Handle(ctx *Context) error {
 		log.Printf("LOG: No searcher found for subservice: %s\n", child.Name)
 
 		ctx.Workflow.NewItem(child.Title()).
-			Subtitle(child.Subtitle()).
+			Subtitle(child.Subtitle(nil)).
 			Autocomplete(child.Autocomplete()).
 			Icon(child.Icon()).
 			Arg(child.URL).

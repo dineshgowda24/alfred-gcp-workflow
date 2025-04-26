@@ -10,6 +10,10 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+type Exister interface {
+	Exists(parent, child *Service) bool
+}
+
 // Service defines the structure of each GCP service
 type Service struct {
 	ID          string    `yaml:"id"`
@@ -58,7 +62,7 @@ func (s *Service) Url(config *gcloud.Config) (string, error) {
 	return buf.String(), nil
 }
 
-func (s *Service) Subtitle() string {
+func (s *Service) Subtitle(exister Exister) string {
 	if s.IsParent() {
 		suffix := s.Name + " - " + s.Description
 		if len(s.SubServices) > 0 {
@@ -66,7 +70,11 @@ func (s *Service) Subtitle() string {
 		}
 		return suffix
 	} else if s.IsChild() {
-		return s.Parent.Name + " - " + s.Name
+		suffix := s.Parent.Name + " - " + s.Name
+		if exister != nil && exister.Exists(s.Parent, s) {
+			return "🔍⚡️ " + suffix
+		}
+		return suffix
 	}
 	return s.Description
 }

@@ -45,7 +45,7 @@ func (r *Registry) Exists(parent, child *services.Service) bool {
 func GetDefaultRegistry() *Registry {
 	return &Registry{
 		lookup: map[string]Searcher{
-			"sql/instances":             &sql.InstanceSearcher{},
+			"cloudsql/instances":        &sql.InstanceSearcher{},
 			"memorystore/redis":         &memorystore.RedisInstanceSearcher{},
 			"pubsub/topics":             &pubsub.TopicSearcher{},
 			"pubsub/subscriptions":      &pubsub.SubscriptionSearcher{},

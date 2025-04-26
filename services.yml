@@ -612,17 +612,17 @@
       description: List of load balancers
       url: https://console.cloud.google.com/net-services/loadbalancing?project={{ .Project }}
       logo_path: images/cloud_load_balancing.png
-    - id: clouddns
+    - id: dns
       name: Cloud DNS Zones
       description: List of DNS zones
       url: https://console.cloud.google.com/net-services/dns/zones?project={{ .Project }}
       logo_path: images/cloud_dns.png
-    - id: cloudcdn
+    - id: cdn
       name: Cloud CDN
       description: List of Cloud CDN configurations
       url: https://console.cloud.google.com/net-services/cdn/list?project={{ .Project }}
       logo_path: images/cloud_cdn.png
-    - id: cloudnat
+    - id: nat
       name: Cloud NAT
       description: List of Cloud NAT configurations
       url: https://console.cloud.google.com/net-services/nat/list?project={{ .Project }}
@@ -714,7 +714,7 @@
   description: Audio-to-text & text-to-audio conversion
   url: https://console.cloud.google.com/speech?project={{ .Project }}
   logo_path: images/speech-to-text.png
-- id: sql
+- id: cloudsql
   name: Cloud SQL
   description: Managed MySQL, PostgreSQL, and SQL Server databases
   url: https://console.cloud.google.com/sql/instances?project={{ .Project }}
@@ -814,7 +814,7 @@
       description: List of VPC networks
       url: https://console.cloud.google.com/networking/networks/list?project={{ .Project }}
       logo_path: images/virtual_private_cloud.png
-    - id: ip_addresses
+    - id: ip
       name: IP Addresses
       description: List of IP addresses
       url: https://console.cloud.google.com/networking/addresses/list?project={{ .Project }}
@@ -829,7 +829,7 @@
       description: List of routes
       url: https://console.cloud.google.com/networking/routes/list?project={{ .Project }}
       logo_path: images/virtual_private_cloud.png
-    - id: networkpeering
+    - id: peering
       name: Network Peering
       description: List of network peerings
       url: https://console.cloud.google.com/networking/peering/list?project={{ .Project }}
@@ -839,7 +839,7 @@
       description: List of shared VPCs
       url: https://console.cloud.google.com/networking/xpn/details?project={{ .Project }}
       logo_path: images/virtual_private_cloud.png
-    - id: serverlessvpcaccess
+    - id: serverless
       name: Serverless VPC Access
       description: List of serverless VPC access connectors
       url: https://console.cloud.google.com/networking/connectors/list?project={{ .Project }}
