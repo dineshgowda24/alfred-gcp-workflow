@@ -22,8 +22,6 @@ This document will guide you through setting up, understanding the design, and a
 
 - [Go](https://golang.org/doc/install) (version 1.22.4 or higher)
 
----
-
 ### Installation
 
 1. **Fork** this repository.
@@ -39,8 +37,6 @@ This document will guide you through setting up, understanding the design, and a
     - Open your Alfred GCP Workflow.
     - Click on the **Script Filter** block.
     - Update the script path to point to your built binary.
-  
----
 
 ## Design
 
@@ -55,8 +51,6 @@ The workflow is organized around three main concepts:
    - Defines how to fetch resources for a Subservice using a gcloud command (e.g., gcloud compute instances list).
    - Implemented in [searchers/searcher.go](searchers/searcher.go).
 
----
-
 ## Adding a New Service or Subservice
 
 1. Update [services.yml](services.yml):
@@ -68,8 +62,6 @@ The workflow is organized around three main concepts:
       - Place the image in [images/](images/).
       - Reference the path inside services.yml.
    - Official GCP service icons can be found [here](https://cloud.google.com/icons).
-
----
 
 ## Adding a New Searcher
 1. Create a new file in the [gcloud/](gcloud/) folder:
@@ -83,15 +75,12 @@ The workflow is organized around three main concepts:
    - Update [searcher.go](searchers/searcher.go).
    - Use the key format: `service_id/subservice_id` when registering the searcher.
 
----
-
 ## Notes
 
 - Keep contributions focused and atomic (one PR per logical change).
 - Follow the existing code structure and style for consistency.
 - Tests(if possible) and documentation updates are highly appreciated!
 
----
 
 ## Thank You! ♥️
 
