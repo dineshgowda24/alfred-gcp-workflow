@@ -64,24 +64,32 @@ The workflow is organized around three main concepts:
 
 ## Adding a New Service or Subservice
 
-1. Update [services.yml](services.yml):
+1. **Update [services.yml](services.yml)**:
    - Add your new Service.
    - (Optional) Add Subservices under the Service.
-2. Icons:
-   - Use existing icons in the [images/](images/) folder if available.
+2. **Icons**:
+   - Use existing icons in the [images](images/) folder if available.
    - To add a new icon:
-      - Place the image in [images/](images/).
+      - Place the image in [images](images/).
       - Reference the path inside services.yml.
    - Official GCP service icons can be found [here](https://cloud.google.com/icons).
+3. **Sort Services Alphabetically**:
+   - To keep `services.yml` clean and consistent, sort services by `id` after your changes.
+   - You can use the `yq` tool for this:
+     ```bash
+     brew install yq
+     yq '.|= sort_by(.id)' services.yml > tmp.yml && mv tmp.yml services.yml
+     ```
+   - This ensures all services remain consistently ordered.
 
 ## Adding a New Searcher
-1. Create a new file in the [gcloud/](gcloud/) folder:
+1. Create a new file in the [gcloud](gcloud/) folder:
    - The file should define the gcloud command to list resources for a subservice.
    - Only include necessary fields, and avoid listing sensitive information.
    - Example: See [firestore.go](gcloud/filestore.go).
 2. Implement a new Searcher:
    - Create a struct that implements the Searcher interface.
-   - Place it inside the [searchers/](searchers/) folder.
+   - Place it inside the [searchers](searchers/) folder.
 3. Register the Searcher:
    - Update [searcher.go](searchers/searcher.go).
    - Use the key format: `service_id/subservice_id` when registering the searcher.
