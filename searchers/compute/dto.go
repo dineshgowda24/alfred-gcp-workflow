@@ -233,3 +233,69 @@ func (t ComputeInstanceTemplate) Subtitle() string {
 func (t ComputeInstanceTemplate) URL(config *gcloud.Config) string {
 	return fmt.Sprintf("https://console.cloud.google.com/compute/instanceTemplates/details/%s?project=%s", t.Name, config.Project)
 }
+
+type MachineImage struct {
+	Name              string
+	Description       string
+	Status            string
+	TotalStorage      string
+	CreationTimestamp time.Time
+	MachineType       string
+}
+
+func (m MachineImage) Title() string {
+	return m.Name
+}
+
+func (m MachineImage) Subtitle() string {
+	var icon string
+	switch m.Status {
+	case "READY":
+		icon = "🟢"
+	case "CREATING", "UPLOADING":
+		icon = "🕒"
+	case "INVALID", "DELETING":
+		icon = "❌"
+	default:
+		icon = "❓"
+	}
+
+	return fmt.Sprintf("%s %s | %s | Created: %s",
+		icon, m.MachineType, m.TotalStorage, m.CreationTimestamp.Local().Format("Jan 2, 2006 15:04 MST"))
+}
+
+func (m MachineImage) URL(config *gcloud.Config) string {
+	return fmt.Sprintf(
+		"https://console.cloud.google.com/compute/machineImages/details/%s?project=%s",
+		m.Name, config.Project)
+}
+
+func FromGCloudComputeMachineImage(image *gcloud.ComputeMachineImage) MachineImage {
+	creationTime, err := time.Parse(time.RFC3339, image.CreationTimestamp)
+	if err != nil {
+		log.Println("LOG: compute: Error parsing creation time:", err)
+		creationTime = time.Time{}
+	}
+
+	size, err := strconv.Atoi(image.TotalStorageBytes)
+	if err != nil {
+		log.Println("LOG: compute: Error parsing size:", err)
+		size = 0
+	}
+
+	storageIdentifiers := []string{"B", "KB", "MB", "GB", "TB"}
+	idx := 0
+	for size > 1024 && idx < len(storageIdentifiers)-1 {
+		size /= 1024
+		idx++
+	}
+
+	return MachineImage{
+		Name:              image.Name,
+		Description:       image.Description,
+		Status:            image.Status,
+		TotalStorage:      fmt.Sprintf("%d %s", size, storageIdentifiers[idx]),
+		MachineType:       image.InstanceProperties.MachineType,
+		CreationTimestamp: creationTime,
+	}
+}

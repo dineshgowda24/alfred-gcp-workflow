@@ -54,6 +54,7 @@ func GetDefaultRegistry() *Registry {
 			"compute/disks":             &compute.DiskSearcher{},
 			"compute/images":            &compute.ImageSearcher{},
 			"compute/instancetemplates": &compute.InstanceTmplSearcher{},
+			"compute/machineimages":     &compute.MachineImageSearcher{},
 			"gke/clusters":              &k8s.ClusterSearcher{},
 			"filestore/instances":       &filestore.InstanceSearcher{},
 			"networkservices/clouddns":  &netservices.DNSZoneSearcher{},

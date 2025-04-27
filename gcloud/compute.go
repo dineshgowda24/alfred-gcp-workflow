@@ -35,6 +35,18 @@ type ComputeInstanceTemplate struct {
 	} `json:"properties"`
 }
 
+// https://cloud.google.com/compute/docs/reference/rest/v1/machineImages/list
+type ComputeMachineImage struct {
+	Name               string `json:"name"`
+	Description        string `json:"description"`
+	Status             string `json:"status"`
+	TotalStorageBytes  string `json:"totalStorageBytes"`
+	CreationTimestamp  string `json:"creationTimestamp"` // Format 2018-11-06T01:59:29.838-08:00
+	InstanceProperties struct {
+		MachineType string `json:"machineType"`
+	} `json:"instanceProperties"`
+}
+
 func ListComputeInstances(config *Config) ([]ComputeInstance, error) {
 	return runGCloudCmd[[]ComputeInstance](config, "compute", "instances", "list")
 }
@@ -49,4 +61,12 @@ func ListComputeImages(config *Config) ([]ComputeImage, error) {
 
 func ListComputeInstanceTemplates(config *Config) ([]ComputeInstanceTemplate, error) {
 	return runGCloudCmd[[]ComputeInstanceTemplate](config, "compute", "instance-templates", "list")
+}
+
+func ListComputeMachineImages(config *Config) ([]ComputeMachineImage, error) {
+	return runGCloudCmd[[]ComputeMachineImage](
+		config,
+		"compute", "machine-images", "list",
+		"--format=json(creationTimestamp,description,id,instanceProperties.machineType,name,status,totalStorageBytes)",
+	)
 }
