@@ -7,6 +7,7 @@ import (
 	"time"
 
 	aw "github.com/deanishe/awgo"
+	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 	gc "github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 	"github.com/dineshgowda24/alfred-gcp-workflow/parser"
 	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/env"
@@ -16,11 +17,15 @@ const (
 	bgJobName               = "alfred-gcp-workflow-background-job"
 	spinnerIdxKey           = "spinner-index"
 	defaultCacheTTLDuration = 7 * 24 * time.Hour
+	defaultErrorCacheTTL    = 1 * time.Minute
 )
 
 var (
 	cacheTTLDuration = env.CacheTTLDuration(defaultCacheTTLDuration)
-	spinnerFrames    = []string{"⏳", "⌛", "⏳", "⌛"}
+	spinnerFrames    = []string{
+		"🕐", "🕑", "🕒", "🕓", "🕔", "🕕",
+		"🕖", "🕗", "🕘", "🕙", "🕚", "🕛",
+	}
 )
 
 type (
@@ -70,14 +75,22 @@ func ResolveAndRender[T any](r RenderRequest[T]) error {
 func store[T any](r RenderRequest[T]) error {
 	data, err := r.Fetch(r.Config)
 	if err != nil {
+		r.Wf.Cache.Store(errorCacheKey(r.Key, r.Config), []byte(err.Error()))
 		return err
 	}
 	return r.Wf.Cache.StoreJSON(r.Config.CacheKey(r.Key), data)
 }
 
-func renderCache[T any](r RenderRequest[T]) bool {
-	cacheKey := r.Config.CacheKey(r.Key)
+func errorCacheKey(key string, c *gcloud.Config) string {
+	return c.CacheKey(key) + "_gcloud_error"
+}
 
+func renderCache[T any](r RenderRequest[T]) bool {
+	if renderGCloudError(r) {
+		return true
+	}
+
+	cacheKey := r.Config.CacheKey(r.Key)
 	if r.Wf.Cache.Expired(cacheKey, cacheTTLDuration) {
 		return false
 	}
@@ -92,6 +105,25 @@ func renderCache[T any](r RenderRequest[T]) bool {
 		r.Render(r.Wf, item)
 	}
 	return true
+}
+
+func renderGCloudError[T any](r RenderRequest[T]) bool {
+	cacheKey := errorCacheKey(r.Key, r.Config)
+	if !r.Wf.Cache.Expired(cacheKey, defaultErrorCacheTTL) {
+		msg, err := r.Wf.Cache.Load(cacheKey)
+		if err != nil {
+			msg = []byte(err.Error())
+		}
+
+		r.Wf.NewItem(string(msg)).
+			Subtitle("gcloud cmd failed to execute").
+			Icon(aw.IconError).
+			Valid(false)
+		r.Wf.SendFeedback()
+		return true
+	}
+
+	return false
 }
 
 func spawnBgJob[T any](r RenderRequest[T]) {
@@ -113,18 +145,18 @@ func loadingItem[T any](r RenderRequest[T]) {
 }
 
 func nextSpinnerFrame(wf *aw.Workflow) string {
-	var idx int
+	var currIdx int
 	if wf.Cache.Exists(spinnerIdxKey) {
-		err := wf.Cache.LoadJSON(spinnerIdxKey, &idx)
+		err := wf.Cache.LoadJSON(spinnerIdxKey, &currIdx)
 		if err != nil {
 			log.Println("LOG: error loading index from cache:", err)
 		}
 	}
 
-	spinner := spinnerFrames[idx%len(spinnerFrames)]
+	spinner := spinnerFrames[currIdx%len(spinnerFrames)]
 
-	nextIdx := (idx + 1) % len(spinnerFrames)
-	err := wf.Cache.StoreJSON(spinnerIdxKey, nextIdx)
+	idx := (currIdx + 1) % len(spinnerFrames)
+	err := wf.Cache.StoreJSON(spinnerIdxKey, idx)
 	if err != nil {
 		log.Println("LOG: error storing index to cache:", err)
 	}
