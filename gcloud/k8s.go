@@ -15,6 +15,6 @@ func ListK8sClusters(config *Config) ([]K8sCluster, error) {
 	return runGCloudCmd[[]K8sCluster](
 		config,
 		"container", "clusters", "list",
-		`--format="json(name,location,status,createTime,currentNodeCount,currentMasterVersion)"`,
+		"--format=json(name,location,status,createTime,currentNodeCount,currentMasterVersion)",
 	)
 }
