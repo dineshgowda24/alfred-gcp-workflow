@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	MagicPrefix = ":"
+	MagicPrefix = "janitor:"
 )
 
 type Runner struct {

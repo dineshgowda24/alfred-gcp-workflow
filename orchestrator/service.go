@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 
-	aw "github.com/deanishe/awgo"
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
 )
 
@@ -14,68 +13,63 @@ type ServiceHandler struct{}
 
 func (h *ServiceHandler) Handle(ctx *Context) error {
 	service := ctx.ParsedQuery.Service
-	wf := ctx.Workflow
-	active := ctx.ActiveConfig
-
-	log.Printf("LOG: Handling service: %s\n", service.Name)
+	log.Printf("LOG: ServiceHandler started for service: %s", service.Name)
 
 	if len(service.SubServices) == 0 {
-		log.Printf("LOG: No subservices for service: %s\n", service.Name)
-
-		url, err := service.Url(active)
-		if err != nil {
-			log.Println("LOG: Error generating service URL:", err)
-		}
-
-		autoComplete := service.Autocomplete()
-		if ctx.ParsedQuery.IsConfigQuery {
-			autoComplete = ctx.Args.Query
-		}
-
-		wf.NewItem(service.Autocomplete()).
-			Subtitle(service.Subtitle(nil)).
-			Autocomplete(autoComplete).
-			Arg(url).
-			Icon(service.Icon()).
-			Valid(true)
-
-		addMissingSubServiceItem(wf, service)
-
-		wf.SendFeedback()
+		h.handleNoSubservices(ctx, service)
 		return nil
 	}
 
-	log.Printf("LOG: Listing %d subservices for: %s\n", len(service.SubServices), service.Name)
+	log.Printf("LOG: Listing %d subservices for service: %s", len(service.SubServices), service.Name)
 
-	for _, child := range service.SubServices {
-		url, err := child.Url(active)
-		if err != nil {
-			log.Printf("LOG: Error generating URL for subservice %s: %v\n", child.Name, err)
-			continue
-		}
-
-		autoComplete := child.Autocomplete()
-		if ctx.ParsedQuery.IsConfigQuery {
-			autoComplete = ctx.Args.Query + " " + child.ID
-		}
-
-		wf.NewItem(child.Title()).
-			Subtitle(child.Subtitle(ctx.SearchRegistry)).
-			Autocomplete(autoComplete).
-			Icon(child.Icon()).
-			Arg(url).
-			Valid(true)
+	for i := range service.SubServices {
+		h.addSubservice(ctx, &service.SubServices[i])
 	}
 
-	wf.Filter(ctx.ParsedQuery.RemainingQuery)
-	wf.SendFeedback()
+	h.send(ctx)
+	log.Printf("LOG: ServiceHandler complete for service: %s", service.Name)
 	return nil
 }
 
-func addMissingSubServiceItem(wf *aw.Workflow, service *services.Service) {
-	wf.NewItem(fmt.Sprintf("%s has no sub-services (yet)", service.Name)).
-		Subtitle("Open contributing guide to add them").
-		Arg("https://github.com/dineshgowda24/alfred-gcp-workflow/CONTRIBUTING.md").
-		Icon(aw.IconNote).
+func (h *ServiceHandler) handleNoSubservices(ctx *Context, s *services.Service) {
+	wf := ctx.Workflow
+	url, _ := s.Url(ctx.ActiveConfig)
+
+	wf.NewItem(s.Autocomplete()).
+		Subtitle(s.Subtitle(nil)).
+		Match(s.Match()).
+		Autocomplete(buildAutocomplete(ctx, s)).
+		Arg(url).
+		Icon(s.Icon()).
 		Valid(true)
+
+	addContributingItem(wf, fmt.Sprintf("%s has no sub-services (yet)", s.Name))
+	h.send(ctx)
+}
+
+func (h *ServiceHandler) addSubservice(ctx *Context, s *services.Service) {
+	wf := ctx.Workflow
+	url, err := s.Url(ctx.ActiveConfig)
+	if err != nil {
+		return
+	}
+
+	wf.NewItem(s.Title()).
+		Subtitle(s.Subtitle(ctx.SearchRegistry)).
+		Match(s.Match()).
+		Autocomplete(buildAutocomplete(ctx, s)).
+		Arg(url).
+		Icon(s.Icon()).
+		Valid(true)
+}
+
+func (h *ServiceHandler) send(ctx *Context) {
+	wf := ctx.Workflow
+
+	wf.Filter(ctx.ParsedQuery.RemainingQuery)
+	if wf.IsEmpty() {
+		emptyResultItem(wf, "No matching subservices found")
+	}
+
+	wf.SendFeedback()
 }

@@ -15,10 +15,6 @@ type ConfigHandler struct{}
 func (h *ConfigHandler) Handle(ctx *Context) error {
 	log.Println("LOG: ConfigHandler started")
 
-	wf := ctx.Workflow
-	query := ctx.Args.Query
-	partial := ctx.ParsedQuery.PartialConfigQuery
-
 	configs, err := gcloud.GetAllConfigs()
 	if err != nil {
 		log.Println("LOG: error getting all configs:", err)
@@ -26,30 +22,38 @@ func (h *ConfigHandler) Handle(ctx *Context) error {
 	}
 
 	for _, config := range configs {
-		newQuery := buildConfigAutocomplete(query, partial, config.Name)
-		wf.NewItem(config.Name).
-			Subtitle(config.Project).
-			Autocomplete(newQuery).
-			Arg(newQuery).
-			Icon(aw.IconAccount).
-			Valid(true)
+		h.addConfigItem(ctx, config)
 	}
 
-	wf.Filter(partial)
-
-	if wf.IsEmpty() {
-		wf.NewItem("No matching configurations found").
-			Subtitle("Try a different query with @").
-			Icon(aw.IconNote).
-			Valid(false)
-	}
-
-	wf.SendFeedback()
-
+	h.send(ctx)
 	log.Println("LOG: ConfigHandler complete")
 	return nil
 }
 
-func buildConfigAutocomplete(query, partial, full string) string {
+func (h *ConfigHandler) buildConfigAutocomplete(ctx *Context, config *gcloud.Config) string {
+	query := ctx.Args.Query
+	partial := ctx.ParsedQuery.PartialConfigQuery
+	full := config.Name
 	return strings.Replace(query, "@"+partial, "@"+full, 1)
+}
+
+func (h *ConfigHandler) addConfigItem(ctx *Context, config *gcloud.Config) {
+	newQuery := h.buildConfigAutocomplete(ctx, config)
+	ctx.Workflow.NewItem(config.Name).
+		Subtitle(config.Project).
+		Autocomplete(newQuery).
+		Arg(newQuery).
+		Icon(aw.IconAccount).
+		Valid(true)
+}
+
+func (h *ConfigHandler) send(ctx *Context) {
+	wf := ctx.Workflow
+	wf.Filter(ctx.ParsedQuery.PartialConfigQuery)
+
+	if wf.IsEmpty() {
+		emptyResultItem(wf, "No matching configurations found")
+	}
+
+	wf.SendFeedback()
 }

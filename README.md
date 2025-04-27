@@ -9,22 +9,26 @@ An Alfred workflow to quickly open GCP services in your browser or search GCP re
 3. Unzip the downloaded file and open the `.alfredworkflow` file to import it into Alfred app.
 4. Set the `ALFRED_GCP_WORKFLOW_GCLOUD_PATH` environment variable to point to your gcloud executable.
 (This is required for the workflow to function properly.)
+5. (Optional) Set the `ALFRED_GCP_WORKFLOW_GCLOUD_CONFIG` environment variable if your gcloud configuration is located somewhere other than the default `~/.config/gcloud` directory.
 
 ## Usage
 
 1. Open Alfred and type `gcp` to see the available services and commands.
 2. The home page will display useful links to Google Cloud:
 ![Home Page](images/docs/home.png)
-3. Type `gcp` followed by a service name. For example, `gcp compute` will show the Compute Engine service.
-4. If a service has 🗂️ in its subtitle, press  press <kbd>Tab</kbd> to autocomplete into the subservices section — to navigate to redis inside memorystore.
-5. You can filter subservices directly by typing their name. For example, `gcp compute instances` will show Compute Engine instances.
-6. If a subservice has 🔍⚡️ in its subtitle, it supports **resource search**. For example, after typing `gcp compute` you can <kbd>Tab</kbd> into `instances` to list them.
-7. The workflow automatically uses your current active gcloud configuration.
-To switch, run in the terminal:
-```bash
-gcloud config configurations activate <configuration-name>
-```
-and the workflow will pick up the new active configuration immediately.
+> Example: Home screen with quick links to GCP Console, Health Status, and Services
+1. Type `gcp` followed by a service name. For example, `gcp compute` will show the Compute Engine service.
+2. If a service has 🗂️ in its subtitle, press  <kbd>Tab</kbd> to autocomplete into the subservices section — to navigate to redis inside memorystore.
+3. You can filter subservices directly by typing their name. For example, `gcp compute instances` will show Compute Engine instances.
+4. If a subservice has 🔍⚡️ in its subtitle, it supports **resource search**. For example, after typing `gcp compute` you can <kbd>Tab</kbd> into `instances` to list them.
+5. The workflow uses your currently active gcloud configuration by default. To override it, type `@` in your query to list and select from your available configurations.
+
+### Advanced Usage
+
+1. The workflow supports janitor actions [janitor actions](https://pkg.go.dev/github.com/deanishe/awgo#MagicAction)**(powered by AwGo Magic Actions)** to manage internal workflow data. Type `gcp janitor:` to view available options — such as clearing cache, accessing logs, or resetting data folders.
+![Janitor](images/docs/janitor.png)
+> Example: View showing available janitor actions
+1. The workflow also supports [Fuzzy Filtering](https://pkg.go.dev/github.com/deanishe/awgo/fuzzy), allowing you to quickly find services or resources even with partial or out-of-order matches.
 
 ## Contributing
 

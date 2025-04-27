@@ -2,7 +2,8 @@ package orchestrator
 
 import (
 	"log"
-	"strings"
+
+	"github.com/dineshgowda24/alfred-gcp-workflow/services"
 )
 
 var _ Handler = (*FallbackHandler)(nil)
@@ -12,45 +13,37 @@ type FallbackHandler struct{}
 func (h *FallbackHandler) Handle(ctx *Context) error {
 	log.Println("LOG: FallbackHandler started")
 
-	wf := ctx.Workflow
-	config := ctx.ActiveConfig
-	query := ctx.Args.Query
-	remaining := ctx.ParsedQuery.RemainingQuery
-	isConfigQuery := ctx.ParsedQuery.IsConfigQuery
-
-	for _, svc := range ctx.Services {
-		url, err := svc.Url(config)
-		if err != nil {
-			log.Printf("LOG: Error generating URL for service %s: %v\n", svc.Name, err)
-			continue
-		}
-
-		wf.NewItem(svc.ID).
-			Subtitle(svc.Subtitle(nil)).
-			Autocomplete(buildAutocompleteForFallback(query, remaining, svc.ID, isConfigQuery)).
-			Arg(url).
-			Icon(svc.Icon()).
-			Valid(true)
+	for i := range ctx.Services {
+		h.addService(ctx, &ctx.Services[i])
 	}
-
-	log.Println("LOG: remaining query:", remaining)
-	wf.Filter(remaining)
-	wf.SendFeedback()
+	h.send(ctx)
 
 	log.Println("LOG: FallbackHandler complete")
 	return nil
 }
 
-func buildAutocompleteForFallback(query, remaining, serviceID string, isConfigQuery bool) string {
-	if !isConfigQuery {
-		return serviceID
+func (h *FallbackHandler) addService(ctx *Context, s *services.Service) {
+	url, err := s.Url(ctx.ActiveConfig)
+	if err != nil {
+		return
 	}
 
-	// If query includes partial config, replace or append serviceID properly
-	stripped := strings.TrimSuffix(query, remaining)
-	stripped = strings.TrimRight(stripped, " ")
-	if stripped != "" {
-		return stripped + " " + serviceID
+	ctx.Workflow.NewItem(s.ID).
+		Subtitle(s.Subtitle(nil)).
+		Match(s.Match()).
+		Autocomplete(buildAutocomplete(ctx, s)).
+		Arg(url).
+		Icon(s.Icon()).
+		Valid(true)
+}
+
+func (h *FallbackHandler) send(ctx *Context) {
+	wf := ctx.Workflow
+	wf.Filter(ctx.ParsedQuery.RemainingQuery)
+
+	if wf.IsEmpty() {
+		emptyResultItem(wf, "No matching services found")
 	}
-	return query + " " + serviceID
+
+	wf.SendFeedback()
 }

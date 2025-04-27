@@ -3,6 +3,7 @@ package services
 import (
 	"bytes"
 	"embed"
+	"log"
 	"text/template"
 
 	aw "github.com/deanishe/awgo"
@@ -52,11 +53,13 @@ func (s *Service) Icon() *aw.Icon {
 func (s *Service) Url(config *gcloud.Config) (string, error) {
 	t, err := template.New("url").Parse(s.URL)
 	if err != nil {
+		log.Printf("LOG: Error parsing template for service %s: %v\n", s.Name, err)
 		return "", err
 	}
 
 	var buf bytes.Buffer
 	if err := t.Execute(&buf, config); err != nil {
+		log.Printf("LOG: Error executing template for service %s: %v\n", s.Name, err)
 		return "", err
 	}
 	return buf.String(), nil
@@ -77,6 +80,10 @@ func (s *Service) Subtitle(exister Exister) string {
 		return suffix
 	}
 	return s.Description
+}
+
+func (s *Service) Match() string {
+	return s.ID + " " + s.Name
 }
 
 func (s *Service) IsParent() bool {
