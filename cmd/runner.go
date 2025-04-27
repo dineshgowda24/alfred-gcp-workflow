@@ -60,22 +60,10 @@ func (r *Runner) ParseFlags() *Runner {
 func (r *Runner) Run() {
 	r.interceptMagicArgs()
 	r.wf.Run(func() {
-		r.defaultOrchestrator().Run(r.wf, r.args)
+		ors.DefaultOrchestrator(r.servicesFS).Run(r.wf, r.args)
 	})
 }
 
 func (r *Runner) interceptMagicArgs() {
 	r.wf.Args()
-}
-
-func (r *Runner) defaultOrchestrator() *ors.Orchestrator {
-	return ors.NewOrchestrator(
-		&ors.PreFlightCheckHandler{},
-		&ors.HomeHandler{},
-		&ors.ServiceHandler{},
-		&ors.SubServiceHandler{},
-		&ors.FallbackHandler{},
-		&ors.ErrorHandler{},
-		r.servicesFS,
-	)
 }

@@ -1,41 +1,55 @@
 package orchestrator
 
 import (
-	"errors"
 	"log"
+	"strings"
 
 	aw "github.com/deanishe/awgo"
-	gc "github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
+	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 )
 
-var ErrNoActiveConfig = errors.New("no active gcloud config found")
+var _ Handler = (*ConfigHandler)(nil)
 
-const configCacheKey = "gcloud_config"
+type ConfigHandler struct{}
 
-func getActiveConfig(ctx *Context, overrideCache bool) *gc.Config {
+func (h *ConfigHandler) Handle(ctx *Context) error {
+	log.Println("LOG: ConfigHandler started")
+
 	wf := ctx.Workflow
-	if !overrideCache && wf.Cache.Exists(configCacheKey) {
-		log.Println("LOG: loading active config from cache")
-		var cached gc.Config
-		if err := wf.Cache.LoadJSON(configCacheKey, &cached); err == nil {
-			return &cached
-		}
+	query := ctx.Args.Query
+	partial := ctx.ParsedQuery.PartialConfigQuery
+
+	configs, err := gcloud.GetAllConfigs()
+	if err != nil {
+		log.Println("LOG: error getting all configs:", err)
+		return err
 	}
 
-	log.Println("LOG: loading active config from gcloud")
-	active := gc.GetActiveConfig(wf)
-	if active == nil {
-		return nil
+	for _, config := range configs {
+		newQuery := buildConfigAutocomplete(query, partial, config.Name)
+		wf.NewItem(config.Name).
+			Subtitle(config.Project).
+			Autocomplete(newQuery).
+			Arg(newQuery).
+			Icon(aw.IconAccount).
+			Valid(true)
 	}
 
-	if err := wf.Cache.StoreJSON(configCacheKey, active); err != nil {
-		wf.NewItem("Error caching active config").
-			Subtitle("Please check the logs for more details").
-			Icon(aw.IconError).
+	wf.Filter(partial)
+
+	if wf.IsEmpty() {
+		wf.NewItem("No matching configurations found").
+			Subtitle("Try a different query with @").
+			Icon(aw.IconNote).
 			Valid(false)
-		wf.SendFeedback()
-		return nil
 	}
 
-	return active
+	wf.SendFeedback()
+
+	log.Println("LOG: ConfigHandler complete")
+	return nil
+}
+
+func buildConfigAutocomplete(query, partial, full string) string {
+	return strings.Replace(query, "@"+partial, "@"+full, 1)
 }

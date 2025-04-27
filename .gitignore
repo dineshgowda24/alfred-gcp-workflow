@@ -27,3 +27,6 @@ go.work.sum
 # build outputs
 run
 alfred-gcp-workfllow
+
+# release files
+release

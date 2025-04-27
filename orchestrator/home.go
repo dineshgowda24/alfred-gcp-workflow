@@ -39,6 +39,12 @@ func (h *HomeHandler) Handle(ctx *Context) error {
 			Icon:     &aw.Icon{Value: "/Users/dinesh.chikkanna/personal/alfred-gcp-workflow/images/heartbeat.png"},
 			Valid:    true,
 		},
+		{
+			Title:    "Use @ to override config",
+			Subtitle: "⚙️ Example: @default",
+			Icon:     aw.IconAccount,
+			Valid:    false,
+		},
 	}
 
 	if ctx.ActiveConfig != nil {

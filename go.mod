@@ -4,6 +4,7 @@ go 1.22.4
 
 require (
 	github.com/deanishe/awgo v0.29.1
+	gopkg.in/ini.v1 v1.67.0
 	gopkg.in/yaml.v2 v2.2.2
 )
 
