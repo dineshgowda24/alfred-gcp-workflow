@@ -27,9 +27,14 @@ func (h *ServiceHandler) Handle(ctx *Context) error {
 			log.Println("LOG: Error generating service URL:", err)
 		}
 
+		autoComplete := service.Autocomplete()
+		if ctx.ParsedQuery.IsConfigQuery {
+			autoComplete = ctx.Args.Query
+		}
+
 		wf.NewItem(service.Autocomplete()).
 			Subtitle(service.Subtitle(nil)).
-			Autocomplete(service.Autocomplete()).
+			Autocomplete(autoComplete).
 			Arg(url).
 			Icon(service.Icon()).
 			Valid(true)
@@ -49,9 +54,14 @@ func (h *ServiceHandler) Handle(ctx *Context) error {
 			continue
 		}
 
+		autoComplete := child.Autocomplete()
+		if ctx.ParsedQuery.IsConfigQuery {
+			autoComplete = ctx.Args.Query + " " + child.ID
+		}
+
 		wf.NewItem(child.Title()).
 			Subtitle(child.Subtitle(ctx.SearchRegistry)).
-			Autocomplete(child.Autocomplete()).
+			Autocomplete(autoComplete).
 			Icon(child.Icon()).
 			Arg(url).
 			Valid(true)

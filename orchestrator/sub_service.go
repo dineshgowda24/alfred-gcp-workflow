@@ -27,12 +27,16 @@ func (h *SubServiceHandler) Handle(ctx *Context) error {
 		ctx.Workflow.Filter(query.RemainingQuery)
 	} else {
 		log.Printf("LOG: No searcher found for subservice: %s\n", child.Name)
-
+		url, err := child.Url(ctx.ActiveConfig)
+		if err != nil {
+			log.Printf("LOG: Error generating URL for subservice %s: %v\n", child.Name, err)
+			return err
+		}
 		ctx.Workflow.NewItem(child.Title()).
 			Subtitle(child.Subtitle(nil)).
 			Autocomplete(child.Autocomplete()).
 			Icon(child.Icon()).
-			Arg(child.URL).
+			Arg(url).
 			Valid(true)
 
 		ctx.Workflow.NewFileItem(fmt.Sprintf("%s has no searcher (yet)", child.Name)).

@@ -26,6 +26,14 @@ func (ctx *Context) IsHomeQuery() bool {
 	return strings.TrimSpace(ctx.Args.Query) == ""
 }
 
+func (ctx *Context) IsConfigQuery() bool {
+	return ctx.ParsedQuery.IsConfigQuery
+}
+
+func (ctx *Context) IsConfigActive() bool {
+	return ctx.ParsedQuery.Config != nil
+}
+
 func (ctx *Context) IsServiceQuery() bool {
 	return ctx.ParsedQuery.HasServiceOnly()
 }
