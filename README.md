@@ -7,8 +7,8 @@ An Alfred workflow to quickly open GCP services in your browser or search GCP re
 1. Make sure you have the [Google Cloud Cli](https://cloud.google.com/sdk/docs/install) installed and authenticated.
 2. Download the latest release from the [releases page](https://github.com/dineshgowda24/alfred-gcp-workflow/releases)
 3. Unzip the downloaded file and open the `.alfredworkflow` file to import it into Alfred app.
-4. Set the `ALFRED_GCP_WORKFLOW_GCLOUD_PATH` environment variable to point to your gcloud executable.
-(This is required for the workflow to function properly.)
+4. Set the **`ALFRED_GCP_WORKFLOW_GCLOUD_PATH`** environment variable to point to your gcloud executable.
+**(This is required for the workflow to function properly.)**
 5. (Optional) Set the `ALFRED_GCP_WORKFLOW_GCLOUD_CONFIG` environment variable if your gcloud configuration is located somewhere other than the default `~/.config/gcloud` directory.
 
 ## Usage
