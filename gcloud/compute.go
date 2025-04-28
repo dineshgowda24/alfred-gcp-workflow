@@ -21,14 +21,14 @@ type ComputeDisk struct {
 type ComputeImage struct {
 	Architecture      string `json:"architecture"`
 	ArchiveSizeBytes  string `json:"archiveSizeBytes"`
-	CreationTimestamp string `json:"creationTimestamp"` // Format 2018-11-06T01:59:29.838-08:00
+	CreationTimestamp string `json:"creationTimestamp"`
 	Name              string `json:"name"`
 	DiskSizeGb        string `json:"diskSizeGb"`
 	Status            string `json:"status"` // one of [FAILED, PENDING, READY]
 }
 
 type ComputeInstanceTemplate struct {
-	CreationTimestamp string `json:"creationTimestamp"` // Format 2018-11-06T01:59:29.838-08:00
+	CreationTimestamp string `json:"creationTimestamp"`
 	Name              string `json:"name"`
 	Properties        struct {
 		MachineType string `json:"machineType"`
@@ -41,10 +41,19 @@ type ComputeMachineImage struct {
 	Description        string `json:"description"`
 	Status             string `json:"status"`
 	TotalStorageBytes  string `json:"totalStorageBytes"`
-	CreationTimestamp  string `json:"creationTimestamp"` // Format 2018-11-06T01:59:29.838-08:00
+	CreationTimestamp  string `json:"creationTimestamp"`
 	InstanceProperties struct {
 		MachineType string `json:"machineType"`
 	} `json:"instanceProperties"`
+}
+
+// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots
+type ComputeSnapshot struct {
+	Name              string `json:"name"`
+	Status            string `json:"status"`
+	DiskSizeGb        string `json:"diskSizeGb"`
+	StorageBytes      string `json:"storageBytes"`
+	CreationTimestamp string `json:"creationTimestamp"`
 }
 
 func ListComputeInstances(config *Config) ([]ComputeInstance, error) {
@@ -68,5 +77,13 @@ func ListComputeMachineImages(config *Config) ([]ComputeMachineImage, error) {
 		config,
 		"compute", "machine-images", "list",
 		"--format=json(creationTimestamp,description,id,instanceProperties.machineType,name,status,totalStorageBytes)",
+	)
+}
+
+func ListComputeSnapshots(config *Config) ([]ComputeSnapshot, error) {
+	return runGCloudCmd[[]ComputeSnapshot](
+		config,
+		"compute", "snapshots", "list",
+		"--format=json(name,status,diskSizeGb,storageBytes,creationTimestamp)",
 	)
 }

@@ -12,7 +12,7 @@ type VPNTunnelSearcher struct{}
 
 func (s *VPNTunnelSearcher) Search(wf *aw.Workflow, svc *services.Service, config *gc.Config, pq *parser.Result) error {
 	return workflow.ResolveAndRender(workflow.NewRenderRequest(
-		"networkconnectivity_vpn_tunnels",
+		"netconnectivity_vpn_tunnels",
 		wf,
 		config,
 		pq,

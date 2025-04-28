@@ -43,7 +43,7 @@ Here are the GCP resources currently searchable through the workflow:
 | 🧠 Memorystore | Redis Instances |
 | 📬 Pub/Sub | Topics, Subscriptions |
 | 📦 Storage | Buckets |
-| 🖥️ Compute Engine | Instances, Disks, Images, Instance Templates, Machine Images |
+| 🖥️ Compute Engine | Instances, Disks, Images, Instance Templates, Machine Images, Snapshots |
 | ☸️ Kubernetes Engine (GKE) | Clusters |
 | 🗄️ Filestore | Instances |
 | 🌐 Cloud DNS (Network Services) | DNS Zones |
