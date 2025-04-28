@@ -2,6 +2,8 @@ package gcloud
 
 import "time"
 
+// https://cloud.google.com/sql/docs/postgres/admin-api/rest/v1/instances#DatabaseInstance
+// https://cloud.google.com/sql/docs/mysql/admin-api/rest/v1/instances#DatabaseInstance
 type SQLInstance struct {
 	CreateTime      time.Time `json:"createTime"`
 	DatabaseVersion string    `json:"databaseVersion"`

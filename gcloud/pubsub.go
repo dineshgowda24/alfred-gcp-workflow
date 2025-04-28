@@ -1,9 +1,11 @@
 package gcloud
 
+// https://cloud.google.com/pubsub/docs/reference/rest/v1/projects.topics#Topic
 type PubSubTopic struct {
 	Name string `json:"name"` // Format: projects/{project}/topics/{topic-id}
 }
 
+// https://cloud.google.com/pubsub/docs/reference/rest/v1/projects.subscriptions#Subscription
 type PubSubSubscription struct {
 	AckDeadlineSeconds       int    `json:"ackDeadlineSeconds"`
 	MessageRetentionDuration string `json:"messageRetentionDuration"`
