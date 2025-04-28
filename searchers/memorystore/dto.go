@@ -2,7 +2,6 @@ package memorystore
 
 import (
 	"fmt"
-	"log"
 	"strconv"
 	"strings"
 
@@ -54,15 +53,17 @@ func RedisInstanceFromGCloud(instance *gcloud.RedisInstance) RedisInstance {
 	var id string
 	words := strings.Split(instance.FullName, "/")
 	for i, word := range words {
-		if word == "locations" && i+1 < len(words) {
-			region = words[i+1]
-		}
-		if word == "instances" && i+1 < len(words) {
-			id = words[i+1]
+		switch word {
+		case "locations":
+			if i+1 < len(words) {
+				region = words[i+1]
+			}
+		case "instances":
+			if i+1 < len(words) {
+				id = words[i+1]
+			}
 		}
 	}
-
-	log.Println("RedisInstanceFromGCloud", words)
 
 	return RedisInstance{
 		Id:           id,
