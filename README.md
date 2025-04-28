@@ -1,5 +1,7 @@
 # <img src="images/gcp.png" width="26"> alfred-gcp-workflow
 
+![Services Covered](https://img.shields.io/badge/Services--Covered-253-blue?style=flat-square&logo=google-cloud)
+
 An Alfred workflow to quickly open GCP services in your browser or search GCP resources with ease.
 
 ## Installation
@@ -31,7 +33,7 @@ An Alfred workflow to quickly open GCP services in your browser or search GCP re
 > Example: View showing available janitor actions
 1. The workflow also supports [Fuzzy Filtering](https://pkg.go.dev/github.com/deanishe/awgo/fuzzy), allowing you to quickly find services or resources even with partial or out-of-order matches.
 
-## Supported Searches
+## 🔍⚡️ Supported Resource Searches
 
 Here are the GCP resources currently searchable through the workflow:
 
@@ -46,7 +48,7 @@ Here are the GCP resources currently searchable through the workflow:
 | 🗄️ Filestore | Instances |
 | 🌐 Cloud DNS (Network Services) | DNS Zones |
 | 🛤️ VPC | Networks, Routes |
-| 🔐 Network Connectivity | VPN Tunnels |
+| 🔐 Network Connectivity | VPN Tunnels, VPN Gateways |
 
 ## Contributing
 

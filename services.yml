@@ -554,16 +554,21 @@
   description: Infrastructure and application quality checks
   url: https://console.cloud.google.com/monitoring?project={{ .Project }}
   logo_path: images/cloud_monitoring.png
-- id: networkconnectivity
+- id: netconnectivity
   name: Network Connectivity
   description: Network and hybrid connectivity options
   url: https://console.cloud.google.com/hybrid?project={{ .Project }}
   logo_path: images/network_connectivity_center.png
   sub_services:
     - id: vpntunnels
-      name: VPN
+      name: VPN Tunnels
       description: List of VPN tunnels
       url: https://console.cloud.google.com/hybrid/vpn/list?project={{ .Project }}
+      logo_path: images/cloud_vpn.png
+    - id: vpngateways
+      name: VPN Gateways
+      description: List of VPN gateways
+      url: https://console.cloud.google.com/hybrid/vpn/list?tab=gateways&project={{ .Project }}
       logo_path: images/cloud_vpn.png
     - id: interconnect
       name: Interconnect
@@ -580,7 +585,7 @@
   description: Network monitoring and topology
   url: https://console.cloud.google.com/net-intelligence?project={{ .Project }}
   logo_path: images/network_intelligence_center.png
-- id: networksecurity
+- id: netsecurity
   name: Network Security
   description: Tools that power safe networking
   url: https://console.cloud.google.com/net-security?project={{ .Project }}
@@ -601,7 +606,7 @@
       description: List of firewall policies
       url: https://console.cloud.google.com/net-security/firewall-manager/firewall-policies/list?project={{ .Project }}
       logo_path: images/network_security.png
-- id: networkservices
+- id: netservices
   name: Network Services
   description: Network management tools
   url: https://console.cloud.google.com/net-services?project={{ .Project }}
