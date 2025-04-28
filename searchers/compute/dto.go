@@ -299,3 +299,73 @@ func FromGCloudComputeMachineImage(image *gcloud.ComputeMachineImage) MachineIma
 		CreationTimestamp: creationTime,
 	}
 }
+
+type Snapshot struct {
+	Name              string
+	Status            string
+	DiskSizeGb        int
+	StorageSize       string
+	CreationTimestamp time.Time
+}
+
+func (s Snapshot) Title() string {
+	return s.Name
+}
+
+func (s Snapshot) Subtitle() string {
+	var icon string
+	switch s.Status {
+	case "READY":
+		icon = "🟢"
+	case "CREATING", "UPLOADING":
+		icon = "🕒"
+	case "FAILED", "DELETING":
+		icon = "❌"
+	default:
+		icon = "❓"
+	}
+
+	return fmt.Sprintf("%s Size: %s | Disk Size: %d GB | Created: %s",
+		icon, s.StorageSize, s.DiskSizeGb, s.CreationTimestamp.Local().Format("Jan 2, 2006 15:04 MST"))
+}
+
+func (s Snapshot) URL(config *gcloud.Config) string {
+	return fmt.Sprintf(
+		"https://console.cloud.google.com/compute/snapshotsDetail/projects/%s/global/snapshots/%s?project=%s",
+		config.Project, s.Name, config.Project)
+}
+
+func FromGCloudComputeSnapshot(snapshot *gcloud.ComputeSnapshot) Snapshot {
+	creationTime, err := time.Parse(time.RFC3339, snapshot.CreationTimestamp)
+	if err != nil {
+		log.Println("error parsing creation time:", err)
+		creationTime = time.Time{}
+	}
+
+	size, err := strconv.Atoi(snapshot.DiskSizeGb)
+	if err != nil {
+		log.Println("error parsing disk size:", err)
+		size = 0
+	}
+
+	storageSize, err := strconv.Atoi(snapshot.StorageBytes)
+	if err != nil {
+		log.Println("LOG: compute: Error parsing storage size:", err)
+		storageSize = 0
+	}
+
+	storageIdentifiers := []string{"B", "KB", "MB", "GB", "TB"}
+	idx := 0
+	for storageSize > 1024 && idx < len(storageIdentifiers)-1 {
+		storageSize /= 1024
+		idx++
+	}
+
+	return Snapshot{
+		Name:              snapshot.Name,
+		Status:            snapshot.Status,
+		DiskSizeGb:        size,
+		StorageSize:       fmt.Sprintf("%d %s", storageSize, storageIdentifiers[idx]),
+		CreationTimestamp: creationTime.Local(),
+	}
+}
