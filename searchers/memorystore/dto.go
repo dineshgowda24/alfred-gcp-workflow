@@ -1,22 +1,24 @@
 package memorystore
 
 import (
+	"fmt"
+	"log"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 )
 
 type RedisInstance struct {
+	Id           string
 	Name         string
+	FullName     string
+	LocationId   string
 	Region       string
 	State        string
-	Tier         string
 	Memory       int
 	RedisVersion string
 	ReplicaCount int
-	CreatedAt    time.Time
 }
 
 func (r RedisInstance) Title() string {
@@ -35,24 +37,42 @@ func (r RedisInstance) Subtitle() string {
 		return "🟢 " + info
 	case "CREATING", "UPDATING", "MAINTENANCE":
 		return "🕒 " + info
-	default:
+	case "DELETING", "REPAIRING", "IMPORTING", "FAILING_OVER":
 		return "❌ " + info
+	default:
+		return "❓ " + info
 	}
 }
 
 func (r RedisInstance) URL(config *gcloud.Config) string {
-	return "https://console.cloud.google.com/memorystore/redis/instances/details/" + r.Name + "?project=" + config.Project + "&region=" + r.Region
+	return fmt.Sprintf("https://console.cloud.google.com/memorystore/redis/locations/%s/instances/%s/details/overview?project=%s",
+		r.Region, r.Id, config.Project)
 }
 
 func RedisInstanceFromGCloud(instance *gcloud.RedisInstance) RedisInstance {
+	var region string
+	var id string
+	words := strings.Split(instance.FullName, "/")
+	for i, word := range words {
+		if word == "locations" && i+1 < len(words) {
+			region = words[i+1]
+		}
+		if word == "instances" && i+1 < len(words) {
+			id = words[i+1]
+		}
+	}
+
+	log.Println("RedisInstanceFromGCloud", words)
+
 	return RedisInstance{
-		Name:         instance.Name,
-		Region:       instance.Region,
+		Id:           id,
+		Name:         instance.DisplayName,
+		FullName:     instance.FullName,
+		LocationId:   instance.LocationId,
+		Region:       region,
 		State:        instance.State,
-		Tier:         instance.Tier,
 		Memory:       instance.Memory,
 		RedisVersion: instance.RedisVersion,
 		ReplicaCount: instance.ReplicaCount,
-		CreatedAt:    instance.CreatedAt,
 	}
 }
