@@ -1,16 +1,14 @@
 package gcloud
 
-import "time"
-
+// https://cloud.google.com/memorystore/docs/redis/reference/rest/v1/projects.locations.instances
 type RedisInstance struct {
-	CreatedAt    time.Time `json:"createTime"`
-	Name         string    `json:"displayName"`
-	Region       string    `json:"currentLocationId"`
-	State        string    `json:"state"`
-	Tier         string    `json:"tier"`
-	Memory       int       `json:"memorySizeGb"`
-	RedisVersion string    `json:"redisVersion"`
-	ReplicaCount int       `json:"replicaCount"`
+	FullName     string `json:"name"`
+	DisplayName  string `json:"displayName"`
+	LocationId   string `json:"currentLocationId"`
+	State        string `json:"state"`
+	Memory       int    `json:"memorySizeGb"`
+	RedisVersion string `json:"redisVersion"`
+	ReplicaCount int    `json:"replicaCount"`
 }
 
 func ListRedisInstances(config *Config) ([]RedisInstance, error) {
@@ -18,6 +16,6 @@ func ListRedisInstances(config *Config) ([]RedisInstance, error) {
 		config,
 		"redis", "instances", "list",
 		"--region=-",
-		"--format=json(name,displayName,currentLocationId,state,tier,memorySizeGb,redisVersion,replicaCount)",
+		"--format=json(name,displayName,currentLocationId,state,memorySizeGb,redisVersion,replicaCount)",
 	)
 }
