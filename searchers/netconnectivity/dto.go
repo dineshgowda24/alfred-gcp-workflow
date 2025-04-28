@@ -2,7 +2,9 @@ package netconnectivity
 
 import (
 	"fmt"
+	"log"
 	"strings"
+	"time"
 
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 )
@@ -65,5 +67,62 @@ func VPNTunnelFromGCloud(tunnel *gcloud.VPNTunnel) VPNTunnel {
 		Status:  tunnel.Status,
 		Region:  region,
 		Gateway: gateway,
+	}
+}
+
+type VPNGateway struct {
+	Name             string
+	GatewayIPVersion string
+	Network          string
+	Region           string
+	CreationTime     time.Time
+}
+
+func (g *VPNGateway) Title() string {
+	return g.Name
+}
+
+func (g *VPNGateway) Subtitle() string {
+	return fmt.Sprintf("IP Version: %s | Network: %s | Created: %s",
+		g.GatewayIPVersion, g.Network, g.CreationTime.Format("Jan 2, 2006 15:04 MST"))
+}
+
+func (g *VPNGateway) URL(config *gcloud.Config) string {
+	return fmt.Sprintf(
+		"https://console.cloud.google.com/hybrid/vpn/gateways/details/%s/%s?project=%s",
+		g.Region, g.Name, config.Project)
+}
+
+func VPNGatewayFromGCloud(gateway *gcloud.VPNGateway) VPNGateway {
+	var region string
+	words := strings.Split(gateway.Region, "/")
+	for i, word := range words {
+		if word == "regions" && i+1 < len(words) {
+			region = words[i+1]
+			break
+		}
+	}
+
+	var network string
+	words = strings.Split(gateway.Network, "/")
+	for i, word := range words {
+		if word == "networks" && i+1 < len(words) {
+			network = words[i+1]
+			break
+		}
+	}
+
+	var creationTime time.Time
+	creationTime, err := time.Parse(time.RFC3339, gateway.CreationTimestamp)
+	if err != nil {
+		log.Println("LOG: Error parsing creation timestamp:", err)
+	}
+
+	return VPNGateway{
+		Name:             gateway.Name,
+		GatewayIPVersion: gateway.GatewayIPVersion,
+		Network:          network,
+		Region:           region,
+		CreationTime:     creationTime.Local(),
 	}
 }
