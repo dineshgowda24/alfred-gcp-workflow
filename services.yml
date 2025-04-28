@@ -560,7 +560,7 @@
   url: https://console.cloud.google.com/hybrid?project={{ .Project }}
   logo_path: images/network_connectivity_center.png
   sub_services:
-    - id: vpn
+    - id: vpntunnels
       name: VPN
       description: List of VPN tunnels
       url: https://console.cloud.google.com/hybrid/vpn/list?project={{ .Project }}

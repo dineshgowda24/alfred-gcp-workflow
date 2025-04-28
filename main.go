@@ -2,13 +2,22 @@ package main
 
 import (
 	"embed"
+	"log"
 
 	aw "github.com/deanishe/awgo"
 	"github.com/dineshgowda24/alfred-gcp-workflow/cmd"
 )
 
-//go:embed services.yml
-var servicesFs embed.FS
+var (
+	Version = "dev"
+	//go:embed services.yml
+	servicesFs embed.FS
+)
+
+func init() {
+	log.SetFlags(log.LstdFlags)
+	log.SetPrefix("[Version: " + Version + "] ")
+}
 
 func main() {
 	wf := aw.New(aw.MagicPrefix(cmd.MagicPrefix))

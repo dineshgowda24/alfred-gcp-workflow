@@ -27,7 +27,6 @@ prompt_version() {
   bold "Input new version (e.g., 1.2.3):"
   read -r VERSION_INPUT
   VERSION="v${VERSION_INPUT//v/}"
-  BUILD_TIME="$(date +%Y-%m-%dT%H:%M:%S%z)"
 }
 
 update_info_plist() {
@@ -70,10 +69,10 @@ clean_release_dir() {
 
 build_binaries() {
   bold "Building binaries..."
-  GOARCH=amd64 go build -ldflags "-X main.Version=$VERSION -X main.BuildTime=$BUILD_TIME" -o "$RELEASE_DIR/alfred-gcp-workflow-amd64" &
+  GOARCH=amd64 go build -ldflags "-X main.Version=$VERSION" -o "$RELEASE_DIR/alfred-gcp-workflow-amd64" &
   spinner $!
   
-  GOARCH=arm64 go build -ldflags "-X main.Version=$VERSION -X main.BuildTime=$BUILD_TIME" -o "$RELEASE_DIR/alfred-gcp-workflow-arm64" &
+  GOARCH=arm64 go build -ldflags "-X main.Version=$VERSION" -o "$RELEASE_DIR/alfred-gcp-workflow-arm64" &
   spinner $!
   
   green "✔️ Binaries built."
