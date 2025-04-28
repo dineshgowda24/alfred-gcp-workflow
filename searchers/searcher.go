@@ -8,6 +8,7 @@ import (
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/filestore"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/k8s"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/memorystore"
+	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/netconnectivity"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/netservices"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/pubsub"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/sql"
@@ -45,21 +46,22 @@ func (r *Registry) Exists(parent, child *services.Service) bool {
 func GetDefaultRegistry() *Registry {
 	return &Registry{
 		lookup: map[string]Searcher{
-			"cloudsql/instances":        &sql.InstanceSearcher{},
-			"memorystore/redis":         &memorystore.RedisInstanceSearcher{},
-			"pubsub/topics":             &pubsub.TopicSearcher{},
-			"pubsub/subscriptions":      &pubsub.SubscriptionSearcher{},
-			"storage/buckets":           &storage.BucketSearcher{},
-			"compute/instances":         &compute.InstanceSearcher{},
-			"compute/disks":             &compute.DiskSearcher{},
-			"compute/images":            &compute.ImageSearcher{},
-			"compute/instancetemplates": &compute.InstanceTmplSearcher{},
-			"compute/machineimages":     &compute.MachineImageSearcher{},
-			"gke/clusters":              &k8s.ClusterSearcher{},
-			"filestore/instances":       &filestore.InstanceSearcher{},
-			"networkservices/clouddns":  &netservices.DNSZoneSearcher{},
-			"vpc/networks":              &vpc.NetworkSearcher{},
-			"vpc/routes":                &vpc.RouteSearcher{},
+			"cloudsql/instances":             &sql.InstanceSearcher{},
+			"memorystore/redis":              &memorystore.RedisInstanceSearcher{},
+			"pubsub/topics":                  &pubsub.TopicSearcher{},
+			"pubsub/subscriptions":           &pubsub.SubscriptionSearcher{},
+			"storage/buckets":                &storage.BucketSearcher{},
+			"compute/instances":              &compute.InstanceSearcher{},
+			"compute/disks":                  &compute.DiskSearcher{},
+			"compute/images":                 &compute.ImageSearcher{},
+			"compute/instancetemplates":      &compute.InstanceTmplSearcher{},
+			"compute/machineimages":          &compute.MachineImageSearcher{},
+			"gke/clusters":                   &k8s.ClusterSearcher{},
+			"filestore/instances":            &filestore.InstanceSearcher{},
+			"networkservices/clouddns":       &netservices.DNSZoneSearcher{},
+			"vpc/networks":                   &vpc.NetworkSearcher{},
+			"vpc/routes":                     &vpc.RouteSearcher{},
+			"networkconnectivity/vpntunnels": &netconnectivity.VPNTunnelSearcher{},
 		},
 	}
 }

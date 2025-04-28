@@ -36,9 +36,9 @@ func (i SQLInstance) Subtitle() string {
 	switch i.State {
 	case "RUNNABLE":
 		icon = "🟢"
-	case "PENDING_CREATE", "UPDATING", "MAINTENANCE":
+	case "PENDING_CREATE", "MAINTENANCE", "ONLINE_MAINTENANCE":
 		icon = "🕒"
-	case "FAILED", "DELETING", "SUSPENDED":
+	case "PENDING_DELETE", "FAILED", "SUSPENDED":
 		icon = "❌"
 	default:
 		icon = "❓"
@@ -62,5 +62,7 @@ func (i SQLInstance) Subtitle() string {
 }
 
 func (i SQLInstance) URL(config *gcloud.Config) string {
-	return "https://console.cloud.google.com/sql/instances/" + i.Name + "?project=" + config.Project
+	return fmt.Sprintf(
+		"https://console.cloud.google.com/sql/instances/%s?project=%s",
+		i.Name, config.Project)
 }

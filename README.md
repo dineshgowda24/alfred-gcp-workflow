@@ -4,12 +4,13 @@ An Alfred workflow to quickly open GCP services in your browser or search GCP re
 
 ## Installation
 
-1. Make sure you have the [Google Cloud Cli](https://cloud.google.com/sdk/docs/install) installed and authenticated.
-2. Download the latest release from the [releases page](https://github.com/dineshgowda24/alfred-gcp-workflow/releases)
-3. Unzip the downloaded file and open the `.alfredworkflow` file to import it into Alfred app.
-4. Set the **`ALFRED_GCP_WORKFLOW_GCLOUD_PATH`** environment variable to point to your gcloud executable.
-**(This is required for the workflow to function properly.)**
+1. Make sure you have the [Google Cloud CLI](https://cloud.google.com/sdk/docs/install) installed and authenticated.
+2. Download the latest release from the [releases page](https://github.com/dineshgowda24/alfred-gcp-workflow/releases).
+3. <kbd>double-click</kbd> the `.alfredworkflow` file. This will automatically open Alfred and import the workflow.
+4. Set the **`ALFRED_GCP_WORKFLOW_GCLOUD_PATH`** environment variable to point to your `gcloud` executable.  
+   **(This is required for the workflow to function properly.)**
 5. (Optional) Set the `ALFRED_GCP_WORKFLOW_GCLOUD_CONFIG` environment variable if your gcloud configuration is located somewhere other than the default `~/.config/gcloud` directory.
+
 
 ## Usage
 
@@ -29,6 +30,23 @@ An Alfred workflow to quickly open GCP services in your browser or search GCP re
 ![Janitor](images/docs/janitor.png)
 > Example: View showing available janitor actions
 1. The workflow also supports [Fuzzy Filtering](https://pkg.go.dev/github.com/deanishe/awgo/fuzzy), allowing you to quickly find services or resources even with partial or out-of-order matches.
+
+## Supported Searches
+
+Here are the GCP resources currently searchable through the workflow:
+
+| Service | Resource |
+|---------|---------|
+| 🛢️ Cloud SQL | Instances |
+| 🧠 Memorystore | Redis Instances |
+| 📬 Pub/Sub | Topics, Subscriptions |
+| 📦 Storage | Buckets |
+| 🖥️ Compute Engine | Instances, Disks, Images, Instance Templates, Machine Images |
+| ☸️ Kubernetes Engine (GKE) | Clusters |
+| 🗄️ Filestore | Instances |
+| 🌐 Cloud DNS (Network Services) | DNS Zones |
+| 🛤️ VPC | Networks, Routes |
+| 🔐 Network Connectivity | VPN Tunnels |
 
 ## Contributing
 
