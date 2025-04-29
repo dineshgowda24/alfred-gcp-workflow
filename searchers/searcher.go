@@ -4,6 +4,7 @@ import (
 	aw "github.com/deanishe/awgo"
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 	"github.com/dineshgowda24/alfred-gcp-workflow/parser"
+	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/artifactregistry"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/compute"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/filestore"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/k8s"
@@ -46,24 +47,25 @@ func (r *Registry) Exists(parent, child *services.Service) bool {
 func GetDefaultRegistry() *Registry {
 	return &Registry{
 		lookup: map[string]Searcher{
-			"cloudsql/instances":          &sql.InstanceSearcher{},
-			"memorystore/redis":           &memorystore.RedisInstanceSearcher{},
-			"pubsub/topics":               &pubsub.TopicSearcher{},
-			"pubsub/subscriptions":        &pubsub.SubscriptionSearcher{},
-			"storage/buckets":             &storage.BucketSearcher{},
-			"compute/instances":           &compute.InstanceSearcher{},
-			"compute/disks":               &compute.DiskSearcher{},
-			"compute/images":              &compute.ImageSearcher{},
-			"compute/instancetemplates":   &compute.InstanceTmplSearcher{},
-			"compute/machineimages":       &compute.MachineImageSearcher{},
-			"compute/snapshots":           &compute.SnapshotSearcher{},
-			"gke/clusters":                &k8s.ClusterSearcher{},
-			"filestore/instances":         &filestore.InstanceSearcher{},
-			"netservices/dns":             &netservices.DNSZoneSearcher{},
-			"vpc/networks":                &vpc.NetworkSearcher{},
-			"vpc/routes":                  &vpc.RouteSearcher{},
-			"netconnectivity/vpntunnels":  &netconnectivity.VPNTunnelSearcher{},
-			"netconnectivity/vpngateways": &netconnectivity.VPNGatewaySearcher{},
+			"cloudsql/instances":            &sql.InstanceSearcher{},
+			"memorystore/redis":             &memorystore.RedisInstanceSearcher{},
+			"pubsub/topics":                 &pubsub.TopicSearcher{},
+			"pubsub/subscriptions":          &pubsub.SubscriptionSearcher{},
+			"storage/buckets":               &storage.BucketSearcher{},
+			"compute/instances":             &compute.InstanceSearcher{},
+			"compute/disks":                 &compute.DiskSearcher{},
+			"compute/images":                &compute.ImageSearcher{},
+			"compute/instancetemplates":     &compute.InstanceTmplSearcher{},
+			"compute/machineimages":         &compute.MachineImageSearcher{},
+			"compute/snapshots":             &compute.SnapshotSearcher{},
+			"gke/clusters":                  &k8s.ClusterSearcher{},
+			"filestore/instances":           &filestore.InstanceSearcher{},
+			"netservices/dns":               &netservices.DNSZoneSearcher{},
+			"vpc/networks":                  &vpc.NetworkSearcher{},
+			"vpc/routes":                    &vpc.RouteSearcher{},
+			"netconnectivity/vpntunnels":    &netconnectivity.VPNTunnelSearcher{},
+			"netconnectivity/vpngateways":   &netconnectivity.VPNGatewaySearcher{},
+			"artifactregistry/repositories": &artifactregistry.RepositorySearcher{},
 		},
 	}
 }

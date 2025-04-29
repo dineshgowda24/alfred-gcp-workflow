@@ -49,6 +49,8 @@ Here are the GCP resources currently searchable through the workflow:
 | 🌐 Cloud DNS (Network Services) | DNS Zones |
 | 🛤️ VPC | Networks, Routes |
 | 🔐 Network Connectivity | VPN Tunnels, VPN Gateways |
+| 🗃️ Artifact Registry | Repositories |
+
 
 ## Contributing
 
