@@ -16,11 +16,11 @@ type VPNTunnel struct {
 	Gateway string
 }
 
-func (t *VPNTunnel) Title() string {
+func (t VPNTunnel) Title() string {
 	return t.Name
 }
 
-func (t *VPNTunnel) Subtitle() string {
+func (t VPNTunnel) Subtitle() string {
 	var icon string
 	switch t.Status {
 	case "ESTABLISHED", "FIRST_HANDSHAKE":
@@ -38,12 +38,12 @@ func (t *VPNTunnel) Subtitle() string {
 	return fmt.Sprintf("%s Gateway: %s", icon, t.Gateway)
 }
 
-func (t *VPNTunnel) URL(config *gcloud.Config) string {
+func (t VPNTunnel) URL(config *gcloud.Config) string {
 	return fmt.Sprintf("https://console.cloud.google.com/hybrid/vpn/tunnels/details/%s/%s?project=%s",
 		t.Region, t.Name, config.Project)
 }
 
-func VPNTunnelFromGCloud(tunnel *gcloud.VPNTunnel) VPNTunnel {
+func FromGCloudVPNTunnel(tunnel *gcloud.VPNTunnel) VPNTunnel {
 	var region string
 	words := strings.Split(tunnel.Region, "/")
 	for i, word := range words {
@@ -78,22 +78,22 @@ type VPNGateway struct {
 	CreationTime     time.Time
 }
 
-func (g *VPNGateway) Title() string {
+func (g VPNGateway) Title() string {
 	return g.Name
 }
 
-func (g *VPNGateway) Subtitle() string {
+func (g VPNGateway) Subtitle() string {
 	return fmt.Sprintf("IP Version: %s | Network: %s | Created: %s",
 		g.GatewayIPVersion, g.Network, g.CreationTime.Format("Jan 2, 2006 15:04 MST"))
 }
 
-func (g *VPNGateway) URL(config *gcloud.Config) string {
+func (g VPNGateway) URL(config *gcloud.Config) string {
 	return fmt.Sprintf(
 		"https://console.cloud.google.com/hybrid/vpn/gateways/details/%s/%s?project=%s",
 		g.Region, g.Name, config.Project)
 }
 
-func VPNGatewayFromGCloud(gateway *gcloud.VPNGateway) VPNGateway {
+func FromGCloudVPNGateway(gateway *gcloud.VPNGateway) VPNGateway {
 	var region string
 	words := strings.Split(gateway.Region, "/")
 	for i, word := range words {

@@ -48,7 +48,7 @@ func (c Cluster) URL(config *gcloud.Config) string {
 	)
 }
 
-func ClusterFromGCloud(cluster *gcloud.K8sCluster) Cluster {
+func FromGCloudCluster(cluster *gcloud.K8sCluster) Cluster {
 	createdAt, err := time.Parse("2006-01-02T15:04:05-07:00", cluster.CreatedAt)
 	if err != nil {
 		createdAt = time.Time{}

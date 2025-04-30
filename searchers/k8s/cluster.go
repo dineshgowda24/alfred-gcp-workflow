@@ -5,33 +5,25 @@ import (
 	gc "github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 	"github.com/dineshgowda24/alfred-gcp-workflow/parser"
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
-	"github.com/dineshgowda24/alfred-gcp-workflow/workflow"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/resource"
 )
 
 type ClusterSearcher struct{}
 
-func (s *ClusterSearcher) Search(wf *aw.Workflow, svc *services.Service, config *gc.Config, pq *parser.Result) error {
-	return workflow.ResolveAndRender(workflow.NewRenderRequest(
+func (s *ClusterSearcher) Search(
+	wf *aw.Workflow, svc *services.Service, cfg *gc.Config, pq *parser.Result,
+) error {
+	builder := resource.NewBuilder(
 		"k8s_clusters",
 		wf,
-		config,
+		cfg,
 		pq,
-		s.fetch,
-		func(wf *aw.Workflow, entity gc.K8sCluster) {
-			s.render(wf, svc, config, entity)
+		gc.ListK8sClusters,
+		func(wf *aw.Workflow, gkec gc.K8sCluster) {
+			kec := FromGCloudCluster(&gkec)
+			resource.NewItem(wf, cfg, kec, svc.Icon())
 		},
-	))
-}
+	)
 
-func (s *ClusterSearcher) fetch(config *gc.Config) ([]gc.K8sCluster, error) {
-	return gc.ListK8sClusters(config)
-}
-
-func (s *ClusterSearcher) render(wf *aw.Workflow, svc *services.Service, config *gc.Config, entity gc.K8sCluster) {
-	cluster := ClusterFromGCloud(&entity)
-	wf.NewItem(cluster.Title()).
-		Subtitle(cluster.Subtitle()).
-		Arg(cluster.URL(config)).
-		Icon(svc.Icon()).
-		Valid(true)
+	return builder.Build()
 }

@@ -5,33 +5,25 @@ import (
 	gc "github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 	"github.com/dineshgowda24/alfred-gcp-workflow/parser"
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
-	"github.com/dineshgowda24/alfred-gcp-workflow/workflow"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/resource"
 )
 
 type DNSZoneSearcher struct{}
 
-func (s *DNSZoneSearcher) Search(wf *aw.Workflow, svc *services.Service, config *gc.Config, pq *parser.Result) error {
-	return workflow.ResolveAndRender(workflow.NewRenderRequest(
+func (s *DNSZoneSearcher) Search(
+	wf *aw.Workflow, svc *services.Service, cfg *gc.Config, q *parser.Result,
+) error {
+	builder := resource.NewBuilder(
 		"netservices_dns_zones",
 		wf,
-		config,
-		pq,
-		s.fetch,
-		func(wf *aw.Workflow, entity gc.DNSZone) {
-			s.render(wf, svc, config, entity)
+		cfg,
+		q,
+		gc.ListDNSZones,
+		func(wf *aw.Workflow, gdz gc.DNSZone) {
+			dz := FromGCloudDNSZone(&gdz)
+			resource.NewItem(wf, cfg, dz, svc.Icon())
 		},
-	))
-}
+	)
 
-func (s *DNSZoneSearcher) fetch(config *gc.Config) ([]gc.DNSZone, error) {
-	return gc.ListDNSZones(config)
-}
-
-func (s *DNSZoneSearcher) render(wf *aw.Workflow, svc *services.Service, config *gc.Config, entity gc.DNSZone) {
-	zone := DNSZoneFromGCloud(&entity)
-	wf.NewItem(zone.Title()).
-		Subtitle(zone.Subtitle()).
-		Arg(zone.URL(config)).
-		Icon(svc.Icon()).
-		Valid(true)
+	return builder.Build()
 }

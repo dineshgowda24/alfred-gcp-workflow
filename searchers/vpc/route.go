@@ -5,33 +5,24 @@ import (
 	gc "github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 	"github.com/dineshgowda24/alfred-gcp-workflow/parser"
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
-	"github.com/dineshgowda24/alfred-gcp-workflow/workflow"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/resource"
 )
 
 type RouteSearcher struct{}
 
-func (r *RouteSearcher) Search(wf *aw.Workflow, svc *services.Service, config *gc.Config, pq *parser.Result) error {
-	return workflow.ResolveAndRender(workflow.NewRenderRequest(
+func (r *RouteSearcher) Search(
+	wf *aw.Workflow, svc *services.Service, cfg *gc.Config, pq *parser.Result,
+) error {
+	builder := resource.NewBuilder(
 		"vpc_routes",
 		wf,
-		config,
+		cfg,
 		pq,
-		r.fetch,
-		func(wf *aw.Workflow, entity gc.VPCRoute) {
-			r.render(wf, svc, config, entity)
+		gc.ListVPCRoutes,
+		func(wf *aw.Workflow, gvr gc.VPCRoute) {
+			vr := FromGCloudRoute(&gvr)
+			resource.NewItem(wf, cfg, vr, svc.Icon())
 		},
-	))
-}
-
-func (r *RouteSearcher) fetch(config *gc.Config) ([]gc.VPCRoute, error) {
-	return gc.ListVPCRoutes(config)
-}
-
-func (r *RouteSearcher) render(wf *aw.Workflow, svc *services.Service, config *gc.Config, entity gc.VPCRoute) {
-	route := RouteFromGCloud(&entity)
-	wf.NewItem(route.Title()).
-		Subtitle(route.Subtitle()).
-		Arg(route.URL(config)).
-		Icon(svc.Icon()).
-		Valid(true)
+	)
+	return builder.Build()
 }

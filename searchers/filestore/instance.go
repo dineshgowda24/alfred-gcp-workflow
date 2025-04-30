@@ -5,33 +5,25 @@ import (
 	gc "github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 	"github.com/dineshgowda24/alfred-gcp-workflow/parser"
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
-	"github.com/dineshgowda24/alfred-gcp-workflow/workflow"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/resource"
 )
 
 type InstanceSearcher struct{}
 
-func (s *InstanceSearcher) Search(wf *aw.Workflow, svc *services.Service, config *gc.Config, pq *parser.Result) error {
-	return workflow.ResolveAndRender(workflow.NewRenderRequest(
+func (s *InstanceSearcher) Search(
+	wf *aw.Workflow, svc *services.Service, cfg *gc.Config, q *parser.Result,
+) error {
+	builder := resource.NewBuilder(
 		"filestore_instances",
 		wf,
-		config,
-		pq,
-		s.fetch,
-		func(wf *aw.Workflow, entity gc.FilestoreInstance) {
-			s.render(wf, svc, config, entity)
+		cfg,
+		q,
+		gc.ListFilestoreInstances,
+		func(wf *aw.Workflow, gfsi gc.FilestoreInstance) {
+			fsi := FromGCloudInstance(&gfsi)
+			resource.NewItem(wf, cfg, fsi, svc.Icon())
 		},
-	))
-}
+	)
 
-func (s *InstanceSearcher) fetch(config *gc.Config) ([]gc.FilestoreInstance, error) {
-	return gc.ListFilestoreInstances(config)
-}
-
-func (s *InstanceSearcher) render(wf *aw.Workflow, svc *services.Service, config *gc.Config, entity gc.FilestoreInstance) {
-	ins := InstanceFromGCloud(&entity)
-	wf.NewItem(ins.Id).
-		Subtitle(ins.Subtitle()).
-		Arg(ins.URL(config)).
-		Icon(svc.Icon()).
-		Valid(true)
+	return builder.Build()
 }

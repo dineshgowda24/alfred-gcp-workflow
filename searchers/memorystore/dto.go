@@ -48,7 +48,7 @@ func (r RedisInstance) URL(config *gcloud.Config) string {
 		r.Region, r.Id, config.Project)
 }
 
-func RedisInstanceFromGCloud(instance *gcloud.RedisInstance) RedisInstance {
+func FromGCloudRedisInstance(instance *gcloud.RedisInstance) RedisInstance {
 	var region string
 	var id string
 	words := strings.Split(instance.FullName, "/")

@@ -37,7 +37,7 @@ func (d DNSZone) URL(config *gc.Config) string {
 	return fmt.Sprintf("https://console.cloud.google.com/net-services/dns/zones/%s/details?project=%s", d.Name, config.Project)
 }
 
-func DNSZoneFromGCloud(zone *gc.DNSZone) DNSZone {
+func FromGCloudDNSZone(zone *gc.DNSZone) DNSZone {
 	createdAt, err := time.Parse(time.RFC3339, zone.CreationTime)
 	if err != nil {
 		createdAt = time.Time{}
