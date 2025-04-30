@@ -28,7 +28,7 @@ func (n Network) URL(config *gc.Config) string {
 	return fmt.Sprintf("https://console.cloud.google.com/networking/networks/details/%s?project=%s", n.Name, config.Project)
 }
 
-func NetworkFromGCloud(network *gc.VPCNetwork) Network {
+func FromGCloudNetwork(network *gc.VPCNetwork) Network {
 	createdAt, err := time.Parse(time.RFC3339, network.CreationTime)
 	if err != nil {
 		createdAt = time.Time{}
@@ -63,7 +63,7 @@ func (r Route) URL(config *gc.Config) string {
 	return fmt.Sprintf("https://console.cloud.google.com/networking/routes/details/%s?project=%s", r.Name, config.Project)
 }
 
-func RouteFromGCloud(route *gc.VPCRoute) Route {
+func FromGCloudRoute(route *gc.VPCRoute) Route {
 	createdAt, err := time.Parse(time.RFC3339, route.CreationTime)
 	if err != nil {
 		createdAt = time.Time{}

@@ -5,33 +5,25 @@ import (
 	gc "github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 	"github.com/dineshgowda24/alfred-gcp-workflow/parser"
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
-	"github.com/dineshgowda24/alfred-gcp-workflow/workflow"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/resource"
 )
 
 type DiskSearcher struct{}
 
-func (s *DiskSearcher) Search(wf *aw.Workflow, svc *services.Service, config *gc.Config, pq *parser.Result) error {
-	return workflow.ResolveAndRender(workflow.NewRenderRequest(
+func (s *DiskSearcher) Search(
+	wf *aw.Workflow, svc *services.Service, cfg *gc.Config, q *parser.Result,
+) error {
+	builder := resource.NewBuilder(
 		"compute_disks",
 		wf,
-		config,
-		pq,
-		s.fetch,
-		func(wf *aw.Workflow, entity gc.ComputeDisk) {
-			s.render(wf, svc, config, entity)
+		cfg,
+		q,
+		gc.ListComputeDisks,
+		func(wf *aw.Workflow, gcd gc.ComputeDisk) {
+			cd := FromGCloudComputeDisk(&gcd)
+			resource.NewItem(wf, cfg, cd, svc.Icon())
 		},
-	))
-}
+	)
 
-func (s *DiskSearcher) fetch(config *gc.Config) ([]gc.ComputeDisk, error) {
-	return gc.ListComputeDisks(config)
-}
-
-func (s *DiskSearcher) render(wf *aw.Workflow, svc *services.Service, config *gc.Config, entity gc.ComputeDisk) {
-	disk := FromGCloudComputeDisk(&entity)
-	wf.NewItem(disk.Title()).
-		Subtitle(disk.Subtitle()).
-		Arg(disk.URL(config)).
-		Icon(svc.Icon()).
-		Valid(true)
+	return builder.Build()
 }

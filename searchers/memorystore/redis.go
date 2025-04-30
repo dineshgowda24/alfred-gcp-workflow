@@ -5,33 +5,25 @@ import (
 	gc "github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 	"github.com/dineshgowda24/alfred-gcp-workflow/parser"
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
-	"github.com/dineshgowda24/alfred-gcp-workflow/workflow"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/resource"
 )
 
 type RedisInstanceSearcher struct{}
 
-func (s *RedisInstanceSearcher) Search(wf *aw.Workflow, svc *services.Service, config *gc.Config, pq *parser.Result) error {
-	return workflow.ResolveAndRender(workflow.NewRenderRequest(
+func (s *RedisInstanceSearcher) Search(
+	wf *aw.Workflow, svc *services.Service, cfg *gc.Config, q *parser.Result,
+) error {
+	builder := resource.NewBuilder(
 		"memorystore_redis_instances",
 		wf,
-		config,
-		pq,
-		s.fetch,
-		func(wf *aw.Workflow, entity gc.RedisInstance) {
-			s.render(wf, svc, config, entity)
+		cfg,
+		q,
+		gc.ListRedisInstances,
+		func(wf *aw.Workflow, gri gc.RedisInstance) {
+			ri := FromGCloudRedisInstance(&gri)
+			resource.NewItem(wf, cfg, ri, svc.Icon())
 		},
-	))
-}
+	)
 
-func (s *RedisInstanceSearcher) fetch(config *gc.Config) ([]gc.RedisInstance, error) {
-	return gc.ListRedisInstances(config)
-}
-
-func (s *RedisInstanceSearcher) render(wf *aw.Workflow, svc *services.Service, config *gc.Config, entity gc.RedisInstance) {
-	ins := RedisInstanceFromGCloud(&entity)
-	wf.NewItem(ins.Name).
-		Subtitle(ins.Subtitle()).
-		Arg(ins.URL(config)).
-		Icon(svc.Icon()).
-		Valid(true)
+	return builder.Build()
 }

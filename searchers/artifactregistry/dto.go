@@ -15,22 +15,22 @@ type Repository struct {
 	UpdateTime time.Time
 }
 
-func (r *Repository) Title() string {
+func (r Repository) Title() string {
 	return r.Name
 }
 
-func (r *Repository) Subtitle() string {
+func (r Repository) Subtitle() string {
 	return fmt.Sprintf("Format: %s  | Last Updated: %s", r.Format, r.UpdateTime.Format("Jan 2, 2006 15:04 MST"))
 }
 
-func (r *Repository) URL(config *gcloud.Config) string {
+func (r Repository) URL(config *gcloud.Config) string {
 	format := strings.ToLower(r.Format)
 	return fmt.Sprintf(
 		"https://console.cloud.google.com/artifacts/%s/%s/%s/%s?project=%s",
 		format, config.Project, r.Location, r.Name, config.Project)
 }
 
-func RepositoryFromGCloud(repo *gcloud.ArtifactRepository) Repository {
+func FromGCloudRepository(repo *gcloud.ArtifactRepository) Repository {
 	var updatedTime time.Time
 	updatedTime, err := time.Parse(time.RFC3339, repo.UpdateTime)
 	if err != nil {

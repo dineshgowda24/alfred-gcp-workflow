@@ -50,7 +50,7 @@ func (i Instance) URL(config *gcloud.Config) string {
 	)
 }
 
-func InstanceFromGCloud(instance *gcloud.FilestoreInstance) Instance {
+func FromGCloudInstance(instance *gcloud.FilestoreInstance) Instance {
 	createdAt, err := time.Parse(time.RFC3339, instance.CreatedAt)
 	if err != nil {
 		createdAt = time.Time{}

@@ -5,33 +5,23 @@ import (
 	gc "github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 	"github.com/dineshgowda24/alfred-gcp-workflow/parser"
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
-	"github.com/dineshgowda24/alfred-gcp-workflow/workflow"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/resource"
 )
 
 type ImageSearcher struct{}
 
-func (s *ImageSearcher) Search(wf *aw.Workflow, svc *services.Service, config *gc.Config, pq *parser.Result) error {
-	return workflow.ResolveAndRender(workflow.NewRenderRequest(
+func (s *ImageSearcher) Search(wf *aw.Workflow, svc *services.Service, cfg *gc.Config, q *parser.Result) error {
+	builder := resource.NewBuilder(
 		"compute_images",
 		wf,
-		config,
-		pq,
-		s.fetch,
-		func(wf *aw.Workflow, entity gc.ComputeImage) {
-			s.render(wf, svc, config, entity)
+		cfg,
+		q,
+		gc.ListComputeImages,
+		func(wf *aw.Workflow, gci gc.ComputeImage) {
+			ci := FromGCloudComputeImage(&gci)
+			resource.NewItem(wf, cfg, ci, svc.Icon())
 		},
-	))
-}
+	)
 
-func (s *ImageSearcher) fetch(config *gc.Config) ([]gc.ComputeImage, error) {
-	return gc.ListComputeImages(config)
-}
-
-func (s *ImageSearcher) render(wf *aw.Workflow, svc *services.Service, config *gc.Config, entity gc.ComputeImage) {
-	image := FromGCloudComputeImage(&entity)
-	wf.NewItem(image.Title()).
-		Subtitle(image.Subtitle()).
-		Arg(image.URL(config)).
-		Icon(svc.Icon()).
-		Valid(true)
+	return builder.Build()
 }
