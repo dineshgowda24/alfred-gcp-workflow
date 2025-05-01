@@ -17,6 +17,14 @@ type VPNGateway struct {
 	CreationTimestamp string `json:"creationTimestamp"`
 }
 
+// https://cloud.google.com/compute/docs/reference/rest/v1/routers
+type CloudRouter struct {
+	Name              string `json:"name"`
+	Network           string `json:"network"`
+	Region            string `json:"region"`
+	CreationTimestamp string `json:"creationTimestamp"`
+}
+
 func ListVPNTunnels(config *Config) ([]VPNTunnel, error) {
 	return runGCloudCmd[[]VPNTunnel](
 		config,
@@ -30,5 +38,13 @@ func ListVPNGateways(config *Config) ([]VPNGateway, error) {
 		config,
 		"compute", "vpn-gateways", "list",
 		"--format=json(name,gatewayIpVersion,network,region,creationTimestamp)",
+	)
+}
+
+func ListCloudRouters(config *Config) ([]CloudRouter, error) {
+	return runGCloudCmd[[]CloudRouter](
+		config,
+		"compute", "routers", "list",
+		"--format=json(name,network,region,creationTimestamp)",
 	)
 }

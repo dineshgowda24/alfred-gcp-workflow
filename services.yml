@@ -576,12 +576,12 @@
   url: https://console.cloud.google.com/hybrid?project={{ .Project }}
   logo_path: images/network_connectivity_center.png
   sub_services:
-    - id: vpntunnels
+    - id: vpntunnel
       name: VPN Tunnels
       description: List of VPN tunnels
       url: https://console.cloud.google.com/hybrid/vpn/list?project={{ .Project }}
       logo_path: images/cloud_vpn.png
-    - id: vpngateways
+    - id: vpngateway
       name: VPN Gateways
       description: List of VPN gateways
       url: https://console.cloud.google.com/hybrid/vpn/list?tab=gateways&project={{ .Project }}

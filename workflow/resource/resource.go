@@ -136,6 +136,13 @@ func (b *Builder[T]) load() ([]T, error) {
 }
 
 func (b *Builder[T]) renderAll(resources ...T) {
+	if len(resources) == 0 {
+		b.wf.NewItem("No resources found").
+			Subtitle("Try a different query").
+			Icon(aw.IconInfo).
+			Valid(false)
+	}
+
 	for _, resource := range resources {
 		b.render(b.wf, resource)
 	}
