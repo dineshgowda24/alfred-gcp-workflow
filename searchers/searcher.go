@@ -5,6 +5,7 @@ import (
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 	"github.com/dineshgowda24/alfred-gcp-workflow/parser"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/artifactregistry"
+	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/cloudrun"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/compute"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/filestore"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/k8s"
@@ -66,6 +67,8 @@ func GetDefaultRegistry() *Registry {
 			"netconnectivity/vpntunnels":    &netconnectivity.VPNTunnelSearcher{},
 			"netconnectivity/vpngateways":   &netconnectivity.VPNGatewaySearcher{},
 			"artifactregistry/repositories": &artifactregistry.RepositorySearcher{},
+			"cloudrun/services":             &cloudrun.ServiceSearcher{},
+			"cloudrun/functions":            &cloudrun.FunctionSearcher{},
 		},
 	}
 }

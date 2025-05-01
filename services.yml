@@ -155,6 +155,22 @@
   description: Fully managed serverless containers
   url: https://console.cloud.google.com/run?project={{ .Project }}
   logo_path: images/cloud_run.png
+  sub_services:
+    - id: functions
+      name: Functions (Gen 1)
+      description: List of functions (Gen 1)
+      url: https://console.cloud.google.com/functions?project={{ .Project }}
+      logo_path: images/cloud_run.png
+    - id: services
+      name: Services (Gen 2)
+      description: List of Services (Gen 2)
+      url: https://console.cloud.google.com/run?project={{ .Project }}
+      logo_path: images/cloud_run.png
+    - id: jobs
+      name: Jobs
+      description: List of Cloud Run jobs
+      url: https://console.cloud.google.com/run/jobs?project={{ .Project }}
+      logo_path: images/cloud_run.png
 - id: cloudscheduler
   name: Cloud Scheduler
   description: Managed cron job service

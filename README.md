@@ -50,7 +50,7 @@ Here are the GCP resources currently searchable through the workflow:
 | 🛤️ VPC | Networks, Routes |
 | 🔐 Network Connectivity | VPN Tunnels, VPN Gateways |
 | 🗃️ Artifact Registry | Repositories |
-
+| 🏃‍♂️ Cloud Run | Functions(Gen1), Services(Gen2) |
 
 ## Contributing
 
