@@ -126,3 +126,58 @@ func FromGCloudVPNGateway(gateway *gcloud.VPNGateway) VPNGateway {
 		CreationTime:     creationTime.Local(),
 	}
 }
+
+type CloudRouter struct {
+	Name         string
+	Network      string
+	Region       string
+	CreationTime time.Time
+}
+
+func (r CloudRouter) Title() string {
+	return r.Name
+}
+
+func (r CloudRouter) Subtitle() string {
+	return fmt.Sprintf("Network: %s | Created: %s",
+		r.Network, r.CreationTime.Format("Jan 2, 2006 15:04 MST"))
+}
+
+func (r CloudRouter) URL(config *gcloud.Config) string {
+	return fmt.Sprintf(
+		"https://console.cloud.google.com/hybrid/routers/details/%s/%s?project=%s",
+		r.Region, r.Name, config.Project)
+}
+
+func FromGCloudCloudRouter(router *gcloud.CloudRouter) CloudRouter {
+	var region string
+	words := strings.Split(router.Region, "/")
+	for i, word := range words {
+		if word == "regions" && i+1 < len(words) {
+			region = words[i+1]
+			break
+		}
+	}
+
+	var network string
+	words = strings.Split(router.Network, "/")
+	for i, word := range words {
+		if word == "networks" && i+1 < len(words) {
+			network = words[i+1]
+			break
+		}
+	}
+
+	var creationTime time.Time
+	creationTime, err := time.Parse(time.RFC3339, router.CreationTimestamp)
+	if err != nil {
+		log.Println("error parsing creation timestamp:", err)
+	}
+
+	return CloudRouter{
+		Name:         router.Name,
+		Network:      network,
+		Region:       region,
+		CreationTime: creationTime.Local(),
+	}
+}
