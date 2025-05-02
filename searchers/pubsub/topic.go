@@ -21,7 +21,7 @@ func (s *TopicSearcher) Search(
 		gc.ListTopics,
 		func(wf *aw.Workflow, gpt gc.PubSubTopic) {
 			pt := FromGCloudTopic(&gpt)
-			resource.NewItem(wf, cfg, pt, svc.Icon())
+			resource.NewItem(wf, cfg, pt, svc.Icon(wf.Dir()))
 		},
 	)
 

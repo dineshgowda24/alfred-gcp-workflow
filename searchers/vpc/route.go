@@ -21,7 +21,7 @@ func (r *RouteSearcher) Search(
 		gc.ListVPCRoutes,
 		func(wf *aw.Workflow, gvr gc.VPCRoute) {
 			vr := FromGCloudRoute(&gvr)
-			resource.NewItem(wf, cfg, vr, svc.Icon())
+			resource.NewItem(wf, cfg, vr, svc.Icon(wf.Dir()))
 		},
 	)
 	return builder.Build()

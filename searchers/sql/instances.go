@@ -21,7 +21,7 @@ func (s *InstanceSearcher) Search(
 		gc.ListSQLInstances,
 		func(wf *aw.Workflow, gsi gc.SQLInstance) {
 			si := FromGCloudSQLInstance(&gsi)
-			resource.NewItem(wf, cfg, si, svc.Icon())
+			resource.NewItem(wf, cfg, si, svc.Icon(wf.Dir()))
 		},
 	)
 	return builder.Build()

@@ -21,7 +21,7 @@ func (s *DNSZoneSearcher) Search(
 		gc.ListDNSZones,
 		func(wf *aw.Workflow, gdz gc.DNSZone) {
 			dz := FromGCloudDNSZone(&gdz)
-			resource.NewItem(wf, cfg, dz, svc.Icon())
+			resource.NewItem(wf, cfg, dz, svc.Icon(wf.Dir()))
 		},
 	)
 

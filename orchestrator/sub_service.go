@@ -57,7 +57,7 @@ func (h *SubServiceHandler) addFallbackItem(ctx *Context) {
 	wf.NewItem(sub.Title()).
 		Subtitle(sub.Subtitle(nil)).
 		Autocomplete(buildAutocomplete(ctx, sub)).
-		Icon(sub.Icon()).
+		Icon(sub.Icon(wf.Dir())).
 		Arg(url).
 		Valid(true)
 
