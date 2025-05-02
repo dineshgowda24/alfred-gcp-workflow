@@ -13,21 +13,21 @@ type ServiceHandler struct{}
 
 func (h *ServiceHandler) Handle(ctx *Context) error {
 	service := ctx.ParsedQuery.Service
-	log.Printf("LOG: ServiceHandler started for service: %s", service.Name)
+	log.Printf("service handler started for service: %s", service.Name)
 
 	if len(service.SubServices) == 0 {
 		h.handleNoSubservices(ctx, service)
 		return nil
 	}
 
-	log.Printf("LOG: Listing %d subservices for service: %s", len(service.SubServices), service.Name)
+	log.Printf("listing subservices for service: %s", service.Name)
 
 	for i := range service.SubServices {
 		h.addSubservice(ctx, &service.SubServices[i])
 	}
 
 	h.send(ctx)
-	log.Printf("LOG: ServiceHandler complete for service: %s", service.Name)
+	log.Printf("service handler completed for service: %s", service.Name)
 	return nil
 }
 

@@ -54,13 +54,13 @@ func (s *Service) Icon(dir string) *aw.Icon {
 func (s *Service) Url(config *gcloud.Config) (string, error) {
 	t, err := template.New("url").Parse(s.URL)
 	if err != nil {
-		log.Printf("LOG: Error parsing template for service %s: %v\n", s.Name, err)
+		log.Printf("error parsing template for service %s: %v\n", s.Name, err)
 		return "", err
 	}
 
 	var buf bytes.Buffer
 	if err := t.Execute(&buf, config); err != nil {
-		log.Printf("LOG: Error executing template for service %s: %v\n", s.Name, err)
+		log.Printf("error executing template for service %s: %v\n", s.Name, err)
 		return "", err
 	}
 	return buf.String(), nil

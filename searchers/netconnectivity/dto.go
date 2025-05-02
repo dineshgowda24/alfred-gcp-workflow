@@ -115,7 +115,7 @@ func FromGCloudVPNGateway(gateway *gcloud.VPNGateway) VPNGateway {
 	var creationTime time.Time
 	creationTime, err := time.Parse(time.RFC3339, gateway.CreationTimestamp)
 	if err != nil {
-		log.Println("LOG: Error parsing creation timestamp:", err)
+		creationTime = time.Time{}
 	}
 
 	return VPNGateway{

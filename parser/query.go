@@ -17,6 +17,9 @@ type Result struct {
 	IsConfigQuery      bool
 	Config             *gcloud.Config
 	PartialConfigQuery string
+
+	Intent      string
+	IntentValue string
 }
 
 func (r *Result) IsEmptyQuery() bool {
@@ -31,6 +34,10 @@ func (r *Result) HasSubService() bool {
 	return r.Service != nil && r.SubService != nil
 }
 
+func (r *Result) HasIntent() bool {
+	return r.Intent != ""
+}
+
 func Parse(searchArgs *arg.SearchArgs, svcList []services.Service) *Result {
 	query := strings.TrimSpace(searchArgs.Query)
 	words := strings.Fields(query)
@@ -40,10 +47,11 @@ func Parse(searchArgs *arg.SearchArgs, svcList []services.Service) *Result {
 		return result
 	}
 
-	log.Println("LOG: parsing words:", words)
+	if result.extractIntent(words) {
+		return result
+	}
 
 	filteredWords := result.extractConfig(words)
-	log.Println("LOG: filtered words after config extraction:", filteredWords)
 
 	if len(filteredWords) == 0 {
 		return result
@@ -51,6 +59,22 @@ func Parse(searchArgs *arg.SearchArgs, svcList []services.Service) *Result {
 
 	result.extractServiceAndSubService(filteredWords, svcList)
 	return result
+}
+
+func (r *Result) extractIntent(words []string) bool {
+	if len(words) == 0 {
+		return false
+	}
+
+	intent := strings.ToLower(words[0])
+	switch intent {
+	case "gcloud-path":
+		r.Intent = intent
+		r.IntentValue = strings.Join(words[1:], " ")
+		return true
+	default:
+		return false
+	}
 }
 
 func (r *Result) extractConfig(words []string) []string {
@@ -69,7 +93,7 @@ func (r *Result) extractConfig(words []string) []string {
 func (r *Result) matchConfig(name string) {
 	configs, err := gcloud.GetAllConfigs()
 	if err != nil {
-		log.Println("LOG: error fetching configs:", err)
+		log.Println("error fetching configs:", err)
 		r.PartialConfigQuery = name
 		return
 	}

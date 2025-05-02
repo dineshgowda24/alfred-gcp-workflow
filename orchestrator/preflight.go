@@ -2,24 +2,31 @@ package orchestrator
 
 import (
 	"errors"
-	"fmt"
 
 	aw "github.com/deanishe/awgo"
-	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/env"
+	"github.com/dineshgowda24/alfred-gcp-workflow/parser"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/config"
 )
 
-type PreFlightCheckHandler struct{}
+var ErrPreflightCheckFailed = errors.New("preflight check failed")
 
-func (h *PreFlightCheckHandler) Handle(ctx *Context) error {
-	wf := ctx.Workflow
+type PreFlight struct{}
 
-	if env.GCloudCliPath() == "" {
-		wf.NewItem("gcloud path not set").
-			Subtitle(fmt.Sprintf("Please set %s in alfred", env.GCloudCliPathEnv)).
-			Icon(aw.IconError).
+func (h *PreFlight) Check(wf *aw.Workflow, result *parser.Result) error {
+	if result.HasIntent() {
+		return nil
+	}
+
+	cfgFile := config.GetConfigFile()
+	if cfgFile.GCloudPath == "" {
+		wf.NewItem("One quick step and you are golden! 🧙✨").
+			Subtitle("Use: gcloud-path /your/gcloud").
+			Arg("gcloud-path ").
+			Autocomplete("gcloud-path ").
+			Icon(aw.IconSettings).
 			Valid(false)
 		wf.SendFeedback()
-		return errors.New("gcloud path not set")
+		return ErrPreflightCheckFailed
 	}
 
 	return nil

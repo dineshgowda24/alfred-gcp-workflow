@@ -21,7 +21,8 @@ type Handler interface {
 
 type Orchestrator struct {
 	ctx               *Context
-	preflightHandler  Handler
+	preflight         *PreFlight
+	intentHandler     Handler
 	configHandler     Handler
 	homeHandler       Handler
 	serviceHandler    Handler
@@ -33,20 +34,21 @@ type Orchestrator struct {
 
 func DefaultOrchestrator(servicesFS embed.FS) *Orchestrator {
 	return NewOrchestrator(
-		&PreFlightCheckHandler{},
 		&ConfigHandler{},
 		&HomeHandler{},
 		&ServiceHandler{},
 		&SubServiceHandler{},
 		&FallbackHandler{},
 		&ErrorHandler{},
+		&PreFlight{},
 		servicesFS,
 	)
 }
 
-func NewOrchestrator(preflight, config, home, service, subService, fallback, err Handler, servicesFS embed.FS) *Orchestrator {
+func NewOrchestrator(config, home, service, subService, fallback, err Handler, preflight *PreFlight, servicesFS embed.FS) *Orchestrator {
 	return &Orchestrator{
-		preflightHandler:  preflight,
+		preflight:         preflight,
+		intentHandler:     &IntentHandler{},
 		configHandler:     config,
 		homeHandler:       home,
 		serviceHandler:    service,
@@ -58,23 +60,19 @@ func NewOrchestrator(preflight, config, home, service, subService, fallback, err
 }
 
 func (o *Orchestrator) Run(wf *aw.Workflow, args *arg.SearchArgs) {
-	log.Println("LOG: orchestrator run with query:", args.Query)
+	log.Println("running orchestrator with query:", args.Query)
 
 	o.buildCtx(wf, args)
 	if o.ctx.Err != nil {
 		o.handleErr()
 		return
 	}
-	log.Println("LOG: build context complete", o.ctx.ActiveConfig, o.ctx.ParsedQuery)
 
-	if !o.preflightCheck() {
-		return
-	}
-
-	log.Println("LOG: IsConfigQuery:", o.ctx.IsConfigQuery())
-	log.Println("LOG: IsConfigActive:", o.ctx.IsConfigActive())
+	log.Println("buildCtx completed successfully")
 
 	switch {
+	case o.ctx.IsIntentQuery():
+		o.ctx.Err = o.intentHandler.Handle(o.ctx)
 	case (o.ctx.IsConfigQuery() && !o.ctx.IsConfigActive()):
 		o.ctx.Err = o.configHandler.Handle(o.ctx)
 	case o.ctx.IsHomeQuery():
@@ -91,27 +89,33 @@ func (o *Orchestrator) Run(wf *aw.Workflow, args *arg.SearchArgs) {
 }
 
 func (o *Orchestrator) buildCtx(wf *aw.Workflow, args *arg.SearchArgs) {
-	o.ctx = &Context{Workflow: wf, Args: args}
+	ctx := &Context{Workflow: wf, Args: args}
+	o.ctx = ctx
 	servicesList, err := services.Load(o.servicesFS)
 	if err != nil {
-		o.ctx.Err = err
+		ctx.Err = err
 		return
 	}
 
-	o.ctx.Services = servicesList
-	o.ctx.SearchRegistry = searchers.GetDefaultRegistry()
-	o.ctx.ParsedQuery = parser.Parse(args, servicesList)
+	ctx.Services = servicesList
+	ctx.SearchRegistry = searchers.GetDefaultRegistry()
+	ctx.ParsedQuery = parser.Parse(args, servicesList)
 
-	if o.ctx.ParsedQuery.Config != nil {
-		o.ctx.ActiveConfig = o.ctx.ParsedQuery.Config
-	} else {
+	if err := o.preflightCheck(); err != nil {
+		ctx.Err = err
+		return
+	}
+
+	if ctx.ParsedQuery.Config != nil {
+		ctx.ActiveConfig = ctx.ParsedQuery.Config
+	} else if !ctx.IsIntentQuery() {
 		config := gcloud.GetActiveConfig()
 		if config == nil {
-			o.ctx.Err = ErrNoActiveConfig
+			ctx.Err = ErrNoActiveConfig
 			return
 		}
 
-		o.ctx.ActiveConfig = config
+		ctx.ActiveConfig = config
 	}
 }
 
@@ -121,11 +125,11 @@ func (o *Orchestrator) handleErr() {
 	}
 }
 
-func (o *Orchestrator) preflightCheck() bool {
-	err := o.preflightHandler.Handle(o.ctx)
+func (o *Orchestrator) preflightCheck() error {
+	err := o.preflight.Check(o.ctx.Workflow, o.ctx.ParsedQuery)
 	if err != nil {
-		log.Println("LOG: preflight check failed:", err)
-		return false
+		log.Println("preflight check failed:", err)
+		return err
 	}
-	return true
+	return nil
 }

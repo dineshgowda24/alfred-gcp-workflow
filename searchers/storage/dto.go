@@ -1,7 +1,6 @@
 package storage
 
 import (
-	"log"
 	"time"
 
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
@@ -33,13 +32,11 @@ func (b Bucket) URL(config *gcloud.Config) string {
 func FromGCloudStorageBucket(bucket *gcloud.Bucket) Bucket {
 	updateTime, err := time.Parse("2006-01-02T15:04:05-0700", bucket.UpdateTime)
 	if err != nil {
-		log.Println("LOG: Error parsing update time:", err)
 		updateTime = time.Time{}
 	}
 
 	creationTime, err := time.Parse("2006-01-02T15:04:05-0700", bucket.CreationTime)
 	if err != nil {
-		log.Println("LOG: Error parsing creation time:", err)
 		creationTime = time.Time{}
 	}
 
