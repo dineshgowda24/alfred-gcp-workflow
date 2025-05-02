@@ -2,7 +2,6 @@ package filestore
 
 import (
 	"fmt"
-	"log"
 	"strconv"
 	"strings"
 	"time"
@@ -60,7 +59,6 @@ func FromGCloudInstance(instance *gcloud.FilestoreInstance) Instance {
 	if len(instance.FileShares) > 0 {
 		capacity, err := strconv.Atoi(instance.FileShares[0].CapacityGb)
 		if err != nil {
-			log.Println("LOG: filestore: Error parsing capacity:", err)
 			capacity = 0
 		}
 

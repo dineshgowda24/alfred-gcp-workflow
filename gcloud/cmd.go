@@ -8,20 +8,18 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/env"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/config"
 )
-
-var gcloudPath = env.GCloudCliPath()
 
 func runGCloudCmd[T any](cfg *Config, cmd string, extraArgs ...string) (T, error) {
 	var out T
 	args := buildArgs(cmd, cfg, extraArgs...)
 
 	var stderr bytes.Buffer
-	cmdExec := exec.Command(gcloudPath, args...)
+	cmdExec := exec.Command(config.GetGCloudPath(), args...)
 	cmdExec.Stderr = &stderr
 
-	log.Println("LOG: gcloud command:", cmdExec.String())
+	log.Println("gcloud command:", cmdExec.String())
 	raw, err := cmdExec.Output()
 	if err != nil {
 		return out, fmt.Errorf("gcloud command failed: %s", stderr.String())
@@ -55,4 +53,12 @@ func containsFlag(args []string, flag string) bool {
 		}
 	}
 	return false
+}
+
+func getCliPath() string {
+	cliPath := config.GetConfigFile().GCloudConfigPath
+	if cliPath == "" {
+		cliPath = "gcloud"
+	}
+	return cliPath
 }

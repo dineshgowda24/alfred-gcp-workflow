@@ -6,6 +6,7 @@ import (
 
 	aw "github.com/deanishe/awgo"
 	"github.com/dineshgowda24/alfred-gcp-workflow/cmd"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/config"
 )
 
 var (
@@ -21,6 +22,8 @@ func init() {
 
 func main() {
 	wf := cmd.NewWorkflow()
+	config.Init(wf)
+
 	logDirs(wf)
 	cmd.NewRunner(wf, servicesFs).
 		RewireMagicQuery().

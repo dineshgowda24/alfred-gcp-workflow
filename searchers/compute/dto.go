@@ -2,7 +2,6 @@ package compute
 
 import (
 	"fmt"
-	"log"
 	"strconv"
 	"strings"
 	"time"
@@ -21,7 +20,6 @@ type ComputeInstance struct {
 func FromGCloudComputeInstance(instance *gcloud.ComputeInstance) ComputeInstance {
 	creationTime, err := time.Parse("2006-01-02T15:04:05.000-07:00", instance.CreationTimestamp)
 	if err != nil {
-		log.Println("LOG: compute: Error parsing creation time:", err)
 		creationTime = time.Time{}
 	}
 
@@ -77,7 +75,6 @@ type ComputeDisk struct {
 func FromGCloudComputeDisk(disk *gcloud.ComputeDisk) ComputeDisk {
 	creationTime, err := time.Parse("2006-01-02T15:04:05.000-07:00", disk.CreationTimestamp)
 	if err != nil {
-		log.Println("LOG: compute: Error parsing creation time:", err)
 		creationTime = time.Time{}
 	}
 
@@ -95,13 +92,11 @@ func FromGCloudComputeDisk(disk *gcloud.ComputeDisk) ComputeDisk {
 
 	size, err := strconv.Atoi(disk.SizeGb)
 	if err != nil {
-		log.Println("LOG: compute: Error parsing size:", err)
 		size = 0
 	}
 
 	blockSize, err := strconv.Atoi(disk.PhysicalBlockSizeBytes)
 	if err != nil {
-		log.Println("LOG: compute: Error parsing block size:", err)
 		blockSize = 0
 	}
 
@@ -152,19 +147,16 @@ type ComputeImage struct {
 func FromGCloudComputeImage(image *gcloud.ComputeImage) ComputeImage {
 	creationTime, err := time.Parse("2006-01-02T15:04:05.000-07:00", image.CreationTimestamp)
 	if err != nil {
-		log.Println("LOG: compute: Error parsing creation time:", err)
 		creationTime = time.Time{}
 	}
 
 	size, err := strconv.Atoi(image.DiskSizeGb)
 	if err != nil {
-		log.Println("LOG: compute: Error parsing size:", err)
 		size = 0
 	}
 
 	archiveSize, err := strconv.Atoi(image.ArchiveSizeBytes)
 	if err != nil {
-		log.Println("LOG: compute: Error parsing archive size:", err)
 		archiveSize = 0
 	}
 
@@ -211,7 +203,6 @@ type ComputeInstanceTemplate struct {
 func FromGCloudComputeInstanceTemplate(template *gcloud.ComputeInstanceTemplate) ComputeInstanceTemplate {
 	creationTime, err := time.Parse("2006-01-02T15:04:05.000-07:00", template.CreationTimestamp)
 	if err != nil {
-		log.Println("LOG: compute: Error parsing creation time:", err)
 		creationTime = time.Time{}
 	}
 
@@ -273,13 +264,11 @@ func (m MachineImage) URL(config *gcloud.Config) string {
 func FromGCloudComputeMachineImage(image *gcloud.ComputeMachineImage) MachineImage {
 	creationTime, err := time.Parse(time.RFC3339, image.CreationTimestamp)
 	if err != nil {
-		log.Println("LOG: compute: Error parsing creation time:", err)
 		creationTime = time.Time{}
 	}
 
 	size, err := strconv.Atoi(image.TotalStorageBytes)
 	if err != nil {
-		log.Println("LOG: compute: Error parsing size:", err)
 		size = 0
 	}
 
@@ -338,19 +327,16 @@ func (s Snapshot) URL(config *gcloud.Config) string {
 func FromGCloudComputeSnapshot(snapshot *gcloud.ComputeSnapshot) Snapshot {
 	creationTime, err := time.Parse(time.RFC3339, snapshot.CreationTimestamp)
 	if err != nil {
-		log.Println("error parsing creation time:", err)
 		creationTime = time.Time{}
 	}
 
 	size, err := strconv.Atoi(snapshot.DiskSizeGb)
 	if err != nil {
-		log.Println("error parsing disk size:", err)
 		size = 0
 	}
 
 	storageSize, err := strconv.Atoi(snapshot.StorageBytes)
 	if err != nil {
-		log.Println("LOG: compute: Error parsing storage size:", err)
 		storageSize = 0
 	}
 

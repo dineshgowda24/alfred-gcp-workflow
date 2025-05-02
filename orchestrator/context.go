@@ -42,6 +42,10 @@ func (ctx *Context) IsSubServiceQuery() bool {
 	return ctx.ParsedQuery.HasSubService()
 }
 
+func (ctx *Context) IsIntentQuery() bool {
+	return ctx.ParsedQuery.HasIntent()
+}
+
 func (ctx *Context) SendFeedback() {
 	if ctx.Err != nil {
 		ctx.Workflow.NewItem("Error: " + ctx.Err.Error()).

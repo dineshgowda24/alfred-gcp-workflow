@@ -11,14 +11,14 @@ var _ Handler = (*FallbackHandler)(nil)
 type FallbackHandler struct{}
 
 func (h *FallbackHandler) Handle(ctx *Context) error {
-	log.Println("LOG: FallbackHandler started")
+	log.Println("fallback handler started")
 
 	for i := range ctx.Services {
 		h.addService(ctx, &ctx.Services[i])
 	}
 	h.send(ctx)
 
-	log.Println("LOG: FallbackHandler complete")
+	log.Println("fallback handler completed")
 	return nil
 }
 

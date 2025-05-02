@@ -3,20 +3,10 @@ package env
 import (
 	"os"
 	"strconv"
-	"strings"
 	"time"
 )
 
-const (
-	GCloudCliPathEnv    = "ALFRED_GCP_WORKFLOW_GCLOUD_PATH"
-	GCloudConfigPathEnv = "ALFRED_GCP_WORKFLOW_GCLOUD_CONFIG_PATH"
-	CacheTTLEnv         = "ALFRED_GCP_WORKFLOW_CACHE_TTL_SECONDS"
-)
-
-func GCloudCliPath() string {
-	val := os.Getenv(GCloudCliPathEnv)
-	return strings.TrimSpace(val)
-}
+const CacheTTLEnv = "ALFRED_GCP_WORKFLOW_CACHE_TTL_SECONDS"
 
 func CacheTTLDuration(defaultTTL time.Duration) time.Duration {
 	val := os.Getenv(CacheTTLEnv)
@@ -29,12 +19,4 @@ func CacheTTLDuration(defaultTTL time.Duration) time.Duration {
 		return defaultTTL
 	}
 	return time.Second * time.Duration(ttl)
-}
-
-func GCloudConfigPath(fallback string) string {
-	val := os.Getenv(GCloudConfigPathEnv)
-	if val == "" {
-		return fallback
-	}
-	return strings.TrimSpace(val)
 }

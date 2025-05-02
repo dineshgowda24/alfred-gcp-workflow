@@ -8,7 +8,7 @@ import (
 
 	"gopkg.in/ini.v1"
 
-	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/env"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/config"
 )
 
 var (
@@ -40,7 +40,7 @@ func GetActiveConfig() *Config {
 
 	path, err := activeConfigPath()
 	if err != nil {
-		log.Println("LOG: failed to get active config path:", err)
+		log.Println("failed to get active config path:", err)
 		return nil
 	}
 
@@ -62,7 +62,7 @@ func GetAllConfigs() ([]*Config, error) {
 
 	files, err := os.ReadDir(dir)
 	if err != nil {
-		log.Println("LOG: error reading configurations directory:", err)
+		log.Println("error reading configurations directory:", err)
 		return nil, err
 	}
 
@@ -83,27 +83,17 @@ func GetAllConfigs() ([]*Config, error) {
 }
 
 func activeConfigPath() (string, error) {
-	home, err := os.UserHomeDir()
-	if err != nil {
-		return "", err
-	}
-
-	base := env.GCloudConfigPath(filepath.Join(home, ".config", "gcloud"))
-	data, err := os.ReadFile(filepath.Join(base, "active_config"))
+	data, err := os.ReadFile(filepath.Join(config.GetGCloudConfigPath(), "active_config"))
 	if err != nil {
 		return "", err
 	}
 
 	name := strings.TrimSpace(string(data))
-	return filepath.Join(base, "configurations", "config_"+name), nil
+	return filepath.Join(config.GetGCloudConfigPath(), "configurations", "config_"+name), nil
 }
 
 func configsDir() (string, error) {
-	home, err := os.UserHomeDir()
-	if err != nil {
-		return "", err
-	}
-	return filepath.Join(env.GCloudConfigPath(filepath.Join(home, ".config", "gcloud")), "configurations"), nil
+	return filepath.Join(config.GetGCloudConfigPath(), "configurations"), nil
 }
 
 func isValidConfigFile(f os.DirEntry) bool {
@@ -113,7 +103,7 @@ func isValidConfigFile(f os.DirEntry) bool {
 func loadConfig(path string) *Config {
 	iniFile, err := ini.Load(path)
 	if err != nil {
-		log.Println("LOG: error loading config file:", path, err)
+		log.Println("error loading config file:", path, err)
 		return nil
 	}
 
