@@ -33,7 +33,7 @@ func (h *FallbackHandler) addService(ctx *Context, s *services.Service) {
 		Match(s.Match()).
 		Autocomplete(buildAutocomplete(ctx, s)).
 		Arg(url).
-		Icon(s.Icon()).
+		Icon(s.Icon(ctx.Workflow.Dir())).
 		Valid(true)
 }
 

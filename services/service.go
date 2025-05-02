@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"embed"
 	"log"
+	"path/filepath"
 	"text/template"
 
 	aw "github.com/deanishe/awgo"
@@ -44,9 +45,9 @@ func (s *Service) Autocomplete() string {
 	return s.ID
 }
 
-func (s *Service) Icon() *aw.Icon {
+func (s *Service) Icon(dir string) *aw.Icon {
 	return &aw.Icon{
-		Value: "/Users/dinesh.chikkanna/personal/alfred-gcp-workflow/" + s.LogoPath,
+		Value: filepath.Join(dir, s.LogoPath),
 	}
 }
 

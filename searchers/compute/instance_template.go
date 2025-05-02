@@ -21,7 +21,7 @@ func (s *InstanceTmplSearcher) Search(
 		gc.ListComputeInstanceTemplates,
 		func(wf *aw.Workflow, gcit gc.ComputeInstanceTemplate) {
 			cit := FromGCloudComputeInstanceTemplate(&gcit)
-			resource.NewItem(wf, cfg, cit, svc.Icon())
+			resource.NewItem(wf, cfg, cit, svc.Icon(wf.Dir()))
 		},
 	)
 

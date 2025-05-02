@@ -1,6 +1,8 @@
 package orchestrator
 
 import (
+	"path/filepath"
+
 	aw "github.com/deanishe/awgo"
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 )
@@ -36,7 +38,7 @@ func (h *HomeHandler) Handle(ctx *Context) error {
 			Title:    "Health Dashboard",
 			Subtitle: "🏥 View service availability by region",
 			Arg:      gcloud.HealthStatusURL,
-			Icon:     &aw.Icon{Value: "/Users/dinesh.chikkanna/personal/alfred-gcp-workflow/images/heartbeat.png"},
+			Icon:     &aw.Icon{Value: filepath.Join(ctx.Workflow.Dir(), "images", "heartbeat.png")},
 			Valid:    true,
 		},
 		{

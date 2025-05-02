@@ -21,7 +21,7 @@ func (s *VPNTunnelSearcher) Search(
 		gc.ListVPNTunnels,
 		func(wf *aw.Workflow, gvt gc.VPNTunnel) {
 			vt := FromGCloudVPNTunnel(&gvt)
-			resource.NewItem(wf, cfg, vt, svc.Icon())
+			resource.NewItem(wf, cfg, vt, svc.Icon(wf.Dir()))
 		},
 	)
 

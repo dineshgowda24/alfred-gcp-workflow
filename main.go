@@ -21,8 +21,15 @@ func init() {
 
 func main() {
 	wf := aw.New(aw.MagicPrefix(cmd.MagicPrefix))
+	logDirs(wf)
 	cmd.NewRunner(wf, servicesFs).
 		RewireMagicQuery().
 		ParseFlags().
 		Run()
+}
+
+func logDirs(wf *aw.Workflow) {
+	log.Println("root dir:", wf.Dir())
+	log.Println("data dir:", wf.DataDir())
+	log.Println("cache dir:", wf.CacheDir())
 }

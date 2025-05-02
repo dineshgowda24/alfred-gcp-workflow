@@ -21,7 +21,7 @@ func (s *InstanceSearcher) Search(
 		gc.ListComputeInstances,
 		func(wf *aw.Workflow, gci gc.ComputeInstance) {
 			ci := FromGCloudComputeInstance(&gci)
-			resource.NewItem(wf, cfg, ci, svc.Icon())
+			resource.NewItem(wf, cfg, ci, svc.Icon(wf.Dir()))
 		},
 	)
 

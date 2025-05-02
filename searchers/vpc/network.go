@@ -21,7 +21,7 @@ func (s *NetworkSearcher) Search(
 		gc.ListVPCNetworks,
 		func(wf *aw.Workflow, gvn gc.VPCNetwork) {
 			nw := FromGCloudNetwork(&gvn)
-			resource.NewItem(wf, cfg, nw, svc.Icon())
+			resource.NewItem(wf, cfg, nw, svc.Icon(wf.Dir()))
 		},
 	).Build()
 }

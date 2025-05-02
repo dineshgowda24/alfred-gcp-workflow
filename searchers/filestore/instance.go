@@ -21,7 +21,7 @@ func (s *InstanceSearcher) Search(
 		gc.ListFilestoreInstances,
 		func(wf *aw.Workflow, gfsi gc.FilestoreInstance) {
 			fsi := FromGCloudInstance(&gfsi)
-			resource.NewItem(wf, cfg, fsi, svc.Icon())
+			resource.NewItem(wf, cfg, fsi, svc.Icon(wf.Dir()))
 		},
 	)
 

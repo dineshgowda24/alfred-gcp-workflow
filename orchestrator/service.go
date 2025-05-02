@@ -40,7 +40,7 @@ func (h *ServiceHandler) handleNoSubservices(ctx *Context, s *services.Service) 
 		Match(s.Match()).
 		Autocomplete(buildAutocomplete(ctx, s)).
 		Arg(url).
-		Icon(s.Icon()).
+		Icon(s.Icon(ctx.Workflow.Dir())).
 		Valid(true)
 
 	addContributingItem(wf, fmt.Sprintf("%s has no sub-services (yet)", s.Name))
@@ -59,7 +59,7 @@ func (h *ServiceHandler) addSubservice(ctx *Context, s *services.Service) {
 		Match(s.Match()).
 		Autocomplete(buildAutocomplete(ctx, s)).
 		Arg(url).
-		Icon(s.Icon()).
+		Icon(s.Icon(ctx.Workflow.Dir())).
 		Valid(true)
 }
 

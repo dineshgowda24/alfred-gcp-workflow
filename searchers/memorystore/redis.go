@@ -21,7 +21,7 @@ func (s *RedisInstanceSearcher) Search(
 		gc.ListRedisInstances,
 		func(wf *aw.Workflow, gri gc.RedisInstance) {
 			ri := FromGCloudRedisInstance(&gri)
-			resource.NewItem(wf, cfg, ri, svc.Icon())
+			resource.NewItem(wf, cfg, ri, svc.Icon(wf.Dir()))
 		},
 	)
 
