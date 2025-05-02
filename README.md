@@ -28,9 +28,9 @@ An Alfred workflow to quickly open GCP services in your browser or search GCP re
 
 ### Advanced Usage
 
-1. The workflow supports janitor actions [janitor actions](https://pkg.go.dev/github.com/deanishe/awgo#MagicAction)**(powered by AwGo Magic Actions)** to manage internal workflow data. Type `gcp janitor:` to view available options — such as clearing cache, accessing logs, or resetting data folders.
-![Janitor](images/docs/janitor.png)
-> Example: View showing available janitor actions
+1. The workflow supports maintenance tools powered by [AwGo Magic Actions](https://pkg.go.dev/github.com/deanishe/awgo#MagicAction). Type `gcp tools:` to access options like clearing cache, viewing logs, or resetting internal data folders.
+![Tools](images/docs/tools.png)
+> Example: View showing available maintenance tools
 1. The workflow also supports [Fuzzy Filtering](https://pkg.go.dev/github.com/deanishe/awgo/fuzzy), allowing you to quickly find services or resources even with partial or out-of-order matches.
 
 ## 🔍⚡️ Supported Resource Searches

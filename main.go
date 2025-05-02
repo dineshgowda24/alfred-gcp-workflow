@@ -20,7 +20,7 @@ func init() {
 }
 
 func main() {
-	wf := aw.New(aw.MagicPrefix(cmd.MagicPrefix))
+	wf := cmd.NewWorkflow()
 	logDirs(wf)
 	cmd.NewRunner(wf, servicesFs).
 		RewireMagicQuery().

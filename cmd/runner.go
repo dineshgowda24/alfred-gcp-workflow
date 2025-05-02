@@ -11,9 +11,9 @@ import (
 	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/arg"
 )
 
-const (
-	MagicPrefix = "janitor:"
-)
+func NewWorkflow() *aw.Workflow {
+	return aw.New(aw.MagicPrefix(ors.MagicPrefix))
+}
 
 type Runner struct {
 	wf         *aw.Workflow
@@ -37,7 +37,7 @@ func (r *Runner) RewireMagicQuery() *Runner {
 	for i, arg := range os.Args {
 		if strings.HasPrefix(arg, "--query=") {
 			query := strings.TrimPrefix(arg, "--query=")
-			if strings.HasPrefix(query, MagicPrefix) {
+			if strings.HasPrefix(query, ors.MagicPrefix) {
 				os.Args[i] = query
 			}
 		}

@@ -7,12 +7,17 @@ import (
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 )
 
+const (
+	MagicPrefix = "tools:"
+)
+
 type homeItem struct {
-	Title    string
-	Subtitle string
-	Arg      string
-	Icon     *aw.Icon
-	Valid    bool
+	Title        string
+	Subtitle     string
+	Arg          string
+	Icon         *aw.Icon
+	Valid        bool
+	AutoComplete string
 }
 
 var _ Handler = (*HomeHandler)(nil)
@@ -47,6 +52,14 @@ func (h *HomeHandler) Handle(ctx *Context) error {
 			Icon:     aw.IconAccount,
 			Valid:    false,
 		},
+		{
+			Title:        "Dev Tools",
+			Subtitle:     "🧹 Clear cache, view logs, or reset internal state",
+			Arg:          MagicPrefix,
+			AutoComplete: MagicPrefix,
+			Icon:         aw.IconInfo,
+			Valid:        false,
+		},
 	}
 
 	if ctx.ActiveConfig != nil {
@@ -76,6 +89,9 @@ func (h *HomeHandler) Handle(ctx *Context) error {
 		}
 		if item.Icon != nil {
 			it.Icon(item.Icon)
+		}
+		if item.AutoComplete != "" {
+			it.Autocomplete(item.AutoComplete)
 		}
 	}
 
