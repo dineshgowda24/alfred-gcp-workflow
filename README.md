@@ -11,6 +11,8 @@ An Alfred workflow to quickly open GCP services in your browser or search GCP re
 3. Double-click the downloaded `.alfredworkflow` file to install it in Alfred.
 4. Follow the instructions in the workflow to set up your gcloud binary path and you are good to go!
 
+> 🆘 **Still stuck?** [Read the full installation guide](installation.md) for step-by-step help.
+
 ## 🧠 Design Philosophy
 
 This workflow is built with a strong focus on security, performance, and keeping things dead simple.
