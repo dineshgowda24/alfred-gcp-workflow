@@ -4,7 +4,7 @@
 
 An Alfred workflow to quickly open GCP services in your browser or search GCP resources with ease.
 
-## 🛠️ Installation
+## Installation
 
 1. Make sure you have the [Google Cloud CLI](https://cloud.google.com/sdk/docs/install) installed and authenticated.
 2. Download the latest release from the [releases page](https://github.com/dineshgowda24/alfred-gcp-workflow/releases).
@@ -13,7 +13,7 @@ An Alfred workflow to quickly open GCP services in your browser or search GCP re
 
 > 🆘 **Still stuck?** [Read the full installation guide](INSTALLATION.md) for step-by-step help.
 
-## 🧠 Design Philosophy
+## Design Philosophy
 
 This workflow is built with a strong focus on security, performance, and keeping things dead simple.
 1. **No secrets, ever** <br>
@@ -27,7 +27,7 @@ This workflow is built with a strong focus on security, performance, and keeping
 5. **You’re always in control** <br>
     Switch configs with `@`, reset anything with `tools:`. What you see is what’s running — nothing hidden, nothing weird.
 
-## ⌨️ Usage
+## Usage
 
 1. Open Alfred and type `gcp` to see the available services and commands.
 2. The home page will display useful links to Google Cloud:
@@ -52,7 +52,7 @@ This workflow is built with a strong focus on security, performance, and keeping
 >
 > _This is not an exhaustive list._ If changing the region has no effect on the results, the resource is likely global.
 
-### ⌨️ Advanced Usage
+### Advanced Usage
 
 1. The workflow supports maintenance tools powered by [AwGo Magic Actions](https://pkg.go.dev/github.com/deanishe/awgo#MagicAction). Type `gcp tools:` to access options like clearing cache, viewing logs, or resetting internal data folders.
 ![Tools](images/docs/tools.png)
@@ -80,13 +80,19 @@ Here are the GCP resources currently searchable through the workflow:
 | 📋 Cloud Tasks | Queues |
 
 
-## ♥️ Contributing
+## Contributing
 
 Please read the [contributing guidelines](CONTRIBUTING.md) for details on how to set up your environment and submit changes.
 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for full license information.
+
+## Donate ♥️
+
+If this workflow saved you some time or made things easier, feel free to show some love 
+
+<a href="https://www.buymeacoffee.com/dineshgowda" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
 ## 🙏 Acknowledgements
 

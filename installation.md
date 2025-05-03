@@ -1,4 +1,4 @@
-# 🚀 Installation
+# Installation
 
 First off — **I'm sorry you're seeing this!**  
 You probably ran into an issue during setup, and this page is here to get you back on track.  
@@ -6,7 +6,7 @@ You weren’t supposed to land here, but no worries — I’ll guide you through
 
 ---
 
-### ✅ 1. Prerequisites
+### 1. Prerequisites
 
 Make sure you have the [Google Cloud CLI](https://cloud.google.com/sdk/docs/install) installed and authenticated.
 
@@ -20,7 +20,7 @@ If that prints a valid path (like `/Users/you/google-cloud-sdk/bin/gcloud`), you
 
 ---
 
-### 📦 2. Install the Workflow
+### 2. Install the Workflow
 
 1. Download the latest release from the [GitHub Releases page](https://github.com/dineshgowda24/alfred-gcp-workflow/releases).
 2. Double-click the `.alfredworkflow` file — it will open in Alfred and install the workflow.
@@ -28,7 +28,7 @@ If that prints a valid path (like `/Users/you/google-cloud-sdk/bin/gcloud`), you
 
 ---
 
-### ⚙️ 3. Set the `gcloud` Binary Path
+### 3. Set the `gcloud` Binary Path
 
 When prompted:
 
@@ -49,7 +49,7 @@ Copy the result and paste it into Alfred. If it's correct, you’ll see a ✅ su
 
 ---
 
-### 🎉 4. You’re All Set!
+### 4. You’re All Set!
 
 Now just hit <kbd>Enter</kbd> or <kbd>Tab</kbd> again to go to the home screen of the workflow.
 
@@ -58,6 +58,6 @@ From here, you can explore services, search resources, or manage configurations 
 
 ---
 
-## ⚠️ Troubleshooting
+## Troubleshooting
 
 If you're still stuck, feel free to [open an issue on GitHub](https://github.com/dineshgowda24/alfred-gcp-workflow/issues) — I’ll get back to you as soon as possible.
