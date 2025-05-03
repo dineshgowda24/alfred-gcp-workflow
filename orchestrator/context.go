@@ -34,6 +34,14 @@ func (ctx *Context) IsConfigActive() bool {
 	return ctx.ParsedQuery.Config != nil
 }
 
+func (ctx *Context) IsRegionQuery() bool {
+	return ctx.ParsedQuery.IsRegionQuery
+}
+
+func (ctx *Context) IsRegionActive() bool {
+	return ctx.ParsedQuery.Region != nil
+}
+
 func (ctx *Context) IsServiceQuery() bool {
 	return ctx.ParsedQuery.HasServiceOnly()
 }

@@ -15,7 +15,7 @@ func buildAutocomplete(ctx *Context, service *services.Service) string {
 	query := ctx.Args.Query
 	remainingQuery := ctx.ParsedQuery.RemainingQuery
 
-	if !ctx.ParsedQuery.IsConfigQuery {
+	if !ctx.ParsedQuery.IsConfigQuery && !ctx.ParsedQuery.IsRegionQuery {
 		return service.Autocomplete()
 	}
 

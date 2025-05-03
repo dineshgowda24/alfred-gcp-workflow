@@ -1,6 +1,7 @@
 package orchestrator
 
 import (
+	"fmt"
 	"math"
 	"path/filepath"
 	"slices"
@@ -65,12 +66,31 @@ func (h *HomeHandler) Handle(ctx *Context) error {
 
 	if ctx.ActiveConfig != nil {
 		items = append(items, homeItem{
-			Title:        "Active gcloud config: " + ctx.ActiveConfig.Name,
-			Subtitle:     "Use @ to override config",
+			Title:        fmt.Sprintf("Using configuration \"%s\"", ctx.ActiveConfig.Name),
+			Subtitle:     "🔩 Use @ to override gcloud config",
 			Icon:         aw.IconAccount,
 			Valid:        false,
 			SortPriority: 4,
 		})
+
+		if ctx.ActiveConfig.Region != nil {
+			items = append(items, homeItem{
+				Title:        fmt.Sprintf("Using region \"%s\"", ctx.ActiveConfig.Region.Name),
+				Subtitle:     "🗺️ Use `$` to override region",
+				Icon:         aw.IconNetwork,
+				Valid:        false,
+				SortPriority: 5,
+			})
+		} else {
+			items = append(items, homeItem{
+				Title:        "No region selected",
+				Subtitle:     "🗺️ Use `$` to override region",
+				Icon:         aw.IconNetwork,
+				Valid:        false,
+				SortPriority: 6,
+			})
+		}
+
 	} else {
 		items = append(items, homeItem{
 			Title:        "No active gcloud config found",
