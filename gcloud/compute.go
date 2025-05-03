@@ -1,5 +1,10 @@
 package gcloud
 
+import (
+	"fmt"
+	"strings"
+)
+
 type ComputeInstance struct {
 	CPUPlatform       string `json:"cpuPlatform"`
 	CreationTimestamp string `json:"creationTimestamp"` // Format 2018-11-06T01:59:29.838-08:00
@@ -16,6 +21,10 @@ type ComputeDisk struct {
 	Status                 string `json:"status"` // one of [CREATING, RESTORING, FAILED, READY, DELETING]
 	Type                   string `json:"type"`   // Format: url/zones/{zone}/diskTypes/{disk-type}
 	Zone                   string `json:"zone"`   // Format: url/zones/{zone}
+}
+
+func (d ComputeDisk) IsRegionSupported(config *Config) bool {
+	return isComputeRegionSupported(config)
 }
 
 type ComputeImage struct {
@@ -61,7 +70,15 @@ func ListComputeInstances(config *Config) ([]ComputeInstance, error) {
 }
 
 func ListComputeDisks(config *Config) ([]ComputeDisk, error) {
-	return runGCloudCmd[[]ComputeDisk](config, "compute", "disks", "list")
+	args := []string{
+		"disks", "list",
+		"--format=json(creationTimestamp,name,physicalBlockSizeBytes,sizeGb,status,type,zone)",
+	}
+	if config != nil && config.GetRegionName() != "" {
+		args = append(args, fmt.Sprintf("--filter=zone:(%s)", config.GetRegionName()))
+	}
+
+	return runGCloudCmd[[]ComputeDisk](config, "compute", args...)
 }
 
 func ListComputeImages(config *Config) ([]ComputeImage, error) {
@@ -86,4 +103,41 @@ func ListComputeSnapshots(config *Config) ([]ComputeSnapshot, error) {
 		"compute", "snapshots", "list",
 		"--format=json(name,status,diskSizeGb,storageBytes,creationTimestamp)",
 	)
+}
+
+func GetAllComputeRegions(config *Config) ([]string, error) {
+	type Alias struct {
+		Name string `json:"name"`
+	}
+
+	regions, err := runGCloudCmd[[]Alias](config, "compute", "regions", "list", "--format=json(name)")
+	if err != nil {
+		return nil, err
+	}
+
+	var regionNames []string
+	for _, region := range regions {
+		regionNames = append(regionNames, region.Name)
+	}
+
+	return regionNames, nil
+}
+
+func isComputeRegionSupported(config *Config) bool {
+	if config == nil || config.GetRegionName() == "" {
+		return true
+	}
+
+	regions, err := GetAllComputeRegions(config)
+	if err != nil {
+		return false
+	}
+
+	for _, reg := range regions {
+		if strings.EqualFold(reg, config.GetRegionName()) {
+			return true
+		}
+	}
+
+	return false
 }

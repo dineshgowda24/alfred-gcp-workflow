@@ -20,7 +20,11 @@ const (
 	errCacheTTL = 5 * time.Second
 )
 
-var cacheTTL = env.CacheTTLDuration(defaultCacheTTL)
+var (
+	cacheTTL              = env.CacheTTLDuration(defaultCacheTTL)
+	ErrCacheExpired       = errors.New("cache expired")
+	ErrRegionNotSupported = errors.New("region not supported")
+)
 
 type (
 	// Fetcher is a function that fetches resources from gcloud.
@@ -94,7 +98,7 @@ func (b *Builder[T]) Build() error {
 
 func (b *Builder[T]) store() error {
 	if !b.validateRegion() {
-		return errors.New("region not supported")
+		return ErrRegionNotSupported
 	}
 
 	data, err := b.fetch(b.cfg)
@@ -174,7 +178,7 @@ func (b *Builder[T]) showCachedErr() bool {
 
 func (b *Builder[T]) load() ([]T, error) {
 	if b.wf.Cache.Expired(b.cacheKey(), cacheTTL) {
-		return nil, errors.New("cache expired")
+		return nil, ErrCacheExpired
 	}
 
 	var resources []T
