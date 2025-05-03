@@ -2,7 +2,7 @@
 
 First off — **I'm sorry you're seeing this!**  
 You probably ran into an issue during setup, and this page is here to get you back on track.  
-You weren’t supposed to land here, but no worries — I’ll guide you through it step by step.
+You weren’t supposed to land here, but no worries — I’ll guide you through it step by step. 
 
 ---
 
