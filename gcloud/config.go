@@ -23,6 +23,13 @@ type Config struct {
 	Region  *Region
 }
 
+func (c *Config) GetRegionName() string {
+	if c.Region != nil {
+		return c.Region.Name
+	}
+	return ""
+}
+
 // CacheKey returns a unique cache key for the config.
 // We use the prefix combined with the project name to avoid collisions.
 // Note: We intentionally avoid using the config name, because multiple configs

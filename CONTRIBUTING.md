@@ -15,7 +15,7 @@ This document will guide you through setting up, understanding the design, and a
   - [Adding a New Service or Subservice](#adding-a-new-service-or-subservice)
   - [Adding a New Searcher](#adding-a-new-searcher)
   - [Notes](#notes)
-  - [Thank You! ♥️](#thank-you-️)
+  - [Thank You! 🙏](#thank-you-)
 
 ---
 
@@ -101,7 +101,7 @@ The workflow is organized around three main concepts:
 - Tests(if possible) and documentation updates are highly appreciated!
 
 
-## Thank You! ♥️
+## Thank You! 🙏
 
 *Every contribution, no matter how small, really helps us improve this workflow. We appreciate your time and effort—thank you so much!*
 
