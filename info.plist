@@ -258,10 +258,6 @@ More more info visit: https://github.com/dineshgowda24/alfred-gcp-workflow</stri
 	<dict>
 		<key>ALFRED_GCP_WORKFLOW_CACHE_TTL_SECONDS</key>
 		<string>172800</string>
-		<key>ALFRED_GCP_WORKFLOW_GCLOUD_CONFIG_PATH</key>
-		<string></string>
-		<key>ALFRED_GCP_WORKFLOW_GCLOUD_PATH</key>
-		<string></string>
 	</dict>
 	<key>variablesdontexport</key>
 	<array/>

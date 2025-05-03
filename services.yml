@@ -181,6 +181,12 @@
   description: Asynchronous task execution
   url: https://console.cloud.google.com/cloudtasks?project={{ .Project }}
   logo_path: images/cloud_tasks.png
+  sub_services:
+    - id: queues
+      name: Queues
+      description: List of Cloud Tasks queues
+      url: https://console.cloud.google.com/cloudtasks?project={{ .Project }}
+      logo_path: images/cloud_tasks.png
 - id: composer
   name: Cloud Composer
   description: Managed Apache Airflow workflow orchestration service

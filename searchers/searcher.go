@@ -6,6 +6,7 @@ import (
 	"github.com/dineshgowda24/alfred-gcp-workflow/parser"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/artifactregistry"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/cloudrun"
+	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/cloudtask"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/compute"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/filestore"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/k8s"
@@ -70,6 +71,7 @@ func GetDefaultRegistry() *Registry {
 			"artifactregistry/repositories": &artifactregistry.RepositorySearcher{},
 			"cloudrun/services":             &cloudrun.ServiceSearcher{},
 			"cloudrun/functions":            &cloudrun.FunctionSearcher{},
+			"cloudtasks/queues":             &cloudtask.QueueSearcher{},
 		},
 	}
 }

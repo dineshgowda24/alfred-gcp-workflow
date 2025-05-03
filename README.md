@@ -36,6 +36,19 @@ This workflow is built with a strong focus on security, performance, and keeping
 3. You can filter subservices directly by typing their name. For example, `gcp compute instances` will show Compute Engine instances.
 4. If a subservice has 🔍⚡️ in its subtitle, it supports **resource search**. For example, after typing `gcp compute` you can <kbd>Tab</kbd> into `instances` to list them. [See full list of searchable resources.](#-supported-resource-searches)
 5. The workflow uses your currently active gcloud configuration by default. To override it, type `@` in your query to list and select from your available configurations.
+6. There are instances where you might want to query for a specific region. You can override the default region by typing `$` in your query to list and select from your available regions.
+
+> ⚠️ **Heads up about regions**
+> 
+> - Not all services support all regions. The workflow checks if the selected region is supported for the resource **before** calling `gcloud`, so you'll get immediate feedback instead of a failure.
+> - Some resources are **global**, meaning they aren't tied to any region or zone. In these cases, selecting a region won't affect the result.
+>
+> **Examples of global resources:**
+> - Compute snapshots  
+> - Compute instance templates  
+> - Pub/Sub topics and subscriptions  
+>
+> _This is not an exhaustive list._ If changing the region has no effect on the results, the resource is likely global.
 
 ### ⌨️ Advanced Usage
 
@@ -49,7 +62,7 @@ This workflow is built with a strong focus on security, performance, and keeping
 Here are the GCP resources currently searchable through the workflow:
 
 | Service | Resource |
-|---------|---------|
+|---------|----------|
 | 🛢️ Cloud SQL | Instances |
 | 🧠 Memorystore | Redis Instances |
 | 📬 Pub/Sub | Topics, Subscriptions |
@@ -61,7 +74,9 @@ Here are the GCP resources currently searchable through the workflow:
 | 🛤️ VPC | Networks, Routes |
 | 🔐 Network Connectivity | VPN Tunnel, VPN Gateway, Cloud Router |
 | 🗃️ Artifact Registry | Repositories |
-| 🏃‍♂️ Cloud Run | Functions(Gen1), Services(Gen2) |
+| 🏃‍♂️ Cloud Run | Functions (Gen1), Services (Gen2) |
+| 📋 Cloud Tasks | Queues |
+
 
 ## ♥️ Contributing
 
