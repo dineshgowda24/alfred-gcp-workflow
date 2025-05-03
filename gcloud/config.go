@@ -20,6 +20,7 @@ var (
 type Config struct {
 	Name    string
 	Project string
+	Region  *Region
 }
 
 // CacheKey returns a unique cache key for the config.
@@ -28,7 +29,12 @@ type Config struct {
 // can point to the same project or config names can change over time.
 // This ensures the cache remains stable and doesn't invalidate unnecessarily.
 func (c *Config) CacheKey(prefix string) string {
-	return prefix + "_" + c.Project
+	base := prefix + "_" + c.Project
+	if c.Region != nil && c.Region.Name != "" {
+		base += "_" + c.Region.Name
+	}
+
+	return base
 }
 
 // GetActiveConfig lazy loads the active gcloud config

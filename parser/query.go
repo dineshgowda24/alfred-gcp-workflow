@@ -10,13 +10,18 @@ import (
 )
 
 type Result struct {
-	SearchArgs         *arg.SearchArgs
-	Service            *services.Service
-	SubService         *services.Service
-	RemainingQuery     string
+	SearchArgs     *arg.SearchArgs
+	Service        *services.Service
+	SubService     *services.Service
+	RemainingQuery string
+
 	IsConfigQuery      bool
 	Config             *gcloud.Config
 	PartialConfigQuery string
+
+	IsRegionQuery      bool
+	Region             *gcloud.Region
+	PartialRegionQuery string
 
 	Intent      string
 	IntentValue string
@@ -51,13 +56,14 @@ func Parse(searchArgs *arg.SearchArgs, svcList []services.Service) *Result {
 		return result
 	}
 
-	filteredWords := result.extractConfig(words)
+	filtered := result.extractConfig(words)
+	filtered = result.extractRegion(filtered)
 
-	if len(filteredWords) == 0 {
+	if len(filtered) == 0 {
 		return result
 	}
 
-	result.extractServiceAndSubService(filteredWords, svcList)
+	result.extractServiceAndSubService(filtered, svcList)
 	return result
 }
 
@@ -106,6 +112,32 @@ func (r *Result) matchConfig(name string) {
 	}
 
 	r.PartialConfigQuery = name
+}
+
+func (r *Result) extractRegion(words []string) []string {
+	var filtered []string
+	for _, w := range words {
+		if strings.HasPrefix(w, "$") {
+			r.IsRegionQuery = true
+			r.matchRegion(strings.TrimPrefix(w, "$"))
+		} else {
+			filtered = append(filtered, strings.ToLower(w))
+		}
+	}
+
+	return filtered
+}
+
+func (r *Result) matchRegion(name string) {
+	regions := gcloud.GetAllRegions()
+	for _, reg := range regions {
+		if strings.EqualFold(reg.Name, name) {
+			r.Region = &reg
+			return
+		}
+	}
+
+	r.PartialRegionQuery = name
 }
 
 func (r *Result) extractServiceAndSubService(words []string, svcList []services.Service) {

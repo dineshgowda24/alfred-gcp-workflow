@@ -24,6 +24,7 @@ type Orchestrator struct {
 	preflight         *PreFlight
 	intentHandler     Handler
 	configHandler     Handler
+	regionHandler     Handler
 	homeHandler       Handler
 	serviceHandler    Handler
 	subServiceHandler Handler
@@ -35,7 +36,9 @@ type Orchestrator struct {
 func DefaultOrchestrator(servicesFS embed.FS) *Orchestrator {
 	return NewOrchestrator(
 		&ConfigHandler{},
+		&IntentHandler{},
 		&HomeHandler{},
+		&RegionHandler{},
 		&ServiceHandler{},
 		&SubServiceHandler{},
 		&FallbackHandler{},
@@ -45,11 +48,15 @@ func DefaultOrchestrator(servicesFS embed.FS) *Orchestrator {
 	)
 }
 
-func NewOrchestrator(config, home, service, subService, fallback, err Handler, preflight *PreFlight, servicesFS embed.FS) *Orchestrator {
+func NewOrchestrator(
+	config, intent, home, region, service, subService, fallback, err Handler,
+	preflight *PreFlight, servicesFS embed.FS,
+) *Orchestrator {
 	return &Orchestrator{
 		preflight:         preflight,
-		intentHandler:     &IntentHandler{},
+		intentHandler:     intent,
 		configHandler:     config,
+		regionHandler:     region,
 		homeHandler:       home,
 		serviceHandler:    service,
 		subServiceHandler: subService,
@@ -75,6 +82,8 @@ func (o *Orchestrator) Run(wf *aw.Workflow, args *arg.SearchArgs) {
 		o.ctx.Err = o.intentHandler.Handle(o.ctx)
 	case (o.ctx.IsConfigQuery() && !o.ctx.IsConfigActive()):
 		o.ctx.Err = o.configHandler.Handle(o.ctx)
+	case o.ctx.IsRegionQuery() && !o.ctx.IsRegionActive():
+		o.ctx.Err = o.regionHandler.Handle(o.ctx)
 	case o.ctx.IsHomeQuery():
 		o.ctx.Err = o.homeHandler.Handle(o.ctx)
 	case o.ctx.IsSubServiceQuery():
@@ -116,6 +125,10 @@ func (o *Orchestrator) buildCtx(wf *aw.Workflow, args *arg.SearchArgs) {
 		}
 
 		ctx.ActiveConfig = config
+	}
+
+	if ctx.ParsedQuery.Region != nil {
+		ctx.ActiveConfig.Region = ctx.ParsedQuery.Region
 	}
 }
 

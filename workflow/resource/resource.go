@@ -17,7 +17,7 @@ const (
 	// defaultCacheTTL is the default time to live for the cache.
 	defaultCacheTTL = 7 * 24 * time.Hour
 	// errCacheTTL is the time to live for the error cache.
-	errCacheTTL = 1 * time.Minute
+	errCacheTTL = 5 * time.Second
 )
 
 var cacheTTL = env.CacheTTLDuration(defaultCacheTTL)
@@ -30,6 +30,23 @@ type (
 	// It takes a workflow and a resource and adds it to the workflow.
 	Renderer[T any] func(*aw.Workflow, T)
 )
+
+// RegionSupporter defines an optional interface for resources that can validate region support.
+// It's used to proactively check if a region (or location) is valid for a given gcloud service.
+//
+// This is useful when users override the region via Script Filter arguments.
+// In some cases, using an unsupported region causes gcloud commands to fail, resulting in poor UX.
+// If a resource implements RegionSupporter, the workflow will check region validity before calling gcloud,
+// allowing the user to be informed immediately.
+type RegionSupporter interface {
+	IsRegionSupported(config *gc.Config) bool
+}
+
+type UXMsg struct {
+	Error    string `json:"error,omitempty"`
+	Title    string `json:"title,omitempty"`
+	Subtitle string `json:"subtitle,omitempty"`
+}
 
 // Builder is a struct that builds a gcloud resource item for Alfred.
 type Builder[T any] struct {
@@ -76,12 +93,31 @@ func (b *Builder[T]) Build() error {
 }
 
 func (b *Builder[T]) store() error {
+	if !b.validateRegion() {
+		return errors.New("region not supported")
+	}
+
 	data, err := b.fetch(b.cfg)
 	if err != nil {
 		b.wf.Cache.Store(b.errKey(), []byte(err.Error()))
 		return err
 	}
 	return b.wf.Cache.StoreJSON(b.cacheKey(), data)
+}
+
+func (b *Builder[T]) validateRegion() bool {
+	var resource T
+	supporter, ok := any(resource).(RegionSupporter)
+	if ok && supporter != nil && !supporter.IsRegionSupported(b.cfg) {
+		msg := UXMsg{
+			Title:    "🔔 Selected region not supported for this resource",
+			Subtitle: "May be try another region? 🤷",
+		}
+		b.wf.Cache.StoreJSON(b.errKey(), &msg)
+		return false
+	}
+
+	return true
 }
 
 func (b *Builder[T]) errKey() string {
@@ -107,16 +143,29 @@ func (b *Builder[T]) tryCache() bool {
 }
 
 func (b *Builder[T]) showCachedErr() bool {
+	var msg UXMsg
 	if !b.wf.Cache.Expired(b.errKey(), errCacheTTL) {
-		msg, err := b.wf.Cache.Load(b.errKey())
+		err := b.wf.Cache.LoadJSON(b.errKey(), &msg)
 		if err != nil {
-			msg = []byte(err.Error())
+			msg = UXMsg{
+				Error:    "🔔 Failed loading cached error",
+				Subtitle: err.Error(),
+			}
 		}
 
-		b.wf.NewItem(string(msg)).
-			Subtitle("gcloud cmd failed to execute").
-			Icon(aw.IconError).
-			Valid(false)
+		title := msg.Title
+		icon := aw.IconInfo
+		if msg.Error != "" {
+			title = msg.Error
+			icon = aw.IconError
+		}
+
+		b.wf.NewItem(title).
+			Subtitle(msg.Subtitle).
+			Icon(icon).
+			Arg("").
+			Valid(false).
+			Autocomplete("")
 		b.wf.SendFeedback()
 		return true
 	}
