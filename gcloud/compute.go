@@ -5,7 +5,6 @@ import (
 	"strings"
 )
 
-// https://cloud.google.com/compute/docs/reference/rest/v1/instances
 type ComputeInstance struct {
 	Name              string `json:"name"`
 	Status            string `json:"status"`
@@ -20,7 +19,6 @@ func ListComputeInstances(config *Config) ([]ComputeInstance, error) {
 		"--format=json(name,status,zone,cpuPlatform,creationTimestamp)")
 }
 
-// https://cloud.google.com/compute/docs/reference/rest/v1/disks/
 type ComputeDisk struct {
 	Name                   string `json:"name"`
 	Status                 string `json:"status"`
@@ -47,7 +45,6 @@ func ListComputeDisks(config *Config) ([]ComputeDisk, error) {
 	return runGCloudCmd[[]ComputeDisk](config, "compute", args...)
 }
 
-// https://cloud.google.com/compute/docs/reference/rest/v1/images/
 type ComputeImage struct {
 	Name              string `json:"name"`
 	Status            string `json:"status"`
@@ -63,7 +60,6 @@ func ListComputeImages(config *Config) ([]ComputeImage, error) {
 		"--format=json(name,status,architecture,diskSizeGb,archiveSizeBytes,creationTimestamp)")
 }
 
-// https://cloud.google.com/compute/docs/reference/rest/v1/instanceTemplates
 type ComputeInstanceTemplate struct {
 	CreationTimestamp string `json:"creationTimestamp"`
 	Name              string `json:"name"`
@@ -88,7 +84,6 @@ func ListComputeInstanceTemplates(config *Config) ([]ComputeInstanceTemplate, er
 	return runGCloudCmd[[]ComputeInstanceTemplate](config, "compute", args...)
 }
 
-// https://cloud.google.com/compute/docs/reference/rest/v1/machineImages/list
 type ComputeMachineImage struct {
 	Name               string `json:"name"`
 	Description        string `json:"description"`
@@ -108,7 +103,6 @@ func ListComputeMachineImages(config *Config) ([]ComputeMachineImage, error) {
 	)
 }
 
-// https://cloud.google.com/compute/docs/reference/rest/v1/snapshots
 type ComputeSnapshot struct {
 	Name              string `json:"name"`
 	Status            string `json:"status"`

@@ -1,17 +1,15 @@
 package gcloud
 
-// https://cloud.google.com/pubsub/docs/reference/rest/v1/projects.topics#Topic
 type PubSubTopic struct {
-	Name string `json:"name"` // Format: projects/{project}/topics/{topic-id}
+	Name string `json:"name"`
 }
 
-// https://cloud.google.com/pubsub/docs/reference/rest/v1/projects.subscriptions#Subscription
 type PubSubSubscription struct {
 	AckDeadlineSeconds       int    `json:"ackDeadlineSeconds"`
 	MessageRetentionDuration string `json:"messageRetentionDuration"`
-	Name                     string `json:"name"` // Format: projects/{project}/subscriptions/{subscription-id}
+	Name                     string `json:"name"`
 	State                    string `json:"state"`
-	Topic                    string `json:"topic"` // Format: projects/{project}/topics/{topic-id}
+	Topic                    string `json:"topic"`
 }
 
 func ListTopics(config *Config) ([]PubSubTopic, error) {

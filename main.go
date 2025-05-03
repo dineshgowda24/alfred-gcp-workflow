@@ -6,6 +6,7 @@ import (
 
 	aw "github.com/deanishe/awgo"
 	"github.com/dineshgowda24/alfred-gcp-workflow/cmd"
+	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/config"
 )
 
@@ -13,15 +14,19 @@ var (
 	Version = "dev"
 	//go:embed services.yml
 	servicesFs embed.FS
+	//go:embed regions.yml
+	regionsFs embed.FS
 )
 
 func init() {
 	log.SetFlags(log.LstdFlags)
 	log.SetPrefix("[Version: " + Version + "] ")
+	gcloud.InitRegions(regionsFs)
 }
 
 func main() {
 	wf := cmd.NewWorkflow()
+
 	config.Init(wf)
 
 	logDirs(wf)
