@@ -44,7 +44,9 @@ func (h *RegionHandler) buildConfigAutocomplete(ctx *Context, region *gcloud.Reg
 
 func (h *RegionHandler) send(ctx *Context) {
 	wf := ctx.Workflow
-	wf.Filter(ctx.ParsedQuery.PartialRegionQuery)
+	if strings.TrimSpace(ctx.ParsedQuery.PartialRegionQuery) != "" {
+		wf.Filter(ctx.ParsedQuery.PartialRegionQuery)
+	}
 
 	if wf.IsEmpty() {
 		emptyResultItem(wf, "No matching regions found")

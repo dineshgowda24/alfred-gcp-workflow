@@ -49,7 +49,9 @@ func (h *ConfigHandler) addConfigItem(ctx *Context, config *gcloud.Config) {
 
 func (h *ConfigHandler) send(ctx *Context) {
 	wf := ctx.Workflow
-	wf.Filter(ctx.ParsedQuery.PartialConfigQuery)
+	if strings.TrimSpace(ctx.ParsedQuery.PartialConfigQuery) != "" {
+		wf.Filter(ctx.ParsedQuery.PartialConfigQuery)
+	}
 
 	if wf.IsEmpty() {
 		emptyResultItem(wf, "No matching configurations found")
