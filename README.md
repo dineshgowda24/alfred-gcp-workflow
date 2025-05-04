@@ -1,4 +1,4 @@
-# <img src="docs/assets/gcp.png" width="26"> alfred-gcp-workflow
+# <img src="./assets/docs/gcp.png" width="26"> alfred-gcp-workflow
 
 ![Services Covered](https://img.shields.io/badge/Services--Covered-250+-blue?style=plastic&logo=google-cloud)
 
@@ -54,7 +54,7 @@ _This is not an exhaustive list — if changing the region has no effect, the re
 ### Advanced Usage
 
 1. Access maintenance tools powered by [AwGo Magic Actions](https://pkg.go.dev/github.com/deanishe/awgo#MagicAction) by typing `gcp tools:`.  This gives you options to clear cache, view logs, or reset internal data folders.
-   <img src="docs/assets/tools.png" alt="Tools" width="500"/><br>
+   <img src="./assets/docs/tools.png" alt="Tools" width="500"/><br>
    _Example: Maintenance tools screen with options like clear cache and view logs._ <br>
 2. The workflow supports [Fuzzy Filtering](https://pkg.go.dev/github.com/deanishe/awgo/fuzzy), so you can quickly find services or resources — even with partial or out-of-order matches.
 

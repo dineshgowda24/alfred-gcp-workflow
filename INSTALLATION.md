@@ -33,7 +33,7 @@ If that prints a valid path (like `/Users/you/google-cloud-sdk/bin/gcloud`), you
 When prompted:
 
 - Use <kbd>Tab</kbd> to select the `gcloud-path` setup option  
-  ![Step 1](assets/install_step1.png)
+  ![Step 1](./assets/docs/install_step1.png)
 
 - Alfred will then ask you to enter the path to your `gcloud` binary  
   ![Step 2](assets/docs/install_step2.png)
