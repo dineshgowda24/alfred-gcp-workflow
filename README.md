@@ -8,6 +8,8 @@
 
 An Alfred workflow that lets you instantly open Google Cloud services or search GCP resources—fast, simple, and right from your Alfred.
 
+ <p align="center"> <img src="./docs/assets/demo.gif" alt="Demo GIF" width="700"/> </p> 
+
 ## Installation
 
 1. Make sure you have the [Google Cloud CLI](https://cloud.google.com/sdk/docs/install) installed and authenticated.

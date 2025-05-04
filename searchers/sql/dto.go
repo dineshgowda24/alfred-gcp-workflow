@@ -38,7 +38,7 @@ func (i SQLInstance) Subtitle() string {
 		icon = "🟢"
 	case "PENDING_CREATE", "MAINTENANCE", "ONLINE_MAINTENANCE":
 		icon = "🕒"
-	case "PENDING_DELETE", "FAILED", "SUSPENDED":
+	case "PENDING_DELETE", "FAILED", "SUSPENDED", "STOPPED":
 		icon = "❌"
 	default:
 		icon = "❓"
@@ -54,11 +54,26 @@ func (i SQLInstance) Subtitle() string {
 		role = "Unknown"
 	}
 
-	version := strings.TrimPrefix(i.DatebaseVersion, "POSTGRES_")
-	version = strings.ReplaceAll(version, "_X", ".x")
-	version = strings.ReplaceAll(version, "_", ".")
+	dbType, version := parseDBVersion(i.DatebaseVersion)
+	return fmt.Sprintf("%s %s | %s %s | %s GB | %s", icon, role, dbType, version, i.DiskSizeInGB, i.Tier)
+}
 
-	return fmt.Sprintf("%s %s | version: %s | %s GB | %s", icon, role, version, i.DiskSizeInGB, i.Tier)
+func parseDBVersion(input string) (dbType string, version string) {
+	input = strings.TrimSpace(input)
+
+	parts := strings.SplitN(input, "_", 2)
+	if len(parts) != 2 {
+		return "", strings.ToLower(input)
+	}
+
+	dbType = strings.ToLower(parts[0])
+	rawVersion := parts[1]
+
+	version = strings.ReplaceAll(rawVersion, "_X", ".x")
+	version = strings.ReplaceAll(version, "_", ".")
+	version = strings.ToLower(version)
+
+	return dbType, version
 }
 
 func (i SQLInstance) URL(config *gcloud.Config) string {

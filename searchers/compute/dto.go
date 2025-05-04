@@ -25,8 +25,11 @@ func FromGCloudComputeInstance(instance *gcloud.ComputeInstance) ComputeInstance
 
 	var zone string
 	zones := strings.Split(instance.Zone, "/")
-	if len(zone) > 0 {
-		zone = zones[len(zones)-1]
+	for i, zn := range zones {
+		if zn == "zones" && i+1 < len(zones) {
+			zone = zones[i+1]
+			break
+		}
 	}
 
 	return ComputeInstance{
