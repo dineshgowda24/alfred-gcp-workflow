@@ -1,4 +1,4 @@
-# <img src="images/gcp.png" width="26"> alfred-gcp-workflow
+# <img src="docs/assets/gcp.png" width="26"> alfred-gcp-workflow
 
 ![Services Covered](https://img.shields.io/badge/Services--Covered-250+-blue?style=plastic&logo=google-cloud)
 
@@ -23,7 +23,7 @@ If you notice anything that feels otherwise, it's unintentional — please open 
 
 1. Open Alfred and type `gcp` to see the available services and commands.
 2. The home page will display useful links to Google Cloud:  
-   <img src="images/docs/home.png" alt="Home Page" width="500"/>  
+   <img src="docs/assets/home.png" alt="Home Page" width="500"/>  
    _Example: Home screen with quick links to GCP Console, Health Status, and Services._
 3. Type `gcp` followed by a service name.  
    _Example: `gcp compute` will show the Compute Engine service._
@@ -54,7 +54,7 @@ _This is not an exhaustive list — if changing the region has no effect, the re
 ### Advanced Usage
 
 1. Access maintenance tools powered by [AwGo Magic Actions](https://pkg.go.dev/github.com/deanishe/awgo#MagicAction) by typing `gcp tools:`.  This gives you options to clear cache, view logs, or reset internal data folders.
-   <img src="images/docs/tools.png" alt="Tools" width="500"/><br>
+   <img src="docs/assets/tools.png" alt="Tools" width="500"/><br>
    _Example: Maintenance tools screen with options like clear cache and view logs._ <br>
 2. The workflow supports [Fuzzy Filtering](https://pkg.go.dev/github.com/deanishe/awgo/fuzzy), so you can quickly find services or resources — even with partial or out-of-order matches.
 

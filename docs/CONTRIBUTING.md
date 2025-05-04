@@ -68,9 +68,9 @@ The workflow is organized around three main concepts:
    - Add your new Service.
    - (Optional) Add Subservices under the Service.
 2. **Icons**:
-   - Use existing icons in the [images](images/) folder if available.
+   - Use existing icons in the [icons](../icons) directory if available.
    - To add a new icon:
-      - Place the image in [images](images/).
+      - Place the image in [icons](../icons).
       - Reference the path inside `services.yml`.
    - Official GCP service icons can be found [here](https://cloud.google.com/icons).
 3. **Sort Services Alphabetically**:

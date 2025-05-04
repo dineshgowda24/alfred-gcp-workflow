@@ -94,7 +94,7 @@ clean_intermediate_binaries() {
 
 copy_assets() {
   bold "Copying workflow assets..."
-  cp -R images services.yml icon.png info.plist LICENSE README.md "$RELEASE_DIR"
+  cp -R icons docs services.yml icon.png info.plist LICENSE README.md "$RELEASE_DIR"
 }
 
 package_workflow() {
