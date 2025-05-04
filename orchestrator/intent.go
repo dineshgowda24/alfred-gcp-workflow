@@ -37,11 +37,10 @@ func (h *IntentHandler) Handle(ctx *Context) error {
 		return err
 	}
 
-	cfg := &config.ConfigFile{
+	config.UpdateConfigFile(wf, &config.ConfigFile{
 		GCloudPath:       bin,
 		GCloudConfigPath: info.Config.Paths.GlobalConfigDir,
-	}
-	config.UpdateConfigFile(wf, cfg)
+	})
 
 	wf.NewItem("Relm unlocked! 🗝️").
 		Subtitle(fmt.Sprintf("gcloud path captured ✅ | Version: %s", info.Installation.Components.Core)).

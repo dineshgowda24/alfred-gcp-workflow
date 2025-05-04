@@ -463,7 +463,7 @@
       description: Collection of rules that allow inbound connections
       url: https://console.cloud.google.com/kubernetes/ingresses?project={{ .Project }}
       logo_path: images/google_kubernetes_engine.png
-- id: maps_platform
+- id: mapsplatform
   name: Google Maps Platform
   description: Real-world insights and location experiences
   url: https://console.cloud.google.com/google/maps-apis?project={{ .Project }}
