@@ -1,8 +1,12 @@
 # <img src="./assets/docs/gcp.png" width="26"> alfred-gcp-workflow
 
-![Services Covered](https://img.shields.io/badge/Services--Covered-250+-blue?style=plastic&logo=google-cloud)
+![Services Covered](https://img.shields.io/badge/Services--Covered-250+-blue?logo=google-cloud)
+![Alfred](https://img.shields.io/badge/Alfred-3+-purple?logo=alfred)
+![Go](https://img.shields.io/badge/Built%20with-Go-1f425f?logo=go)
+![Version](https://img.shields.io/github/v/release/dineshgowda24/alfred-gcp-workflow)
+![License](https://img.shields.io/github/license/dineshgowda24/alfred-gcp-workflow)
 
-An Alfred workflow to quickly open GCP services in your browser or search GCP resources with ease.
+An Alfred workflow that lets you instantly open Google Cloud services or search GCP resources—fast, simple, and right from your Alfred.
 
 ## Installation
 
@@ -13,35 +17,48 @@ An Alfred workflow to quickly open GCP services in your browser or search GCP re
 
 > 🆘 **Still stuck?** [Read the full installation guide](INSTALLATION.md) for step-by-step help.
 
+## ✨ Features at a Glance
+
+- 🔍 Fuzzy search across 250+ Google Cloud services and subservices  
+- 🔍⚡️ Search live GCP resources across 20+ services, right from Alfred  
+- ⚡ Instantly copy, paste or open GCP Console links without touching your browser 
+- 🧠 Config and region overrides using simple symbols (`@` and `$`)  
+- 🔐 Secure by design — uses your local `gcloud` CLI, never touches credentials  
+- 💾 Fast performance with safe caching (customizable via env var)  
+- 🛠️ Built-in tools to clear cache, view logs, or reset internal data  
+
 ## Design Philosophy
 
-This workflow is built to be fast, secure, and effortless. It never sees your credentials — authentication stays with the gcloud CLI. It only caches safe, non-sensitive data to keep things snappy. Every command fetches just the fields it needs, so there's no noise or overhead. Set it up once, and it just works — no surprises.
+1. This workflow never sees your credentials — authentication is handled entirely by the `gcloud` CLI.
+2. Only non-sensitive data is cached, such as project names, regions, resource names etc. Jusk enough keep things snappy.
+3. Every command fetches only the non sensitive data it needs, keeping it lightweight and efficient.
+4. Set your `gcloud` path once, and the workflow runs smoothly without surprises.
 
-If you notice anything that feels otherwise, it's unintentional — please open an issue.
+> If you notice anything that doesn't align with this, it's unintentional — please open an issue.
 
 ## Usage
 
 1. Open Alfred and type `gcp` to see the available services and commands.
 2. The home page will display useful links to Google Cloud:  
-   <img src="docs/assets/home.png" alt="Home Page" width="500"/>  
-   _Example: Home screen with quick links to GCP Console, Health Status, and Services._
+   <img src="assets/docs/home.png" alt="Home Page" width="500"/>  
+   _Example: Home screen with quick links to GCP Console, Health Status, tools etc._
 3. Type `gcp` followed by a service name.  
-   _Example: `gcp compute` will show the Compute Engine service._
-4. If a service has 🗂️ in its subtitle, press <kbd>Tab</kbd> to autocomplete into the subservices section (e.g., navigate to Redis inside Memorystore).
+   _Example: `gcp comp` will fuzzy-match and show services like Compute Engine._
+4. If a service has 🗂️ in its subtitle, <kbd>Tab</kbd> to autocomplete into the subservices section.
 5. You can filter subservices directly by typing their name.  
-   _Example: `gcp compute instances` will show Compute Engine instances._
+   _Example: Typing `gcp compute inst` will fuzzy-match and show subservices like instances for Compute Engine._
 6. If a subservice has 🔍⚡️ in its subtitle, it supports **resource search**.  
-   _Example: after typing `gcp compute`, tab into `instances` to list them._  
+   _Example: after typing `gcp compute`, <kbd>Tab</kbd> into `instances` to list all instances in your project._
    [See full list of searchable resources.](#️-supported-resource-searches)
 7. The workflow uses your currently active gcloud configuration by default.  
-   To override it, type `@` in your query to list and select from available configurations.
-8. To query a specific region, type `$` in your query to list and select from available regions.
+   To override it, type `@` in your query to list and <kbd>Tab</kbd> to select the desired configuration.
+8. To override specific region, type `$` in your query to list and <kbd>Tab</kbd> to select the desired region.
 
 ---
 
 ### ⚠️ Heads up about regions
 
-- Not all services support all regions. The workflow checks if the selected region is valid **before** calling `gcloud`, so you'll get immediate feedback instead of a failure.
+- Not all services support all regions. The workflow checks if the selected region is supported by the searcher **before** calling `gcloud`, so you'll get immediate feedback instead of a failure.
 - Some resources are **global**, meaning they aren't tied to a region or zone. Selecting a region won't affect those results.
 
 **Examples of global resources:**
@@ -53,10 +70,11 @@ _This is not an exhaustive list — if changing the region has no effect, the re
 
 ### Advanced Usage
 
-1. Access maintenance tools powered by [AwGo Magic Actions](https://pkg.go.dev/github.com/deanishe/awgo#MagicAction) by typing `gcp tools:`.  This gives you options to clear cache, view logs, or reset internal data folders.
+1. Type `gcp tools:` to list the maintenance options powered by [AwGo Magic Actions](https://pkg.go.dev/github.com/deanishe/awgo#MagicAction).You can use <kbd>Tab</kbd> to navigate between actions like clearing the cache, viewing logs, or resetting internal data folders, then press <kbd>Enter</kbd> to run the selected action. <br>
    <img src="./assets/docs/tools.png" alt="Tools" width="500"/><br>
    _Example: Maintenance tools screen with options like clear cache and view logs._ <br>
 2. The workflow supports [Fuzzy Filtering](https://pkg.go.dev/github.com/deanishe/awgo/fuzzy), so you can quickly find services or resources — even with partial or out-of-order matches.
+3. By default, resource searches are cached for 7 days. To customize this duration, set the `ALFRED_GCP_WORKFLOW_CACHE_TTL_SECONDS` environment variable in Alfred. Learn how to do this here: [Alfred Environment Variables Guide](https://www.alfredapp.com/help/workflows/advanced/variables/#environment).
 
 
 ## 🔍⚡️ Supported Resource Searches
@@ -82,7 +100,7 @@ Here are the GCP resources currently searchable through the workflow:
 
 ## Contributing
 
-Please read the [contributing guidelines](CONTRIBUTING.md) for details on how to set up your environment and submit changes.
+Please refer to the [contributing guidelines](CONTRIBUTING.md) for instructions on setting up your environment and submitting contributions.
 
 ## License
 
@@ -90,7 +108,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Donate ♥️
 
-If this workflow saved you some time or made things easier, feel free to show some love 
+If this workflow saved you time or made your day a little easier, consider showing some support:
 
 <a href="https://www.buymeacoffee.com/dineshgowda" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
