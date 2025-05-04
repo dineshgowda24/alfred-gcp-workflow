@@ -7,6 +7,6 @@ build:
 
 release:
 	@echo "Building the project for release..."
-	./release.sh
+	./tools/release.sh
 	@echo "Release build complete."
 

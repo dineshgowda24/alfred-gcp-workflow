@@ -33,10 +33,10 @@ If that prints a valid path (like `/Users/you/google-cloud-sdk/bin/gcloud`), you
 When prompted:
 
 - Use <kbd>Tab</kbd> to select the `gcloud-path` setup option  
-  ![Step 1](images/docs/install_step1.png)
+  ![Step 1](./assets/docs/install_step1.png)
 
 - Alfred will then ask you to enter the path to your `gcloud` binary  
-  ![Step 2](images/docs/install_step2.png)
+  ![Step 2](assets/docs/install_step2.png)
 
 To find your path, run:
 
@@ -45,7 +45,7 @@ which gcloud
 ```
 
 Copy the result and paste it into Alfred. If it's correct, you’ll see a ✅ success message.  
-![Step 3](images/docs/install_step3.png)
+![Step 3](assets/docs/install_step3.png)
 
 ---
 
@@ -54,7 +54,7 @@ Copy the result and paste it into Alfred. If it's correct, you’ll see a ✅ su
 Now just hit <kbd>Enter</kbd> or <kbd>Tab</kbd> again to go to the home screen of the workflow.
 
 From here, you can explore services, search resources, or manage configurations — all with Alfred's lightning-fast speed.  
-![Step 4](images/docs/home.png)
+![Step 4](assets/docs/home.png)
 
 ---
 

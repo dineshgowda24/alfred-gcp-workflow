@@ -1,6 +1,6 @@
-# <img src="images/gcp.png" width="26"> alfred-gcp-workflow
+# <img src="./assets/docs/gcp.png" width="26"> alfred-gcp-workflow
 
-![Services Covered](https://img.shields.io/badge/Services--Covered-253-blue?style=flat-square&logo=google-cloud)
+![Services Covered](https://img.shields.io/badge/Services--Covered-250+-blue?style=plastic&logo=google-cloud)
 
 An Alfred workflow to quickly open GCP services in your browser or search GCP resources with ease.
 
@@ -15,49 +15,49 @@ An Alfred workflow to quickly open GCP services in your browser or search GCP re
 
 ## Design Philosophy
 
-This workflow is built with a strong focus on security, performance, and keeping things dead simple.
-1. **No secrets, ever** <br>
-    Auth stays with the gcloud CLI. The workflow never sees your tokens, credentials, or anything private.
-2. **Only cache what’s safe** <br>
-    Things like project IDs, region names, resource names, timestamps etc — never sensitive data. Just enough to speed things up.
-3. **One-time setup, then smooth sailing** <br>
-    Set your `gcloud` path once, and you’re good to go.
-4. **Efficient by default** <br>
-    Every gcloud command fetches just the fields it needs using `--format=json(...)`. No noise, no bloat.
-5. **You’re always in control** <br>
-    Switch configs with `@`, reset anything with `tools:`. What you see is what’s running — nothing hidden, nothing weird.
+This workflow is built to be fast, secure, and effortless. It never sees your credentials — authentication stays with the gcloud CLI. It only caches safe, non-sensitive data to keep things snappy. Every command fetches just the fields it needs, so there's no noise or overhead. Set it up once, and it just works — no surprises.
+
+If you notice anything that feels otherwise, it's unintentional — please open an issue.
 
 ## Usage
 
 1. Open Alfred and type `gcp` to see the available services and commands.
-2. The home page will display useful links to Google Cloud:
-![Home Page](images/docs/home.png)
-> Example: Home screen with quick links to GCP Console, Health Status, and Services
-1. Type `gcp` followed by a service name. For example, `gcp compute` will show the Compute Engine service.
-2. If a service has 🗂️ in its subtitle, press  <kbd>Tab</kbd> to autocomplete into the subservices section — to navigate to redis inside memorystore.
-3. You can filter subservices directly by typing their name. For example, `gcp compute instances` will show Compute Engine instances.
-4. If a subservice has 🔍⚡️ in its subtitle, it supports **resource search**. For example, after typing `gcp compute` you can <kbd>Tab</kbd> into `instances` to list them. [See full list of searchable resources.](#️-supported-resource-searches)
-5. The workflow uses your currently active gcloud configuration by default. To override it, type `@` in your query to list and select from your available configurations.
-6. There are instances where you might want to query for a specific region. You can override the default region by typing `$` in your query to list and select from your available regions.
+2. The home page will display useful links to Google Cloud:  
+   <img src="docs/assets/home.png" alt="Home Page" width="500"/>  
+   _Example: Home screen with quick links to GCP Console, Health Status, and Services._
+3. Type `gcp` followed by a service name.  
+   _Example: `gcp compute` will show the Compute Engine service._
+4. If a service has 🗂️ in its subtitle, press <kbd>Tab</kbd> to autocomplete into the subservices section (e.g., navigate to Redis inside Memorystore).
+5. You can filter subservices directly by typing their name.  
+   _Example: `gcp compute instances` will show Compute Engine instances._
+6. If a subservice has 🔍⚡️ in its subtitle, it supports **resource search**.  
+   _Example: after typing `gcp compute`, tab into `instances` to list them._  
+   [See full list of searchable resources.](#️-supported-resource-searches)
+7. The workflow uses your currently active gcloud configuration by default.  
+   To override it, type `@` in your query to list and select from available configurations.
+8. To query a specific region, type `$` in your query to list and select from available regions.
 
-> ⚠️ **Heads up about regions**
-> 
-> - Not all services support all regions. The workflow checks if the selected region is supported for the resource **before** calling `gcloud`, so you'll get immediate feedback instead of a failure.
-> - Some resources are **global**, meaning they aren't tied to any region or zone. In these cases, selecting a region won't affect the result.
->
-> **Examples of global resources:**
-> - Compute snapshots  
-> - Compute instance templates  
-> - Pub/Sub topics and subscriptions  
->
-> _This is not an exhaustive list._ If changing the region has no effect on the results, the resource is likely global.
+---
+
+### ⚠️ Heads up about regions
+
+- Not all services support all regions. The workflow checks if the selected region is valid **before** calling `gcloud`, so you'll get immediate feedback instead of a failure.
+- Some resources are **global**, meaning they aren't tied to a region or zone. Selecting a region won't affect those results.
+
+**Examples of global resources:**
+- Compute snapshots  
+- Compute instance templates  
+- Pub/Sub topics and subscriptions  
+_This is not an exhaustive list — if changing the region has no effect, the resource is likely global._
+
 
 ### Advanced Usage
 
-1. The workflow supports maintenance tools powered by [AwGo Magic Actions](https://pkg.go.dev/github.com/deanishe/awgo#MagicAction). Type `gcp tools:` to access options like clearing cache, viewing logs, or resetting internal data folders.
-![Tools](images/docs/tools.png)
-> Example: View showing available maintenance tools
-1. The workflow also supports [Fuzzy Filtering](https://pkg.go.dev/github.com/deanishe/awgo/fuzzy), allowing you to quickly find services or resources even with partial or out-of-order matches.
+1. Access maintenance tools powered by [AwGo Magic Actions](https://pkg.go.dev/github.com/deanishe/awgo#MagicAction) by typing `gcp tools:`.  This gives you options to clear cache, view logs, or reset internal data folders.
+   <img src="./assets/docs/tools.png" alt="Tools" width="500"/><br>
+   _Example: Maintenance tools screen with options like clear cache and view logs._ <br>
+2. The workflow supports [Fuzzy Filtering](https://pkg.go.dev/github.com/deanishe/awgo/fuzzy), so you can quickly find services or resources — even with partial or out-of-order matches.
+
 
 ## 🔍⚡️ Supported Resource Searches
 

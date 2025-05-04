@@ -2,9 +2,19 @@ package gcloud
 
 import (
 	"encoding/json"
+	"errors"
+	"log"
+	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
+)
+
+const execPerm = 0o111
+
+var (
+	ErrGCloudNotFound = errors.New("gcloud binary not found")
+	ErrNonExecutable  = errors.New("provided path is not executable")
 )
 
 type GCloudInfo struct {
@@ -26,9 +36,20 @@ type GCloudInfo struct {
 	} `json:"installation"`
 }
 
-func GetGCloudInfo(cliPath string) (*GCloudInfo, error) {
-	cmd := exec.Command(cliPath, "info", "--format=json(config,installation)")
-	out, err := cmd.Output()
+func GetGCloudInfo(binPath string) (*GCloudInfo, error) {
+	stat, err := os.Stat(binPath)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return nil, ErrGCloudNotFound
+		}
+		return nil, err
+	}
+
+	if stat.IsDir() || stat.Mode().Perm()&execPerm == 0 {
+		return nil, ErrNonExecutable
+	}
+
+	out, err := exec.Command(binPath, "info", "--format=json(config,installation)").Output()
 	if err != nil {
 		return nil, err
 	}
@@ -42,11 +63,25 @@ func GetGCloudInfo(cliPath string) (*GCloudInfo, error) {
 }
 
 func NormalizeGCloudPath(path string) string {
-	if path == "" {
+	normalized := strings.TrimSpace(path)
+	if normalized == "" {
 		return ""
 	}
-	if !strings.HasSuffix(path, "gcloud") {
-		return filepath.Join(path, "gcloud")
+
+	if strings.HasPrefix(normalized, "~") {
+		homeDir, err := os.UserHomeDir()
+		if err != nil {
+			log.Println("error getting home directory:", err)
+			return normalized
+		}
+
+		normalized = filepath.Join(homeDir, normalized[1:])
 	}
-	return path
+
+	normalized = filepath.Clean(normalized)
+	if filepath.Base(normalized) != "gcloud" {
+		return filepath.Join(normalized, "gcloud")
+	}
+
+	return normalized
 }

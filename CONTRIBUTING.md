@@ -54,23 +54,23 @@ If you're looking for something to work on:
 The workflow is organized around three main concepts:
 1. **Service**
    - Represents a GCP service (e.g., Compute Engine, Cloud Storage).
-   - Defined in [services.yml](services.yml).
+   - Defined in [services.yml](./services.yml).
 2. **Subservice**
    - Represents a specific resource within a Service (e.g., a VM instance, a Storage bucket).
-   - Listed under each Service in [services.yml](services.yml).
+   - Listed under each Service in [services.yml](./services.yml).
 3. **Searcher**
    - Defines how to fetch resources for a Subservice using a gcloud command (e.g., gcloud compute instances list).
-   - Implemented in [searchers/searcher.go](searchers/searcher.go).
+   - Implemented in [searchers/searcher.go](./searchers/searcher.go).
 
 ## Adding a New Service or Subservice
 
-1. **Update [services.yml](services.yml)**:
+1. **Update [services.yml](./services.yml)**:
    - Add your new Service.
    - (Optional) Add Subservices under the Service.
 2. **Icons**:
-   - Use existing icons in the [images](images/) folder if available.
+   - Use existing icons in the [assets/gcp](./assets/gcp) directory if available.
    - To add a new icon:
-      - Place the image in [images](images/).
+      - Place the image in [assets/gcp](./assets/gcp).
       - Reference the path inside `services.yml`.
    - Official GCP service icons can be found [here](https://cloud.google.com/icons).
 3. **Sort Services Alphabetically**:
@@ -83,15 +83,15 @@ The workflow is organized around three main concepts:
    - This ensures all services remain consistently ordered.
 
 ## Adding a New Searcher
-1. Create a new file in the [gcloud](gcloud/) folder:
+1. Create a new file in the [gcloud](./gcloud/) folder:
    - The file should define the gcloud command to list resources for a subservice.
    - Only include necessary fields, and avoid listing sensitive information.
-   - Example: See [firestore.go](gcloud/filestore.go).
+   - Example: See [firestore.go](./gcloud/filestore.go).
 2. Implement a new Searcher:
    - Create a struct that implements the `Searcher` interface.
-   - Place it inside the [searchers](searchers/) folder.
+   - Place it inside the [searchers](./searchers/) folder.
 3. Register the Searcher:
-   - Update [searcher.go](searchers/searcher.go).
+   - Update [searcher.go](./searchers/searcher.go).
    - Use the key format: `service_id/subservice_id` when registering the searcher.
 
 ## Notes

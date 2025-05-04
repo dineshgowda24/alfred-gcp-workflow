@@ -49,7 +49,7 @@ func (h *HomeHandler) Handle(ctx *Context) error {
 			Title:        "Health Dashboard",
 			Subtitle:     "🏥 View service availability by region",
 			Arg:          gcloud.HealthStatusURL,
-			Icon:         &aw.Icon{Value: filepath.Join(ctx.Workflow.Dir(), "images", "heartbeat.png")},
+			Icon:         &aw.Icon{Value: filepath.Join(ctx.Workflow.Dir(), "assets", "workflow", "heartbeat.png")},
 			Valid:        true,
 			SortPriority: 3,
 		},

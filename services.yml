@@ -3,881 +3,881 @@
   name: API & Services
   description: Manage APIs and services
   url: https://console.cloud.google.com/apis/dashboard?project={{ .Project }}
-  logo_path: images/api.png
+  logo_path: assets/gcp/api.png
   sub_services:
     - id: library
       name: Library
       description: Enable and disable APIs
       url: https://console.cloud.google.com/apis/library?project={{ .Project }}
-      logo_path: images/api.png
+      logo_path: assets/gcp/api.png
     - id: credentials
       name: Credentials
       description: Manage API keys, OAuth 2.0 client IDs, and service accounts
       url: https://console.cloud.google.com/apis/credentials?project={{ .Project }}
-      logo_path: images/api.png
+      logo_path: assets/gcp/api.png
     - id: agreements
       name: Page usage agreements
       description: List of agreements
       url: https://console.cloud.google.com/apis/agreements?project={{ .Project }}
-      logo_path: images/api.png
+      logo_path: assets/gcp/api.png
 - id: apigateway
   name: API Gateway
   description: API development, deployment, and management
   url: https://console.cloud.google.com/api-gateway?project={{ .Project }}
-  logo_path: images/cloud_api_gateway.png
+  logo_path: assets/gcp/cloud_api_gateway.png
 - id: apigee
   name: Apigee
   description: API management platform
   url: https://console.cloud.google.com/apigee?project={{ .Project }}
-  logo_path: images/apigee.png
+  logo_path: assets/gcp/apigee.png
   sub_services:
     - id: proxies
       name: API Proxies
       description: List of API proxies
       url: https://console.cloud.google.com/apigee/proxies?project={{ .Project }}
-      logo_path: images/apigee.png
+      logo_path: assets/gcp/apigee.png
     - id: sharedflows
       name: Shared Flows
       description: List of shared flows
       url: https://console.cloud.google.com/apigee/sharedflows?project={{ .Project }}
-      logo_path: images/apigee.png
+      logo_path: assets/gcp/apigee.png
     - id: integrations
       name: Integrations
       description: List of integrations
       url: https://console.cloud.google.com/apigee/integrations?project={{ .Project }}
-      logo_path: images/apigee.png
+      logo_path: assets/gcp/apigee.png
     - id: offlinedebug
       name: Offline Debug
       description: List of offline debug sessions
       url: https://console.cloud.google.com/apigee/offline-debug?project={{ .Project }}
-      logo_path: images/apigee.png
+      logo_path: assets/gcp/apigee.png
     - id: apimonitoring
       name: API Monitoring
       description: List of API monitoring reports
       url: https://console.cloud.google.com/apigee/apimonitoring?project={{ .Project }}
-      logo_path: images/apigee.png
+      logo_path: assets/gcp/apigee.png
 - id: appengine
   name: App Engine
   description: Managed app platform
   url: https://console.cloud.google.com/appengine?project={{ .Project }}
-  logo_path: images/app_engine.png
+  logo_path: assets/gcp/app_engine.png
   sub_services:
     - id: versions
       name: Versions
       description: List of App Engine versions
       url: https://console.cloud.google.com/appengine/versions?project={{ .Project }}
-      logo_path: images/app_engine.png
+      logo_path: assets/gcp/app_engine.png
     - id: services
       name: Services
       description: List of App Engine services
       url: https://console.cloud.google.com/appengine/services?project={{ .Project }}
-      logo_path: images/app_engine.png
+      logo_path: assets/gcp/app_engine.png
 - id: artifactregistry
   name: Artifact Registry
   description: Universal build artifact management
   url: https://console.cloud.google.com/artifacts?project={{ .Project }}
-  logo_path: images/artifact_registry.png
+  logo_path: assets/gcp/artifact_registry.png
   sub_services:
     - id: repositories
       name: Repositories
       description: List of artifact repositories
       url: https://console.cloud.google.com/artifacts?project={{ .Project }}
-      logo_path: images/artifact_registry.png
+      logo_path: assets/gcp/artifact_registry.png
 - id: authplatform
   name: Google Auth Platform
   description: Manage authentication and authorization
   url: https://console.cloud.google.com/auth?project={{ .Project }}
-  logo_path: images/auth_platform.png
+  logo_path: assets/gcp/auth_platform.png
   sub_services:
     - id: branding
       name: Branding
       description: Manage branding for your OAuth consent screen
       url: https://console.cloud.google.com/auth/branding?project={{ .Project }}
-      logo_path: images/auth_platform.png
+      logo_path: assets/gcp/auth_platform.png
     - id: clients
       name: OAuth 2.0 Clients
       description: Manage OAuth 2.0 client IDs and secrets
       url: https://console.cloud.google.com/auth/clients?project={{ .Project }}
-      logo_path: images/auth_platform.png
+      logo_path: assets/gcp/auth_platform.png
 - id: batch
   name: Batch
   description: Jobs as a service
   url: https://console.cloud.google.com/batch/jobs?project={{ .Project }}
-  logo_path: images/batch.png
+  logo_path: assets/gcp/batch.png
 - id: bigquery
   name: BigQuery
   description: Data warehouse/analytics
   url: https://console.cloud.google.com/bigquery?project={{ .Project }}
-  logo_path: images/bigquery.png
+  logo_path: assets/gcp/bigquery.png
 - id: bigtable
   name: Bigtable
   description: Petabyte-scale, low-latency, non-relational database
   url: https://console.cloud.google.com/bigtable?project={{ .Project }}
-  logo_path: images/bigtable.png
+  logo_path: assets/gcp/bigtable.png
 - id: billing
   name: Billing
   description: Manage billing accounts and budgets
   url: https://console.cloud.google.com/billing?project={{ .Project }}
-  logo_path: images/billing.png
+  logo_path: assets/gcp/billing.png
 - id: ccai
   name: CCAI Platform
   description: Contact Center As A Service (CCaaS)
   url: https://console.cloud.google.com/contact-center-ai?project={{ .Project }}
-  logo_path: images/contact_center_ai.png
+  logo_path: assets/gcp/contact_center_ai.png
 - id: cloudbuild
   name: Cloud Build
   description: Continuous integration delivery platform
   url: https://console.cloud.google.com/cloud-build?project={{ .Project }}
-  logo_path: images/cloud_build.png
+  logo_path: assets/gcp/cloud_build.png
   sub_services:
     - id: triggers
       name: Triggers
       description: List of build triggers
       url: https://console.cloud.google.com/cloud-build/triggers?project={{ .Project }}
-      logo_path: images/cloud_build.png
+      logo_path: assets/gcp/cloud_build.png
     - id: repositories
       name: Repositories
       description: List of build repositories
       url: https://console.cloud.google.com/cloud-build/repositories/2nd-gen?project={{ .Project }}
-      logo_path: images/cloud_build.png
+      logo_path: assets/gcp/cloud_build.png
     - id: builds
       name: Builds
       description: List of builds
       url: https://console.cloud.google.com/cloud-build/builds?project={{ .Project }}
-      logo_path: images/cloud_build.png
+      logo_path: assets/gcp/cloud_build.png
 - id: clouddeploy
   name: Cloud Deploy
   description: Continuous delivery to GKE and Cloud Run
   url: https://console.cloud.google.com/deploy?project={{ .Project }}
-  logo_path: images/cloud_deploy.png
+  logo_path: assets/gcp/cloud_deploy.png
 - id: cloudrun
   name: Cloud Run
   description: Fully managed serverless containers
   url: https://console.cloud.google.com/run?project={{ .Project }}
-  logo_path: images/cloud_run.png
+  logo_path: assets/gcp/cloud_run.png
   sub_services:
     - id: functions
       name: Functions (Gen 1)
       description: List of functions (Gen 1)
       url: https://console.cloud.google.com/functions?project={{ .Project }}
-      logo_path: images/cloud_run.png
+      logo_path: assets/gcp/cloud_run.png
     - id: services
       name: Services (Gen 2)
       description: List of Services (Gen 2)
       url: https://console.cloud.google.com/run?project={{ .Project }}
-      logo_path: images/cloud_run.png
+      logo_path: assets/gcp/cloud_run.png
     - id: jobs
       name: Jobs
       description: List of Cloud Run jobs
       url: https://console.cloud.google.com/run/jobs?project={{ .Project }}
-      logo_path: images/cloud_run.png
+      logo_path: assets/gcp/cloud_run.png
 - id: cloudscheduler
   name: Cloud Scheduler
   description: Managed cron job service
   url: https://console.cloud.google.com/cloudscheduler?project={{ .Project }}
-  logo_path: images/cloud_scheduler.png
+  logo_path: assets/gcp/cloud_scheduler.png
 - id: cloudtasks
   name: Cloud Tasks
   description: Asynchronous task execution
   url: https://console.cloud.google.com/cloudtasks?project={{ .Project }}
-  logo_path: images/cloud_tasks.png
+  logo_path: assets/gcp/cloud_tasks.png
   sub_services:
     - id: queues
       name: Queues
       description: List of Cloud Tasks queues
       url: https://console.cloud.google.com/cloudtasks?project={{ .Project }}
-      logo_path: images/cloud_tasks.png
+      logo_path: assets/gcp/cloud_tasks.png
 - id: composer
   name: Cloud Composer
   description: Managed Apache Airflow workflow orchestration service
   url: https://console.cloud.google.com/composer/environments?project={{ .Project }}
-  logo_path: images/cloud_composer.png
+  logo_path: assets/gcp/cloud_composer.png
 - id: compute
   name: Compute Engine
   description: VMs, GPUs, TPUs, disks
   url: https://console.cloud.google.com/compute/overview?project={{ .Project }}
-  logo_path: images/compute_engine.png
+  logo_path: assets/gcp/compute_engine.png
   sub_services:
     - id: instances
       name: VM Instances
       description: Virtual machine instances
       url: https://console.cloud.google.com/compute/instances?project={{ .Project }}
-      logo_path: images/compute_engine.png
+      logo_path: assets/gcp/compute_engine.png
     - id: instancetemplates
       name: Instance Templates
       description: Instance templates for VM instances
       url: https://console.cloud.google.com/compute/instanceTemplates?project={{ .Project }}
-      logo_path: images/compute_engine.png
+      logo_path: assets/gcp/compute_engine.png
     - id: soletenancy
       name: Sole Tenancy
       description: Physical servers dedicated to your project
       url: https://console.cloud.google.com/compute/soleTenancy?project={{ .Project }}
-      logo_path: images/compute_engine.png
+      logo_path: assets/gcp/compute_engine.png
     - id: machineimages
       name: Machine Images
       description: Create, backup, and restore VM instances
       url: https://console.cloud.google.com/compute/machineImages?project={{ .Project }}
-      logo_path: images/compute_engine.png
+      logo_path: assets/gcp/compute_engine.png
     - id: disks
       name: Disks
       description: List of persistent disks
       url: https://console.cloud.google.com/compute/disks?project={{ .Project }}
-      logo_path: images/compute_engine.png
+      logo_path: assets/gcp/compute_engine.png
     - id: storagepools
       name: Storage Pools
       description: Collection of compressed disks
       url: https://console.cloud.google.com/compute/storagePools?project={{ .Project }}
-      logo_path: images/compute_engine.png
+      logo_path: assets/gcp/compute_engine.png
     - id: snapshots
       name: Snapshots
       description: Backups of persistent disks
       url: https://console.cloud.google.com/compute/snapshots?project={{ .Project }}
-      logo_path: images/compute_engine.png
+      logo_path: assets/gcp/compute_engine.png
     - id: images
       name: Images
       description: Replica of a disk that contains the applications and OS needed to start a VM
       url: https://console.cloud.google.com/compute/images?project={{ .Project }}
-      logo_path: images/compute_engine.png
+      logo_path: assets/gcp/compute_engine.png
     - id: instancegroups
       name: Instance Groups
       description: Collections of instances for load balancing and automated services.
       url: https://console.cloud.google.com/compute/instanceGroups?project={{ .Project }}
-      logo_path: images/compute_engine.png
+      logo_path: assets/gcp/compute_engine.png
     - id: healthchecks
       name: Health Checks
       description: List of health checks
       url: https://console.cloud.google.com/compute/healthChecks?project={{ .Project }}
-      logo_path: images/compute_engine.png
+      logo_path: assets/gcp/compute_engine.png
 - id: dataflow
   name: Dataflow
   description: Streaming analytics service
   url: https://console.cloud.google.com/dataflow/jobs?project={{ .Project }}
-  logo_path: images/dataflow.png
+  logo_path: assets/gcp/dataflow.png
   sub_services:
     - id: jobs
       name: Jobs
       description: List of Dataflow jobs
       url: https://console.cloud.google.com/dataflow/jobs?project={{ .Project }}
-      logo_path: images/dataflow.png
+      logo_path: assets/gcp/dataflow.png
     - id: pipelines
       name: Pipelines
       description: List of Dataflow pipelines
       url: https://console.cloud.google.com/dataflow/pipelines?project={{ .Project }}
-      logo_path: images/dataflow.png
+      logo_path: assets/gcp/dataflow.png
     - id: workbench
       name: Workbench
       description: Dataflow workbench
       url: https://console.cloud.google.com/dataflow/workbench/legacy?project={{ .Project }}
-      logo_path: images/dataflow.png
+      logo_path: assets/gcp/dataflow.png
     - id: snapshots
       name: Snapshots
       description: List of Dataflow snapshots
       url: https://console.cloud.google.com/dataflow/snapshots?project={{ .Project }}
-      logo_path: images/dataflow.png
+      logo_path: assets/gcp/dataflow.png
 - id: datafusion
   name: Data Fusion
   description: Data pipeline management
   url: https://console.cloud.google.com/data-fusion?project={{ .Project }}
-  logo_path: images/cloud_data_fusion.png
+  logo_path: assets/gcp/cloud_data_fusion.png
 - id: dataplex
   name: Dataplex
   description: Intelligent data fabric
   url: https://console.cloud.google.com/dataplex?project={{ .Project }}
-  logo_path: images/dataplex.png
+  logo_path: assets/gcp/dataplex.png
 - id: dataprep
   name: Dataprep
   description: Visual data wrangling
   url: https://console.cloud.google.com/dataprep?project={{ .Project }}
-  logo_path: images/dataprep.png
+  logo_path: assets/gcp/dataprep.png
 - id: dataproc
   name: Dataproc
   description: Managed Apache Spark and Hadoop service
   url: https://console.cloud.google.com/dataproc/overview?project={{ .Project }}
-  logo_path: images/dataproc.png
+  logo_path: assets/gcp/dataproc.png
   sub_services:
     - id: clusters
       name: Clusters
       description: List of clusters
       url: https://console.cloud.google.com/dataproc/clusters?project={{ .Project }}
-      logo_path: images/dataproc.png
+      logo_path: assets/gcp/dataproc.png
     - id: jobs
       name: Jobs
       description: List of jobs
       url: https://console.cloud.google.com/dataproc/jobs?project={{ .Project }}
-      logo_path: images/dataproc.png
+      logo_path: assets/gcp/dataproc.png
     - id: instances
       name: Instances
       description: List of instances
       url: https://console.cloud.google.com/dataproc/instances?project={{ .Project }}
-      logo_path: images/dataproc.png
+      logo_path: assets/gcp/dataproc.png
     - id: batches
       name: Batches
       description: List of batches
       url: https://console.cloud.google.com/dataproc/batches?project={{ .Project }}
-      logo_path: images/dataproc.png
+      logo_path: assets/gcp/dataproc.png
     - id: serverinstances
       name: Server Instances
       description: List of server instances
       url: https://console.cloud.google.com/dataproc/serverInstances?project={{ .Project }}
-      logo_path: images/dataproc.png
+      logo_path: assets/gcp/dataproc.png
 - id: datastore
   name: Datastore
   description: Serverless NoSQL document DB
   url: https://console.cloud.google.com/datastore?project={{ .Project }}
-  logo_path: images/datastore.png
+  logo_path: assets/gcp/datastore.png
 - id: datastream
   name: Datastream
   description: Streaming ingestion and replication
   url: https://console.cloud.google.com/datastream?project={{ .Project }}
-  logo_path: images/datastream.png
+  logo_path: assets/gcp/datastream.png
 - id: dbmigration
   name: Database Migration Service
   description: Cloud SQL and AlloyDB migrations simplified
   url: https://console.cloud.google.com/dbmigration?project={{ .Project }}
-  logo_path: images/database_migration_service.png
+  logo_path: assets/gcp/database_migration_service.png
 - id: discoveryengine
   name: Discovery Engine
   description: Cross-industry discovery solutions
   url: https://console.cloud.google.com/ai/discovery?project={{ .Project }}
-  logo_path: images/service_discovery.png
+  logo_path: assets/gcp/service_discovery.png
 - id: documentai
   name: Document AI
   description: Document analysis, classification, and searches
   url: https://console.cloud.google.com/ai/document-ai?project={{ .Project }}
-  logo_path: images/document_ai.png
+  logo_path: assets/gcp/document_ai.png
 - id: endpoints
   name: Endpoints
   description: API management
   url: https://console.cloud.google.com/endpoints?project={{ .Project }}
-  logo_path: images/cloud_endpoints.png
+  logo_path: assets/gcp/cloud_endpoints.png
 - id: errorreporting
   name: Error Reporting
   description: Dashboard for app errors
   url: https://console.cloud.google.com/errors?project={{ .Project }}
-  logo_path: images/error_reporting.png
+  logo_path: assets/gcp/error_reporting.png
 - id: eventarc
   name: Eventarc
   description: Modern event delivery
   url: https://console.cloud.google.com/eventarc?project={{ .Project }}
-  logo_path: images/eventarc.png
+  logo_path: assets/gcp/eventarc.png
   sub_services:
     - id: triggers
       name: Triggers
       description: List of event triggers
       url: https://console.cloud.google.com/eventarc/triggers?project={{ .Project }}
-      logo_path: images/eventarc.png
+      logo_path: assets/gcp/eventarc.png
     - id: channels
       name: Channels
       description: List of event channels
       url: https://console.cloud.google.com/eventarc/channels?project={{ .Project }}
-      logo_path: images/eventarc.png
+      logo_path: assets/gcp/eventarc.png
     - id: bus
       name: Buses
       description: List of event buses
       url: https://console.cloud.google.com/eventarc/buses?project={{ .Project }}
-      logo_path: images/eventarc.png
+      logo_path: assets/gcp/eventarc.png
     - id: pipelines
       name: Pipelines
       description: List of event pipelines
       url: https://console.cloud.google.com/eventarc/pipelines?project={{ .Project }}
-      logo_path: images/eventarc.png
+      logo_path: assets/gcp/eventarc.png
 - id: filestore
   name: Filestore
   description: Fully managed NFS server
   url: https://console.cloud.google.com/filestore?project={{ .Project }}
-  logo_path: images/filestore.png
+  logo_path: assets/gcp/filestore.png
   sub_services:
     - id: instances
       name: Instances
       description: List of instances
       url: https://console.cloud.google.com/filestore/instances?project={{ .Project }}
-      logo_path: images/filestore.png
+      logo_path: assets/gcp/filestore.png
     - id: backups
       name: Backups
       description: List of backups
       url: https://console.cloud.google.com/filestore/backups?project={{ .Project }}
-      logo_path: images/filestore.png
+      logo_path: assets/gcp/filestore.png
     - id: replication
       name: Replication
       description: List of replications
       url: https://console.cloud.google.com/filestore/replications?project={{ .Project }}
-      logo_path: images/filestore.png
+      logo_path: assets/gcp/filestore.png
 - id: financialservices
   name: Financial Services
   description: Revenue growth through the cloud
   url: https://console.cloud.google.com/financial_services?project={{ .Project }}
-  logo_path: images/financial_services_marketplace.png
+  logo_path: assets/gcp/financial_services_marketplace.png
 - id: firestore
   name: Firestore
   description: Serverless, JSON & MongoDB compatible database
   url: https://console.cloud.google.com/firestore?project={{ .Project }}
-  logo_path: images/firestore.png
+  logo_path: assets/gcp/firestore.png
 - id: gcr
   name: Container Registry
   description: Private container registry storage
   url: https://console.cloud.google.com/gcr?project={{ .Project }}
-  logo_path: images/container_registry.png
+  logo_path: assets/gcp/container_registry.png
 - id: gke
   name: Kubernetes Engine
   description: Managed Kubernetes / containers
   url: https://console.cloud.google.com/kubernetes/overview?project={{ .Project }}
-  logo_path: images/google_kubernetes_engine.png
+  logo_path: assets/gcp/google_kubernetes_engine.png
   sub_services:
     - id: clusters
       name: Clusters
       description: List of Kubernetes clusters
       url: https://console.cloud.google.com/kubernetes/clusters?project={{ .Project }}
-      logo_path: images/google_kubernetes_engine.png
+      logo_path: assets/gcp/google_kubernetes_engine.png
     - id: workloads
       name: Workloads
       description: List of workloads
       url: https://console.cloud.google.com/kubernetes/workloads/overview?project={{ .Project }}
-      logo_path: images/google_kubernetes_engine.png
+      logo_path: assets/gcp/google_kubernetes_engine.png
     - id: secrets
       name: Secrets and ConfigMaps
       description: Manage secrets and ConfigMaps in Kubernetes
       url: https://console.cloud.google.com/kubernetes/secrets?project={{ .Project }}
-      logo_path: images/google_kubernetes_engine.png
+      logo_path: assets/gcp/google_kubernetes_engine.png
     - id: storage
       name: Storage
       description: Persistent storage for Kubernetes
       url: https://console.cloud.google.com/kubernetes/persistentvolumeclaim?project={{ .Project }}
-      logo_path: images/google_kubernetes_engine.png
+      logo_path: assets/gcp/google_kubernetes_engine.png
     - id: gateways
       name: Gateways
       description: Manage gateways for Kubernetes
       url: https://console.cloud.google.com/kubernetes/gateways?project={{ .Project }}
-      logo_path: images/google_kubernetes_engine.png
+      logo_path: assets/gcp/google_kubernetes_engine.png
     - id: routes
       name: Routes
       description: Manage routes for Kubernetes
       url: https://console.cloud.google.com/kubernetes/httproutes?project={{ .Project }}
-      logo_path: images/google_kubernetes_engine.png
+      logo_path: assets/gcp/google_kubernetes_engine.png
     - id: services
       name: Services
       description: Set of Pods with a network endpoint that can be used for discovery and load balancing
       url: https://console.cloud.google.com/kubernetes/discovery?project={{ .Project }}
-      logo_path: images/google_kubernetes_engine.png
+      logo_path: assets/gcp/google_kubernetes_engine.png
     - id: ingress
       name: Ingress
       description: Collection of rules that allow inbound connections
       url: https://console.cloud.google.com/kubernetes/ingresses?project={{ .Project }}
-      logo_path: images/google_kubernetes_engine.png
-- id: maps_platform
+      logo_path: assets/gcp/google_kubernetes_engine.png
+- id: mapsplatform
   name: Google Maps Platform
   description: Real-world insights and location experiences
   url: https://console.cloud.google.com/google/maps-apis?project={{ .Project }}
-  logo_path: images/google_maps_platform.png
+  logo_path: assets/gcp/google_maps_platform.png
   sub_services:
     - id: api
       name: APIs
       description: List of Google Maps APIs
       url: https://console.cloud.google.com/google/maps-apis/api-list?project={{ .Project }}
-      logo_path: images/google_maps_platform.png
+      logo_path: assets/gcp/google_maps_platform.png
     - id: metrics
       name: Metrics
       description: List of Google Maps metrics
       url: https://console.cloud.google.com/google/maps-apis/metrics?project={{ .Project }}
-      logo_path: images/google_maps_platform.png
+      logo_path: assets/gcp/google_maps_platform.png
     - id: quotas
       name: Quotas
       description: List of Google Maps quotas
       url: https://console.cloud.google.com/google/maps-apis/quotas?project={{ .Project }}
-      logo_path: images/google_maps_platform.png
+      logo_path: assets/gcp/google_maps_platform.png
     - id: credentials
       name: Keys and Credentials
       description: List of Google Maps credentials
       url: https://console.cloud.google.com/google/maps-apis/credentials?project={{ .Project }}
-      logo_path: images/google_maps_platform.png
+      logo_path: assets/gcp/google_maps_platform.png
     - id: support
       name: Support
       description: List of Google Maps support options
       url: https://console.cloud.google.com/google/maps-apis/support?project={{ .Project }}
-      logo_path: images/google_maps_platform.png
+      logo_path: assets/gcp/google_maps_platform.png
     - id: solutionslibrary
       name: Solutions Library
       description: List of Google Maps solutions
       url: https://console.cloud.google.com/google/maps-apis/build?project={{ .Project }}
-      logo_path: images/google_maps_platform.png
+      logo_path: assets/gcp/google_maps_platform.png
     - id: mapmanagement
       name: Map Management
       description: List of Google Maps management options
       url: https://console.cloud.google.com/google/maps-apis/studio?project={{ .Project }}
-      logo_path: images/google_maps_platform.png
+      logo_path: assets/gcp/google_maps_platform.png
     - id: datasets
       name: Datasets
       description: List of Google Maps datasets
       url: https://console.cloud.google.com/google/maps-apis/datasets?project={{ .Project }}
-      logo_path: images/google_maps_platform.png
+      logo_path: assets/gcp/google_maps_platform.png
 - id: healthcare
   name: Cloud Healthcare
   description: Healthcare data storage and processing
   url: https://console.cloud.google.com/healthcare/browser?project={{ .Project }}
-  logo_path: images/cloud_healthcare_api.png
+  logo_path: assets/gcp/cloud_healthcare_api.png
 - id: iam
   name: Identity & Access Management
   description: Manage access control
   url: https://console.cloud.google.com/iam-admin/iam?project={{ .Project }}
-  logo_path: images/identity_and_access_management.png
+  logo_path: assets/gcp/identity_and_access_management.png
   sub_services:
     - id: roles
       name: Roles
       description: Manage custom roles
       url: https://console.cloud.google.com/iam-admin/roles?project={{ .Project }}
-      logo_path: images/identity_and_access_management.png
+      logo_path: assets/gcp/identity_and_access_management.png
     - id: serviceaccounts
       name: Service Accounts
       description: Manage service accounts
       url: https://console.cloud.google.com/iam-admin/serviceaccounts?project={{ .Project }}
-      logo_path: images/identity_and_access_management.png
+      logo_path: assets/gcp/identity_and_access_management.png
 - id: identityplatform
   name: Identity Platform
   description: Google-grade identity and access management
   url: https://console.cloud.google.com/customer-identity?project={{ .Project }}
-  logo_path: images/identity_platform.png
+  logo_path: assets/gcp/identity_platform.png
 - id: logs
   name: Logging
   description: Real-time log management and analysis
   url: https://console.cloud.google.com/logs?project={{ .Project }}
-  logo_path: images/cloud_logging.png
+  logo_path: assets/gcp/cloud_logging.png
 - id: looker
   name: Looker
   description: Enterprise BI and Analytics
   url: https://console.cloud.google.com/looker?project={{ .Project }}
-  logo_path: images/looker.png
+  logo_path: assets/gcp/looker.png
 - id: lookerstudio
   name: Looker Studio
   description: Scalable self-service BI
   url: https://console.cloud.google.com/looker-studio?project={{ .Project }}
-  logo_path: images/looker.png
+  logo_path: assets/gcp/looker.png
 - id: memorystore
   name: Memorystore for Redis
   description: Fully managed Redis for GCP
   url: https://console.cloud.google.com/memorystore?project={{ .Project }}
-  logo_path: images/memorystore.png
+  logo_path: assets/gcp/memorystore.png
   sub_services:
     - id: redis
       name: Redis Instances
       description: List of Redis instances
       url: https://console.cloud.google.com/memorystore/redis/instances?project={{ .Project }}
-      logo_path: images/memorystore.png
+      logo_path: assets/gcp/memorystore.png
     - id: redisclusters
       name: Redis Clusters
       description: List of Redis clusters
       url: https://console.cloud.google.com/memorystore/redis/clusters?project={{ .Project }}
-      logo_path: images/memorystore.png
+      logo_path: assets/gcp/memorystore.png
     - id: memcached
       name: Memcached Instances
       description: List of Memcached instances
       url: https://console.cloud.google.com/memorystore/memcached/instances?project={{ .Project }}
-      logo_path: images/memorystore.png
+      logo_path: assets/gcp/memorystore.png
 - id: monitoring
   name: Monitoring
   description: Infrastructure and application quality checks
   url: https://console.cloud.google.com/monitoring?project={{ .Project }}
-  logo_path: images/cloud_monitoring.png
+  logo_path: assets/gcp/cloud_monitoring.png
 - id: netconnectivity
   name: Network Connectivity
   description: Network and hybrid connectivity options
   url: https://console.cloud.google.com/hybrid?project={{ .Project }}
-  logo_path: images/network_connectivity_center.png
+  logo_path: assets/gcp/network_connectivity_center.png
   sub_services:
     - id: vpntunnel
       name: VPN Tunnels
       description: List of VPN tunnels
       url: https://console.cloud.google.com/hybrid/vpn/list?project={{ .Project }}
-      logo_path: images/cloud_vpn.png
+      logo_path: assets/gcp/cloud_vpn.png
     - id: vpngateway
       name: VPN Gateways
       description: List of VPN gateways
       url: https://console.cloud.google.com/hybrid/vpn/list?tab=gateways&project={{ .Project }}
-      logo_path: images/cloud_vpn.png
+      logo_path: assets/gcp/cloud_vpn.png
     - id: interconnect
       name: Interconnect
       description: List of interconnect connections
       url: https://console.cloud.google.com/hybrid/interconnects/list?project={{ .Project }}
-      logo_path: images/network_connectivity_center.png
+      logo_path: assets/gcp/network_connectivity_center.png
     - id: cloudrouter
       name: Cloud Router
       description: List of Cloud Routers
       url: https://console.cloud.google.com/hybrid/routers/list?project={{ .Project }}
-      logo_path: images/network_connectivity_center.png
+      logo_path: assets/gcp/network_connectivity_center.png
 - id: networkintelligence
   name: Network Intelligence
   description: Network monitoring and topology
   url: https://console.cloud.google.com/net-intelligence?project={{ .Project }}
-  logo_path: images/network_intelligence_center.png
+  logo_path: assets/gcp/network_intelligence_center.png
 - id: netsecurity
   name: Network Security
   description: Tools that power safe networking
   url: https://console.cloud.google.com/net-security?project={{ .Project }}
-  logo_path: images/network_security.png
+  logo_path: assets/gcp/network_security.png
   sub_services:
     - id: ddos
       name: DDoS Dashboard
       description: List of DDoS attacks
       url: https://console.cloud.google.com/net-security/securitypolicies/ddosdashboard?project={{ .Project }}
-      logo_path: images/network_security.png
+      logo_path: assets/gcp/network_security.png
     - id: cloudarmor
       name: Cloud Armor
       description: List of Cloud Armor security policies
       url: https://console.cloud.google.com/net-security/securitypolicies/list?project={{ .Project }}
-      logo_path: images/network_security.png
+      logo_path: assets/gcp/network_security.png
     - id: firewallpolicies
       name: Firewall Policies
       description: List of firewall policies
       url: https://console.cloud.google.com/net-security/firewall-manager/firewall-policies/list?project={{ .Project }}
-      logo_path: images/network_security.png
+      logo_path: assets/gcp/network_security.png
 - id: netservices
   name: Network Services
   description: Network management tools
   url: https://console.cloud.google.com/net-services?project={{ .Project }}
-  logo_path: images/cloud_load_balancing.png
+  logo_path: assets/gcp/cloud_load_balancing.png
   sub_services:
     - id: loadbalancing
       name: Load Balancing
       description: List of load balancers
       url: https://console.cloud.google.com/net-services/loadbalancing?project={{ .Project }}
-      logo_path: images/cloud_load_balancing.png
+      logo_path: assets/gcp/cloud_load_balancing.png
     - id: dns
       name: Cloud DNS Zones
       description: List of DNS zones
       url: https://console.cloud.google.com/net-services/dns/zones?project={{ .Project }}
-      logo_path: images/cloud_dns.png
+      logo_path: assets/gcp/cloud_dns.png
     - id: cdn
       name: Cloud CDN
       description: List of Cloud CDN configurations
       url: https://console.cloud.google.com/net-services/cdn/list?project={{ .Project }}
-      logo_path: images/cloud_cdn.png
+      logo_path: assets/gcp/cloud_cdn.png
     - id: nat
       name: Cloud NAT
       description: List of Cloud NAT configurations
       url: https://console.cloud.google.com/net-services/nat/list?project={{ .Project }}
-      logo_path: images/cloud_nat.png
+      logo_path: assets/gcp/cloud_nat.png
 - id: nettier
   name: Network Tiers
   description: Price vs performance tiering
   url: https://console.cloud.google.com/net-tier?project={{ .Project }}
-  logo_path: images/network_tiers.png
+  logo_path: assets/gcp/network_tiers.png
 - id: profiler
   name: Profiler
   description: CPU and heap profiling
   url: https://console.cloud.google.com/profiler?project={{ .Project }}
-  logo_path: images/profiler.png
+  logo_path: assets/gcp/profiler.png
 - id: pubsub
   name: Pub/Sub
   description: Messaging and ingestion for event-driven systems
   url: https://console.cloud.google.com/cloudpubsub?project={{ .Project }}
-  logo_path: images/pubsub.png
+  logo_path: assets/gcp/pubsub.png
   sub_services:
     - id: topics
       name: Pub/Sub Topics
       description: List of Pub/Sub topics
       url: https://console.cloud.google.com/cloudpubsub/topic/list?project={{ .Project }}
-      logo_path: images/pubsub.png
+      logo_path: assets/gcp/pubsub.png
     - id: subscriptions
       name: Pub/Sub Subscriptions
       description: List of Pub/Sub subscriptions
       url: https://console.cloud.google.com/cloudpubsub/subscription/list?project={{ .Project }}
-      logo_path: images/pubsub.png
+      logo_path: assets/gcp/pubsub.png
 - id: retail
   name: Search for commerce
   description: Data-driven solutions for commerce
   url: https://console.cloud.google.com/ai/retail?project={{ .Project }}
-  logo_path: images/retail_api.png
+  logo_path: assets/gcp/retail_api.png
 - id: security
   name: Security
   description: Security management controls and capabilities
   url: https://console.cloud.google.com/security/command-center?project={{ .Project }}
-  logo_path: images/security.png
+  logo_path: assets/gcp/security.png
   sub_services:
     - id: threats
       name: Threats
       description: List of detected threats
       url: https://console.cloud.google.com/security/command-center/threats?project={{ .Project }}
-      logo_path: images/security.png
+      logo_path: assets/gcp/security.png
     - id: vulnerabilities
       name: Vulnerabilities
       description: List of detected vulnerabilities
       url: https://console.cloud.google.com/security/command-center/vulnerabilities?project={{ .Project }}
-      logo_path: images/security.png
+      logo_path: assets/gcp/security.png
     - id: compliance
       name: Compliance
       description: List of compliance findings
       url: https://console.cloud.google.com/security/command-center/compliance?project={{ .Project }}
-      logo_path: images/security.png
+      logo_path: assets/gcp/security.png
     - id: recaptcha
       name: reCAPTCHA
       description: List of reCAPTCHA keys
       url: https://console.cloud.google.com/security/recaptcha?project={{ .Project }}
-      logo_path: images/security.png
+      logo_path: assets/gcp/security.png
     - id: secretmanager
       name: Secret Manager
       description: List of secrets
       url: https://console.cloud.google.com/security/secret-manager?project={{ .Project }}
-      logo_path: images/security.png
+      logo_path: assets/gcp/security.png
     - id: keymanagement
       name: Key Management
       description: List of encryption keys
       url: https://console.cloud.google.com/security/kms/keyrings?project={{ .Project }}
-      logo_path: images/security.png
+      logo_path: assets/gcp/security.png
     - id: certificatemanager
       name: Certificate Manager
       description: List of SSL certificates
       url: https://console.cloud.google.com/security/certificate-manager?project={{ .Project }}
-      logo_path: images/security.png
+      logo_path: assets/gcp/security.png
 - id: servicecatalog
   name: Service Catalog
   description: Internal solutions catalog
   url: https://console.cloud.google.com/catalog?project={{ .Project }}
-  logo_path: images/catalog.png
+  logo_path: assets/gcp/catalog.png
 - id: spanner
   name: Spanner
   description: Fully managed, horizontally scalable, relational database
   url: https://console.cloud.google.com/spanner?project={{ .Project }}
-  logo_path: images/cloud_spanner.png
+  logo_path: assets/gcp/cloud_spanner.png
 - id: speech
   name: Speech
   description: Audio-to-text & text-to-audio conversion
   url: https://console.cloud.google.com/speech?project={{ .Project }}
-  logo_path: images/speech-to-text.png
+  logo_path: assets/gcp/speech-to-text.png
 - id: cloudsql
   name: Cloud SQL
   description: Managed MySQL, PostgreSQL, and SQL Server databases
   url: https://console.cloud.google.com/sql/instances?project={{ .Project }}
-  logo_path: images/cloud_sql.png
+  logo_path: assets/gcp/cloud_sql.png
   sub_services:
     - id: instances
       name: SQL Instances
       description: List of Cloud SQL instances
       url: https://console.cloud.google.com/sql/instances?project={{ .Project }}
-      logo_path: images/cloud_sql.png
+      logo_path: assets/gcp/cloud_sql.png
 - id: storage
   name: Cloud Storage
   description: Enterprise-ready object storage
   url: https://console.cloud.google.com/storage/browser
-  logo_path: images/cloud_storage.png
+  logo_path: assets/gcp/cloud_storage.png
   sub_services:
     - id: buckets
       name: Storage Buckets
       description: List of Cloud Storage buckets
       url: https://console.cloud.google.com/storage/browser?project={{ .Project }}
-      logo_path: images/cloud_storage.png
+      logo_path: assets/gcp/cloud_storage.png
     - id: monitoring
       name: Monitoring
       description: Monitor and manage your Cloud Storage buckets
       url: https://console.cloud.google.com/storage/monitoring?project={{ .Project }}
-      logo_path: images/cloud_storage.png
+      logo_path: assets/gcp/cloud_storage.png
 - id: support
   name: Support
   description: Google Cloud support
   url: https://console.cloud.google.com/support?project={{ .Project }}
-  logo_path: images/support.png
+  logo_path: assets/gcp/support.png
   sub_services:
     - id: cases
       name: Support Cases
       description: List of support cases
       url: https://console.cloud.google.com/support/cases?project={{ .Project }}
-      logo_path: images/support.png
+      logo_path: assets/gcp/support.png
     - id: billing
       name: Billing Support
       description: List of billing support cases
       url: https://console.cloud.google.com/support/chat?project={{ .Project }}
-      logo_path: images/support.png
+      logo_path: assets/gcp/support.png
     - id: phone
       name: Phone Support
       description: List of phone support cases
       url: https://console.cloud.google.com/support/phone?project={{ .Project }}
-      logo_path: images/support.png
+      logo_path: assets/gcp/support.png
     - id: community
       name: Community Support
       description: List of community support cases
       url: https://console.cloud.google.com/support/community?project={{ .Project }}
-      logo_path: images/support.png
+      logo_path: assets/gcp/support.png
 - id: trace
   name: Trace
   description: App latency insights
   url: https://console.cloud.google.com/trace?project={{ .Project }}
-  logo_path: images/trace.png
+  logo_path: assets/gcp/trace.png
 - id: translation
   name: Translation
   description: Language detection and translation
   url: https://console.cloud.google.com/translation?project={{ .Project }}
-  logo_path: images/cloud_translation_api.png
+  logo_path: assets/gcp/cloud_translation_api.png
 - id: vertexai
   name: Vertex AI
   description: One AI platform, every ML tool you need
   url: https://console.cloud.google.com/vertex-ai?project={{ .Project }}
-  logo_path: images/vertexai.png
+  logo_path: assets/gcp/vertexai.png
   sub_services:
     - id: modelgarden
       name: Model Garden
       description: List of models
       url: https://console.cloud.google.com/vertex-ai/model-garden?project={{ .Project }}
-      logo_path: images/vertexai.png
+      logo_path: assets/gcp/vertexai.png
     - id: pipelines
       name: Pipelines
       description: List of pipelines
       url: https://console.cloud.google.com/vertex-ai/pipelines?project={{ .Project }}
-      logo_path: images/vertexai.png
+      logo_path: assets/gcp/vertexai.png
     - id: workbench
       name: Workbench
       description: List of workbenches
       url: https://console.cloud.google.com/vertex-ai/workbench?project={{ .Project }}
-      logo_path: images/vertexai.png
+      logo_path: assets/gcp/vertexai.png
 - id: vmware
   name: VMware Engine
   description: VMware as a Service
   url: https://console.cloud.google.com/vmwareengine?project={{ .Project }}
-  logo_path: images/vmware_engine.png
+  logo_path: assets/gcp/vmware_engine.png
 - id: vpc
   name: VPC
   description: Virtual private cloud
   url: https://console.cloud.google.com/networking?project={{ .Project }}
-  logo_path: images/virtual_private_cloud.png
+  logo_path: assets/gcp/virtual_private_cloud.png
   sub_services:
     - id: networks
       name: Networks
       description: List of VPC networks
       url: https://console.cloud.google.com/networking/networks/list?project={{ .Project }}
-      logo_path: images/virtual_private_cloud.png
+      logo_path: assets/gcp/virtual_private_cloud.png
     - id: ip
       name: IP Addresses
       description: List of IP addresses
       url: https://console.cloud.google.com/networking/addresses/list?project={{ .Project }}
-      logo_path: images/virtual_private_cloud.png
+      logo_path: assets/gcp/virtual_private_cloud.png
     - id: internalranges
       name: Internal IP Ranges
       description: List of internal IP ranges
       url: https://console.cloud.google.com/networking/internal-ranges/list?project={{ .Project }}
-      logo_path: images/virtual_private_cloud.png
+      logo_path: assets/gcp/virtual_private_cloud.png
     - id: routes
       name: Routes
       description: List of routes
       url: https://console.cloud.google.com/networking/routes/list?project={{ .Project }}
-      logo_path: images/virtual_private_cloud.png
+      logo_path: assets/gcp/virtual_private_cloud.png
     - id: peering
       name: Network Peering
       description: List of network peerings
       url: https://console.cloud.google.com/networking/peering/list?project={{ .Project }}
-      logo_path: images/virtual_private_cloud.png
+      logo_path: assets/gcp/virtual_private_cloud.png
     - id: sharedvpc
       name: Shared VPC
       description: List of shared VPCs
       url: https://console.cloud.google.com/networking/xpn/details?project={{ .Project }}
-      logo_path: images/virtual_private_cloud.png
+      logo_path: assets/gcp/virtual_private_cloud.png
     - id: serverless
       name: Serverless VPC Access
       description: List of serverless VPC access connectors
       url: https://console.cloud.google.com/networking/connectors/list?project={{ .Project }}
-      logo_path: images/virtual_private_cloud.png
+      logo_path: assets/gcp/virtual_private_cloud.png
     - id: packetmirror
       name: Packet Mirroring
       description: List of packet mirroring policies
       url: https://console.cloud.google.com/networking/packetmirroring/list?project={{ .Project }}
-      logo_path: images/virtual_private_cloud.png
+      logo_path: assets/gcp/virtual_private_cloud.png
 - id: workflows
   name: Workflows
   description: HTTP services orchestration
   url: https://console.cloud.google.com/workflows?project={{ .Project }}
-  logo_path: images/workflows.png
+  logo_path: assets/gcp/workflows.png

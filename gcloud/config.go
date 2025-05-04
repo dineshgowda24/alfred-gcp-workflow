@@ -61,6 +61,38 @@ func GetActiveConfig() *Config {
 	return activeConfigCache
 }
 
+func activeConfigPath() (string, error) {
+	path := getGCloudConfigPath()
+	data, err := os.ReadFile(filepath.Join(path, "active_config"))
+	if err != nil {
+		return "", err
+	}
+
+	name := strings.TrimSpace(string(data))
+	return filepath.Join(path, "configurations", "config_"+name), nil
+}
+
+func getGCloudConfigPath() string {
+	path := config.GetGCloudConfigPath()
+	return filepath.Clean(path)
+}
+
+func loadConfig(path string) *Config {
+	iniFile, err := ini.Load(path)
+	if err != nil {
+		log.Println("error loading config file:", path, err)
+		return nil
+	}
+
+	name := strings.TrimPrefix(filepath.Base(path), "config_")
+	project := iniFile.Section("core").Key("project").String()
+
+	return &Config{
+		Name:    name,
+		Project: project,
+	}
+}
+
 // GetAllConfigs lazy loads all gcloud configs
 // subsequent calls will return the cached configs
 func GetAllConfigs() ([]*Config, error) {
@@ -95,36 +127,10 @@ func GetAllConfigs() ([]*Config, error) {
 	return allConfigsCache, nil
 }
 
-func activeConfigPath() (string, error) {
-	data, err := os.ReadFile(filepath.Join(config.GetGCloudConfigPath(), "active_config"))
-	if err != nil {
-		return "", err
-	}
-
-	name := strings.TrimSpace(string(data))
-	return filepath.Join(config.GetGCloudConfigPath(), "configurations", "config_"+name), nil
-}
-
 func configsDir() (string, error) {
-	return filepath.Join(config.GetGCloudConfigPath(), "configurations"), nil
+	return filepath.Join(getGCloudConfigPath(), "configurations"), nil
 }
 
 func isValidConfigFile(f os.DirEntry) bool {
 	return !f.IsDir() && f.Type().IsRegular() && strings.HasPrefix(f.Name(), "config_")
-}
-
-func loadConfig(path string) *Config {
-	iniFile, err := ini.Load(path)
-	if err != nil {
-		log.Println("error loading config file:", path, err)
-		return nil
-	}
-
-	name := strings.TrimPrefix(filepath.Base(path), "config_")
-	project := iniFile.Section("core").Key("project").String()
-
-	return &Config{
-		Name:    name,
-		Project: project,
-	}
 }
