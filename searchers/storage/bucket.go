@@ -21,7 +21,7 @@ func (s *BucketSearcher) Search(
 		gc.ListCloudStorageBuckets,
 		func(wf *aw.Workflow, gsb gc.Bucket) {
 			sb := FromGCloudStorageBucket(&gsb)
-			resource.NewItem(wf, cfg, sb, svc.Icon(wf.Dir()))
+			resource.NewItem(wf, cfg, sb, svc.Icon())
 		},
 	)
 

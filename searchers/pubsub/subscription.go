@@ -21,7 +21,7 @@ func (s *SubscriptionSearcher) Search(
 		gc.ListSubscriptions,
 		func(wf *aw.Workflow, gps gc.PubSubSubscription) {
 			ps := FromGCloudSubscription(&gps)
-			resource.NewItem(wf, cfg, ps, svc.Icon(wf.Dir()))
+			resource.NewItem(wf, cfg, ps, svc.Icon())
 		},
 	)
 

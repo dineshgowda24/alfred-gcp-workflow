@@ -4,12 +4,14 @@ import (
 	"errors"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"time"
 
 	aw "github.com/deanishe/awgo"
 	gc "github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 	"github.com/dineshgowda24/alfred-gcp-workflow/parser"
 	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/env"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/log"
 )
 
 const (
@@ -117,6 +119,7 @@ func (b *Builder[T]) validateRegion() bool {
 			Title:    "🔔 Selected region not supported for this resource",
 			Subtitle: "May be try another region? 🤷",
 		}
+
 		b.wf.Cache.StoreJSON(b.errKey(), &msg)
 		return false
 	}
@@ -139,6 +142,7 @@ func (b *Builder[T]) tryCache() bool {
 
 	resources, err := b.load()
 	if err != nil {
+		log.Error("failed to load cache:", err)
 		return false
 	}
 
@@ -151,6 +155,12 @@ func (b *Builder[T]) showCachedErr() bool {
 	if !b.wf.Cache.Expired(b.errKey(), errCacheTTL) {
 		err := b.wf.Cache.LoadJSON(b.errKey(), &msg)
 		if err != nil {
+			log.Error("failed to load cached error:", err)
+
+			if err := b.delCacheKey(); err != nil {
+				log.Error("failed to delete cache file:", err)
+			}
+
 			msg = UXMsg{
 				Error:    "🔔 Failed loading cached error",
 				Subtitle: err.Error(),
@@ -183,9 +193,23 @@ func (b *Builder[T]) load() ([]T, error) {
 
 	var resources []T
 	if err := b.wf.Cache.LoadJSON(b.cacheKey(), &resources); err != nil {
+		log.Error("failed to load cache:", err)
+		if b.delCacheKey() != nil {
+			return nil, err
+		}
 		return nil, err
 	}
 	return resources, nil
+}
+
+func (b *Builder[T]) delCacheKey() error {
+	if err := os.Remove(filepath.Clean(filepath.Join(b.wf.CacheDir(), b.cacheKey()))); err != nil {
+		if !os.IsNotExist(err) {
+			log.Error("failed to delete cache file:", err)
+			return err
+		}
+	}
+	return nil
 }
 
 func (b *Builder[T]) renderAll(resources ...T) {

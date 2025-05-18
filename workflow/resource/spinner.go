@@ -1,9 +1,8 @@
 package resource
 
 import (
-	"log"
-
 	aw "github.com/deanishe/awgo"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/log"
 )
 
 type spinner struct {
@@ -40,7 +39,7 @@ func (s *spinner) load() {
 	}
 
 	if err := s.wf.Cache.LoadJSON(s.key, &s.index); err != nil {
-		log.Println("cache read failed:", err)
+		log.Error("failed to read cache:", err)
 		s.index = 0
 	}
 	s.loaded = true
@@ -59,6 +58,6 @@ func (s *spinner) next() string {
 
 func (s *spinner) store() {
 	if err := s.wf.Cache.StoreJSON(s.key, s.index); err != nil {
-		log.Println("cache write failed:", err)
+		log.Error("failed to store cache:", err)
 	}
 }

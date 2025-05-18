@@ -1,11 +1,11 @@
 package orchestrator
 
 import (
-	"log"
 	"strings"
 
 	aw "github.com/deanishe/awgo"
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/log"
 )
 
 var _ Handler = (*RegionHandler)(nil)
@@ -13,7 +13,7 @@ var _ Handler = (*RegionHandler)(nil)
 type RegionHandler struct{}
 
 func (h *RegionHandler) Handle(ctx *Context) error {
-	log.Println("region handler started")
+	log.Debug("region handler started")
 
 	regions := gcloud.GetAllRegions()
 	for _, region := range regions {
@@ -21,7 +21,7 @@ func (h *RegionHandler) Handle(ctx *Context) error {
 	}
 
 	h.send(ctx)
-	log.Println("region handler completed")
+	log.Debug("region handler completed")
 	return nil
 }
 

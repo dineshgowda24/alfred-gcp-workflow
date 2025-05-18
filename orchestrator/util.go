@@ -23,7 +23,7 @@ func buildAutocomplete(ctx *Context, service *services.Service) string {
 		return query
 	}
 
-	// freze the autocomplete if the query is messy
+	// freeze the autocomplete if the query is messy
 	if isMessyQuery(query, remainingQuery) {
 		return query
 	}

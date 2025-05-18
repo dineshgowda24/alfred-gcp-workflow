@@ -19,7 +19,7 @@ func (s *RepositorySearcher) Search(wf *aw.Workflow, svc *services.Service, cfg 
 		gc.ListArtifactRepositories,
 		func(wf *aw.Workflow, car gc.ArtifactRepository) {
 			cr := FromGCloudRepository(&car)
-			resource.NewItem(wf, cfg, cr, svc.Icon(wf.Dir()))
+			resource.NewItem(wf, cfg, cr, svc.Icon())
 		},
 	)
 

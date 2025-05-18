@@ -19,7 +19,7 @@ func (s *ImageSearcher) Search(wf *aw.Workflow, svc *services.Service, cfg *gc.C
 		gc.ListComputeImages,
 		func(wf *aw.Workflow, gci gc.ComputeImage) {
 			ci := FromGCloudComputeImage(&gci)
-			resource.NewItem(wf, cfg, ci, svc.Icon(wf.Dir()))
+			resource.NewItem(wf, cfg, ci, svc.Icon())
 		},
 	)
 

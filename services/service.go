@@ -45,9 +45,9 @@ func (s *Service) Autocomplete() string {
 	return s.ID
 }
 
-func (s *Service) Icon(dir string) *aw.Icon {
+func (s *Service) Icon() *aw.Icon {
 	return &aw.Icon{
-		Value: filepath.Join(dir, s.LogoPath),
+		Value: filepath.Clean(s.LogoPath),
 	}
 }
 

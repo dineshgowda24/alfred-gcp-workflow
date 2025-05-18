@@ -2,7 +2,6 @@ package gcloud
 
 import "strings"
 
-// https://cloud.google.com/run/docs/reference/rest/v2/projects.locations.services
 type CloudRunService struct {
 	Metadata struct {
 		Name   string `json:"name"`

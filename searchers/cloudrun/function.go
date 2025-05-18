@@ -21,7 +21,7 @@ func (s *FunctionSearcher) Search(
 		gc.ListCloudRunFunctions,
 		func(wf *aw.Workflow, gcrf gc.CloudRunFunction) {
 			crf := FromGCloudCloudRunFunction(&gcrf)
-			resource.NewItem(wf, cfg, crf, svc.Icon(wf.Dir()))
+			resource.NewItem(wf, cfg, crf, svc.Icon())
 		},
 	)
 
