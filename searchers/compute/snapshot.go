@@ -19,7 +19,7 @@ func (s *SnapshotSearcher) Search(wf *aw.Workflow, svc *services.Service, cfg *g
 		gc.ListComputeSnapshots,
 		func(wf *aw.Workflow, gcs gc.ComputeSnapshot) {
 			cs := FromGCloudComputeSnapshot(&gcs)
-			resource.NewItem(wf, cfg, cs, svc.Icon(wf.Dir()))
+			resource.NewItem(wf, cfg, cs, svc.Icon())
 		},
 	)
 

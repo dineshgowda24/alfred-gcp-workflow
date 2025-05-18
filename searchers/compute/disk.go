@@ -21,7 +21,7 @@ func (s *DiskSearcher) Search(
 		gc.ListComputeDisks,
 		func(wf *aw.Workflow, gcd gc.ComputeDisk) {
 			cd := FromGCloudComputeDisk(&gcd)
-			resource.NewItem(wf, cfg, cd, svc.Icon(wf.Dir()))
+			resource.NewItem(wf, cfg, cd, svc.Icon())
 		},
 	)
 

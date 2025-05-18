@@ -21,7 +21,7 @@ func (s *CloudRouterSearcher) Search(
 		gc.ListCloudRouters,
 		func(wf *aw.Workflow, gcr gc.CloudRouter) {
 			cr := FromGCloudCloudRouter(&gcr)
-			resource.NewItem(wf, cfg, cr, svc.Icon(wf.Dir()))
+			resource.NewItem(wf, cfg, cr, svc.Icon())
 		},
 	)
 

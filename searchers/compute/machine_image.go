@@ -21,7 +21,7 @@ func (s *MachineImageSearcher) Search(
 		gc.ListComputeMachineImages,
 		func(wf *aw.Workflow, gcmi gc.ComputeMachineImage) {
 			cmi := FromGCloudComputeMachineImage(&gcmi)
-			resource.NewItem(wf, cfg, cmi, svc.Icon(wf.Dir()))
+			resource.NewItem(wf, cfg, cmi, svc.Icon())
 		},
 	)
 

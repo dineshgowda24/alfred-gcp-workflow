@@ -21,7 +21,7 @@ func (s *ServiceSearcher) Search(
 		gc.ListCloudRunServices,
 		func(wf *aw.Workflow, gcrs gc.CloudRunService) {
 			crs := FromGCloudCloudRunService(&gcrs)
-			resource.NewItem(wf, cfg, crs, svc.Icon(wf.Dir()))
+			resource.NewItem(wf, cfg, crs, svc.Icon())
 		},
 	)
 

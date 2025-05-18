@@ -1,9 +1,8 @@
 package orchestrator
 
 import (
-	"log"
-
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/log"
 )
 
 var _ Handler = (*FallbackHandler)(nil)
@@ -11,14 +10,14 @@ var _ Handler = (*FallbackHandler)(nil)
 type FallbackHandler struct{}
 
 func (h *FallbackHandler) Handle(ctx *Context) error {
-	log.Println("fallback handler started")
+	log.Debug("fallback handler started")
 
 	for i := range ctx.Services {
 		h.addService(ctx, &ctx.Services[i])
 	}
 	h.send(ctx)
 
-	log.Println("fallback handler completed")
+	log.Debug("fallback handler completed")
 	return nil
 }
 
@@ -33,7 +32,7 @@ func (h *FallbackHandler) addService(ctx *Context, s *services.Service) {
 		Match(s.Match()).
 		Autocomplete(buildAutocomplete(ctx, s)).
 		Arg(url).
-		Icon(s.Icon(ctx.Workflow.Dir())).
+		Icon(s.Icon()).
 		Valid(true)
 }
 

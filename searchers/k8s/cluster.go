@@ -21,7 +21,7 @@ func (s *ClusterSearcher) Search(
 		gc.ListK8sClusters,
 		func(wf *aw.Workflow, gkec gc.K8sCluster) {
 			kec := FromGCloudCluster(&gkec)
-			resource.NewItem(wf, cfg, kec, svc.Icon(wf.Dir()))
+			resource.NewItem(wf, cfg, kec, svc.Icon())
 		},
 	)
 

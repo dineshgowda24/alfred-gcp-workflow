@@ -21,7 +21,7 @@ func (s *VPNGatewaySearcher) Search(
 		gc.ListVPNGateways,
 		func(wf *aw.Workflow, gvc gc.VPNGateway) {
 			vg := FromGCloudVPNGateway(&gvc)
-			resource.NewItem(wf, cfg, vg, svc.Icon(wf.Dir()))
+			resource.NewItem(wf, cfg, vg, svc.Icon())
 		},
 	)
 	return builder.Build()

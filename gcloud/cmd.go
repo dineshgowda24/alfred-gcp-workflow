@@ -54,11 +54,3 @@ func containsFlag(args []string, flag string) bool {
 	}
 	return false
 }
-
-func getCliPath() string {
-	cliPath := config.GetConfigFile().GCloudConfigPath
-	if cliPath == "" {
-		cliPath = "gcloud"
-	}
-	return cliPath
-}

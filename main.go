@@ -2,12 +2,12 @@ package main
 
 import (
 	"embed"
-	"log"
 
 	aw "github.com/deanishe/awgo"
 	"github.com/dineshgowda24/alfred-gcp-workflow/cmd"
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/config"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/log"
 )
 
 var (
@@ -19,14 +19,13 @@ var (
 )
 
 func init() {
-	log.SetFlags(log.LstdFlags)
-	log.SetPrefix("[Version: " + Version + "] ")
 	gcloud.InitRegions(regionsFs)
 }
 
 func main() {
 	wf := cmd.NewWorkflow()
 
+	log.Init(Version, wf)
 	config.Init(wf)
 
 	logDirs(wf)
@@ -37,7 +36,7 @@ func main() {
 }
 
 func logDirs(wf *aw.Workflow) {
-	log.Println("root dir:", wf.Dir())
-	log.Println("data dir:", wf.DataDir())
-	log.Println("cache dir:", wf.CacheDir())
+	log.Debug("root dir:", wf.Dir())
+	log.Debug("data dir:", wf.DataDir())
+	log.Debug("cache dir:", wf.CacheDir())
 }

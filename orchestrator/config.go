@@ -1,11 +1,11 @@
 package orchestrator
 
 import (
-	"log"
 	"strings"
 
 	aw "github.com/deanishe/awgo"
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/log"
 )
 
 var _ Handler = (*ConfigHandler)(nil)
@@ -13,11 +13,11 @@ var _ Handler = (*ConfigHandler)(nil)
 type ConfigHandler struct{}
 
 func (h *ConfigHandler) Handle(ctx *Context) error {
-	log.Println("config handler started")
+	log.Debug("config handler started")
 
 	configs, err := gcloud.GetAllConfigs()
 	if err != nil {
-		log.Println("error getting all configs:", err)
+		log.Error("error getting all configs:", err)
 		return err
 	}
 
@@ -26,7 +26,7 @@ func (h *ConfigHandler) Handle(ctx *Context) error {
 	}
 
 	h.send(ctx)
-	log.Println("config handler completed")
+	log.Debug("config handler completed")
 	return nil
 }
 

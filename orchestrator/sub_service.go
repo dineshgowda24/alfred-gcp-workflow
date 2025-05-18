@@ -2,10 +2,10 @@ package orchestrator
 
 import (
 	"fmt"
-	"log"
 
 	aw "github.com/deanishe/awgo"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/log"
 )
 
 var _ Handler = (*SubServiceHandler)(nil)
@@ -13,7 +13,7 @@ var _ Handler = (*SubServiceHandler)(nil)
 type SubServiceHandler struct{}
 
 func (h *SubServiceHandler) Handle(ctx *Context) error {
-	log.Println("subservice handler started")
+	log.Debug("subservice handler started")
 
 	query := ctx.ParsedQuery
 	service := query.Service
@@ -25,13 +25,13 @@ func (h *SubServiceHandler) Handle(ctx *Context) error {
 	}
 
 	h.addFallbackItem(ctx)
-	log.Println("subservice handler completed")
+	log.Debug("subservice handler completed")
 	ctx.Workflow.SendFeedback()
 	return nil
 }
 
 func (h *SubServiceHandler) handleSearcher(ctx *Context, searcher searchers.Searcher) error {
-	log.Println("running searcher for subservice:", ctx.ParsedQuery.SubService.Name)
+	log.Debugf("running searcher: %s", ctx.ParsedQuery.SubService.Name)
 	sub := ctx.ParsedQuery.SubService
 	wf := ctx.Workflow
 	if err := searcher.Search(wf, sub, ctx.ActiveConfig, ctx.ParsedQuery); err != nil {
@@ -47,7 +47,7 @@ func (h *SubServiceHandler) handleSearcher(ctx *Context, searcher searchers.Sear
 	}
 	wf.SendFeedback()
 
-	log.Println("subservice searcher completed")
+	log.Debug("subservice searcher completed")
 	return nil
 }
 
@@ -57,14 +57,14 @@ func (h *SubServiceHandler) addFallbackItem(ctx *Context) {
 
 	url, err := sub.Url(ctx.ActiveConfig)
 	if err != nil {
-		log.Printf("error getting URL for subservice %s: %v", sub.Name, err)
+		log.Errorf("error getting URL for subservice %s: %v", sub.Name, err)
 		return
 	}
 
 	wf.NewItem(sub.Title()).
 		Subtitle(sub.Subtitle(nil)).
 		Autocomplete(buildAutocomplete(ctx, sub)).
-		Icon(sub.Icon(wf.Dir())).
+		Icon(sub.Icon()).
 		Arg(url).
 		Valid(true)
 

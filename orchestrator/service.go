@@ -2,9 +2,9 @@ package orchestrator
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/log"
 )
 
 var _ Handler = (*ServiceHandler)(nil)
@@ -13,21 +13,21 @@ type ServiceHandler struct{}
 
 func (h *ServiceHandler) Handle(ctx *Context) error {
 	service := ctx.ParsedQuery.Service
-	log.Printf("service handler started for service: %s", service.Name)
+	log.Debugf("service handler started for: %s", service.Name)
 
 	if len(service.SubServices) == 0 {
 		h.handleNoSubservices(ctx, service)
 		return nil
 	}
 
-	log.Printf("listing subservices for service: %s", service.Name)
+	log.Debugf("listing subservices for: %s", service.Name)
 
 	for i := range service.SubServices {
 		h.addSubservice(ctx, &service.SubServices[i])
 	}
 
 	h.send(ctx)
-	log.Printf("service handler completed for service: %s", service.Name)
+	log.Debugf("service handler completed for: %s", service.Name)
 	return nil
 }
 
@@ -40,7 +40,7 @@ func (h *ServiceHandler) handleNoSubservices(ctx *Context, s *services.Service) 
 		Match(s.Match()).
 		Autocomplete(buildAutocomplete(ctx, s)).
 		Arg(url).
-		Icon(s.Icon(ctx.Workflow.Dir())).
+		Icon(s.Icon()).
 		Valid(true)
 
 	addContributingItem(wf, fmt.Sprintf("%s has no sub-services (yet)", s.Name))
@@ -59,7 +59,7 @@ func (h *ServiceHandler) addSubservice(ctx *Context, s *services.Service) {
 		Match(s.Match()).
 		Autocomplete(buildAutocomplete(ctx, s)).
 		Arg(url).
-		Icon(s.Icon(ctx.Workflow.Dir())).
+		Icon(s.Icon()).
 		Valid(true)
 }
 

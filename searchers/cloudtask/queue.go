@@ -20,7 +20,7 @@ func (qs *QueueSearcher) Search(wf *aw.Workflow, svc *services.Service, cfg *gc.
 		gc.ListCloudTaskQueues,
 		func(wf *aw.Workflow, gctq gc.CloudTaskQueue) {
 			tq := FromGCloudCloudTaskQueue(&gctq)
-			resource.NewItem(wf, cfg, tq, svc.Icon(wf.Dir()))
+			resource.NewItem(wf, cfg, tq, svc.Icon())
 		},
 	)
 

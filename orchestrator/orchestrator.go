@@ -3,7 +3,6 @@ package orchestrator
 import (
 	"embed"
 	"errors"
-	"log"
 
 	aw "github.com/deanishe/awgo"
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
@@ -11,6 +10,7 @@ import (
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers"
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
 	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/arg"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/log"
 )
 
 var ErrNoActiveConfig = errors.New("no active gcloud config found")
@@ -67,7 +67,7 @@ func NewOrchestrator(
 }
 
 func (o *Orchestrator) Run(wf *aw.Workflow, args *arg.SearchArgs) {
-	log.Println("running orchestrator with query:", args.Query)
+	log.Debug("running orchestrator with query:", args.Query)
 
 	o.buildCtx(wf, args)
 	if o.ctx.Err != nil {
@@ -75,7 +75,7 @@ func (o *Orchestrator) Run(wf *aw.Workflow, args *arg.SearchArgs) {
 		return
 	}
 
-	log.Println("buildCtx completed successfully")
+	log.Debug("build context completed")
 
 	switch {
 	case o.ctx.IsIntentQuery():
@@ -141,7 +141,7 @@ func (o *Orchestrator) handleErr() {
 func (o *Orchestrator) preflightCheck() error {
 	err := o.preflight.Check(o.ctx.Workflow, o.ctx.ParsedQuery)
 	if err != nil {
-		log.Println("preflight check failed:", err)
+		log.Error("preflight check failed:", err)
 		return err
 	}
 	return nil
