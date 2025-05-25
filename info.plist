@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string>com.alfredapp.dineshchikkanna.gcp</string>
+	<string>com.dineshchikkanna.alfred.gcp</string>
 	<key>category</key>
 	<string>Productivity</string>
 	<key>connections</key>

@@ -2,7 +2,9 @@
 set -euo pipefail
 
 RELEASE_DIR="$(pwd)/release/"
-PACKAGE_NAME="alfred-gcp-workflow.alfredworkflow"
+PKG_DIR="$(pwd)"
+PACKAGE_NAME="$PKG_DIR/alfred-gcp-workflow.alfredworkflow"
+BUNDLE_ID="com.dineshchikkanna.alfred.gcp"
 
 bold() { echo -e "\033[1m$1\033[0m"; }
 green() { echo -e "\033[32m$1\033[0m"; }
@@ -97,6 +99,30 @@ copy_assets() {
   cp -R assets services.yml regions.yml icon.png info.plist LICENSE README.md "$RELEASE_DIR"
 }
 
+code_sign() {
+  bold "Code signing the workflow..."
+  cd "$RELEASE_DIR" || exit 1
+
+  if [[ $SHOULD_TAG != "y" && $SHOULD_TAG != "Y" ]]; then
+    yellow "⚡ Skipping code signing as no tag was created."
+    return
+  fi
+
+  if [[ -z "${APPLE_DEVELOPER_ID_CERT_ID:-}" ]]; then
+    red "❌ Missing Apple Developer ID Certificate ID. Please set the APPLE_DEVELOPER_ID_CERT_ID environment variable."
+    exit 1
+  fi
+  
+  codesign -s "$APPLE_DEVELOPER_ID_CERT_ID" -f -v --timestamp --options runtime ./alfred-gcp-workflow
+  if [[ $? -ne 0 ]]; then
+    red "❌ Code signing failed. Please ensure you have a valid code signing identity."
+    exit 1
+  fi
+  
+  green "✔️ Code signed successfully."
+  cd "$PKG_DIR" || exit 1
+}
+
 package_workflow() {
   bold "Packaging .alfredworkflow file..."
   ditto -ck "$RELEASE_DIR" "$PACKAGE_NAME"
@@ -107,6 +133,33 @@ zip_workflow() {
   bold "Zipping .alfredworkflow for GitHub upload..."
   zip -q "${PACKAGE_NAME}.zip" "$PACKAGE_NAME"
   green "✔️ Zipped workflow."
+}
+
+notarize_app() {
+  bold "Notarizing the build..."
+
+  if [[ $SHOULD_TAG != "y" && $SHOULD_TAG != "Y" ]]; then
+    yellow "⚡ Skipping notarization as no tag was created."
+    return
+  fi
+
+  if [[ -z "${APPLE_ID:-}" || -z "${APPLE_TEAM_ID:-}" || -z "${APPLE_DEVELOPER_APP_PASSWORD:-}" ]]; then
+    red "❌ Missing Apple ID, Team ID, or Developer App Password. Please set these environment variables."
+    exit 1
+  fi
+ 
+  xcrun notarytool submit "${PACKAGE_NAME}.zip" \
+    --wait \
+    --apple-id "$APPLE_ID" \
+    --team-id "$APPLE_TEAM_ID" \
+    --password "$APPLE_DEVELOPER_APP_PASSWORD" 
+  
+  if [[ $? -ne 0 ]]; then
+    red "❌ Notarization failed. Please check your credentials and try again."
+    exit 1
+  fi
+  
+  green "✔️ Notarization completed successfully."
 }
 
 open_github_release_page() {
@@ -134,8 +187,10 @@ main() {
   merge_binaries
   clean_intermediate_binaries
   copy_assets
+  code_sign
   package_workflow
   zip_workflow
+  notarize_app
   show_files
   open_github_release_page
   open_finder
