@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string>dineshgowda.gcp</string>
+	<string>com.alfredapp.dineshchikkanna.gcp</string>
 	<key>category</key>
 	<string>Productivity</string>
 	<key>connections</key>
@@ -132,7 +132,7 @@
 				<key>argumenttype</key>
 				<integer>1</integer>
 				<key>escaping</key>
-				<integer>7</integer>
+				<integer>32</integer>
 				<key>keyword</key>
 				<string>gcp</string>
 				<key>queuedelaycustom</key>
@@ -146,7 +146,7 @@
 				<key>runningsubtext</key>
 				<string>Please Wait</string>
 				<key>script</key>
-				<string>./alfred-gcp-workflow --query={query}</string>
+				<string>./alfred-gcp-workflow --query="{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -213,7 +213,7 @@
 
 An Alfred workflow to quickly open GCP services in your browser or search GCP resources with ease.
 
-More more info visit: https://github.com/dineshgowda24/alfred-gcp-workflow</string>
+More info visit: https://github.com/dineshgowda24/alfred-gcp-workflow</string>
 	<key>uidata</key>
 	<dict>
 		<key>1B2C4A00-09E5-472C-84C9-ABC4017DBA62</key>
@@ -257,13 +257,13 @@ More more info visit: https://github.com/dineshgowda24/alfred-gcp-workflow</stri
 	<key>variables</key>
 	<dict>
 		<key>ALFRED_GCP_WORKFLOW_CACHE_TTL_SECONDS</key>
-		<string>172800</string>
+		<string>604800</string>
 	</dict>
 	<key>variablesdontexport</key>
 	<array/>
 	<key>version</key>
-	<string>v0.1.0-beta</string>
+	<string>v0.0.1</string>
 	<key>webaddress</key>
-	<string>https://dineshgowda.com</string>
+	<string>https://github.com/dineshgowda24/alfred-gcp-workflow</string>
 </dict>
 </plist>
