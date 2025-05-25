@@ -42,9 +42,9 @@ commit_version_update() {
   if [[ "$SHOULD_COMMIT" == "y" || "$SHOULD_COMMIT" == "Y" ]]; then
     bold "Committing and pushing changes..."
     git add info.plist
-    git commit -m "Release ${VERSION}" && git push origin master &
+    git commit -m "Release ${VERSION}" && git push origin main &
     spinner $!
-    green "✔️ Committed and pushed to master."
+    green "✔️ Committed and pushed to main."
   else
     yellow "⚡ Skipped commit and push."
   fi
