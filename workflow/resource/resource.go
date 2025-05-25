@@ -105,7 +105,10 @@ func (b *Builder[T]) store() error {
 
 	data, err := b.fetch(b.cfg)
 	if err != nil {
-		b.wf.Cache.Store(b.errKey(), []byte(err.Error()))
+		msg := UXMsg{
+			Error: err.Error(),
+		}
+		b.wf.Cache.StoreJSON(b.errKey(), &msg)
 		return err
 	}
 	return b.wf.Cache.StoreJSON(b.cacheKey(), data)
@@ -169,17 +172,31 @@ func (b *Builder[T]) showCachedErr() bool {
 
 		title := msg.Title
 		icon := aw.IconInfo
+		subtitle := msg.Subtitle
 		if msg.Error != "" {
-			title = msg.Error
+			title = "🔔 Error fetching resources"
+			subtitle = "<CMD> + l to view error details"
 			icon = aw.IconError
 		}
 
 		b.wf.NewItem(title).
-			Subtitle(msg.Subtitle).
+			Subtitle(subtitle).
 			Icon(icon).
 			Arg("").
 			Valid(false).
+			Largetype(msg.Error).
 			Autocomplete("")
+
+		if msg.Error != "" {
+			errorFilePath := filepath.Join(b.wf.CacheDir(), b.errKey())
+			b.wf.NewFileItem("📂 View full error file").
+				Subtitle("<CTRL> to open file options").
+				Icon(aw.IconInfo).
+				IsFile(true).
+				Arg(errorFilePath).
+				Valid(true)
+
+		}
 		b.wf.SendFeedback()
 		return true
 	}

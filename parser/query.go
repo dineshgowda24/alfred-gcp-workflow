@@ -1,12 +1,12 @@
 package parser
 
 import (
-	"log"
 	"strings"
 
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
 	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/arg"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/log"
 )
 
 type Result struct {
@@ -99,7 +99,7 @@ func (r *Result) extractConfig(words []string) []string {
 func (r *Result) matchConfig(name string) {
 	configs, err := gcloud.GetAllConfigs()
 	if err != nil {
-		log.Println("error fetching configs:", err)
+		log.Error("error fetching configs:", err)
 		r.PartialConfigQuery = name
 		return
 	}

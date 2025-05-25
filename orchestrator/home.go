@@ -70,6 +70,8 @@ func (h *HomeHandler) Handle(ctx *Context) error {
 			Subtitle:     "🔩 Use @ to override gcloud config",
 			Icon:         aw.IconAccount,
 			Valid:        false,
+			AutoComplete: "@",
+			Arg:          "@",
 			SortPriority: 4,
 		})
 
@@ -79,6 +81,8 @@ func (h *HomeHandler) Handle(ctx *Context) error {
 				Subtitle:     "🗺️ Use `$` to override region",
 				Icon:         aw.IconNetwork,
 				Valid:        false,
+				AutoComplete: "$",
+				Arg:          "$",
 				SortPriority: 5,
 			})
 		} else {
@@ -87,6 +91,8 @@ func (h *HomeHandler) Handle(ctx *Context) error {
 				Subtitle:     "🗺️ Use `$` to override region",
 				Icon:         aw.IconNetwork,
 				Valid:        false,
+				AutoComplete: "$",
+				Arg:          "$",
 				SortPriority: 6,
 			})
 		}
