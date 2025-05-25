@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	contributingURL = "https://github.com/dineshgowda24/alfred-gcp-workflow/CONTRIBUTING.md"
+	contributingURL = "https://github.com/dineshgowda24/alfred-gcp-workflow/blob/main/CONTRIBUTING.md"
 )
 
 func buildAutocomplete(ctx *Context, service *services.Service) string {

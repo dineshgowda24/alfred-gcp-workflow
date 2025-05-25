@@ -20,10 +20,12 @@ import (
 	"github.com/dineshgowda24/alfred-gcp-workflow/services"
 )
 
+// Searcher is an interface for searching GCP resources.
 type Searcher interface {
 	Search(wf *aw.Workflow, svc *services.Service, config *gcloud.Config, pq *parser.Result) error
 }
 
+// Registry contains the map of all the searchers.
 type Registry struct {
 	lookup map[string]Searcher
 }
@@ -46,32 +48,33 @@ func (r *Registry) Exists(parent, child *services.Service) bool {
 	return ok
 }
 
+// GetDefaultRegistry returns a default registry with all the searchers registered.
 func GetDefaultRegistry() *Registry {
 	return &Registry{
 		lookup: map[string]Searcher{
+			"artifactregistry/repositories": &artifactregistry.RepositorySearcher{},
+			"cloudrun/functions":            &cloudrun.FunctionSearcher{},
+			"cloudrun/services":             &cloudrun.ServiceSearcher{},
 			"cloudsql/instances":            &sql.InstanceSearcher{},
-			"memorystore/redis":             &memorystore.RedisInstanceSearcher{},
-			"pubsub/topics":                 &pubsub.TopicSearcher{},
-			"pubsub/subscriptions":          &pubsub.SubscriptionSearcher{},
-			"storage/buckets":               &storage.BucketSearcher{},
-			"compute/instances":             &compute.InstanceSearcher{},
+			"cloudtasks/queues":             &cloudtask.QueueSearcher{},
 			"compute/disks":                 &compute.DiskSearcher{},
 			"compute/images":                &compute.ImageSearcher{},
+			"compute/instances":             &compute.InstanceSearcher{},
 			"compute/instancetemplates":     &compute.InstanceTmplSearcher{},
 			"compute/machineimages":         &compute.MachineImageSearcher{},
 			"compute/snapshots":             &compute.SnapshotSearcher{},
-			"gke/clusters":                  &k8s.ClusterSearcher{},
 			"filestore/instances":           &filestore.InstanceSearcher{},
+			"gke/clusters":                  &k8s.ClusterSearcher{},
+			"memorystore/redis":             &memorystore.RedisInstanceSearcher{},
+			"netconnectivity/cloudrouter":   &netconnectivity.CloudRouterSearcher{},
+			"netconnectivity/vpngateway":    &netconnectivity.VPNGatewaySearcher{},
+			"netconnectivity/vpntunnel":     &netconnectivity.VPNTunnelSearcher{},
 			"netservices/dns":               &netservices.DNSZoneSearcher{},
+			"pubsub/subscriptions":          &pubsub.SubscriptionSearcher{},
+			"pubsub/topics":                 &pubsub.TopicSearcher{},
+			"storage/buckets":               &storage.BucketSearcher{},
 			"vpc/networks":                  &vpc.NetworkSearcher{},
 			"vpc/routes":                    &vpc.RouteSearcher{},
-			"netconnectivity/vpntunnel":     &netconnectivity.VPNTunnelSearcher{},
-			"netconnectivity/vpngateway":    &netconnectivity.VPNGatewaySearcher{},
-			"netconnectivity/cloudrouter":   &netconnectivity.CloudRouterSearcher{},
-			"artifactregistry/repositories": &artifactregistry.RepositorySearcher{},
-			"cloudrun/services":             &cloudrun.ServiceSearcher{},
-			"cloudrun/functions":            &cloudrun.FunctionSearcher{},
-			"cloudtasks/queues":             &cloudtask.QueueSearcher{},
 		},
 	}
 }

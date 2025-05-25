@@ -4,11 +4,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"log"
 	"os/exec"
 	"strings"
 
 	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/config"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/log"
 )
 
 func runGCloudCmd[T any](cfg *Config, cmd string, extraArgs ...string) (T, error) {
@@ -19,7 +19,7 @@ func runGCloudCmd[T any](cfg *Config, cmd string, extraArgs ...string) (T, error
 	cmdExec := exec.Command(config.GetGCloudPath(), args...)
 	cmdExec.Stderr = &stderr
 
-	log.Println("gcloud command:", cmdExec.String())
+	log.Info("gcloud command:", cmdExec.String())
 	raw, err := cmdExec.Output()
 	if err != nil {
 		return out, fmt.Errorf("gcloud command failed: %s", stderr.String())

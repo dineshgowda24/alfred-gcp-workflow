@@ -3,12 +3,12 @@ package services
 import (
 	"bytes"
 	"embed"
-	"log"
 	"path/filepath"
 	"text/template"
 
 	aw "github.com/deanishe/awgo"
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/log"
 	"gopkg.in/yaml.v2"
 )
 
@@ -54,13 +54,13 @@ func (s *Service) Icon() *aw.Icon {
 func (s *Service) Url(config *gcloud.Config) (string, error) {
 	t, err := template.New("url").Parse(s.URL)
 	if err != nil {
-		log.Printf("error parsing template for service %s: %v\n", s.Name, err)
+		log.Errorf("error parsing template for service %s: %v", s.Name, err)
 		return "", err
 	}
 
 	var buf bytes.Buffer
 	if err := t.Execute(&buf, config); err != nil {
-		log.Printf("error executing template for service %s: %v\n", s.Name, err)
+		log.Errorf("error executing template for service %s: %v", s.Name, err)
 		return "", err
 	}
 	return buf.String(), nil
