@@ -2,8 +2,7 @@
 set -euo pipefail
 
 RELEASE_DIR="$(pwd)/release/"
-PKG_DIR="$(pwd)"
-PACKAGE_NAME="$PKG_DIR/alfred-gcp-workflow.alfredworkflow"
+PACKAGE_NAME="alfred-gcp-workflow.alfredworkflow"
 BUNDLE_ID="com.dineshchikkanna.alfred.gcp"
 
 bold() { echo -e "\033[1m$1\033[0m"; }
@@ -120,7 +119,7 @@ code_sign() {
   fi
   
   green "✔️ Code signed successfully."
-  cd "$PKG_DIR" || exit 1
+  cd - || exit 1
 }
 
 package_workflow() {
