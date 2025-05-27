@@ -2,6 +2,7 @@
 ## explicit; go 1.13
 github.com/deanishe/awgo
 github.com/deanishe/awgo/keychain
+github.com/deanishe/awgo/update
 github.com/deanishe/awgo/util
 # github.com/magefile/mage v1.11.0
 ## explicit; go 1.12

@@ -7,12 +7,17 @@ import (
 	"strings"
 
 	aw "github.com/deanishe/awgo"
+	awupdate "github.com/deanishe/awgo/update"
 	ors "github.com/dineshgowda24/alfred-gcp-workflow/orchestrator"
 	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/arg"
 )
 
+const (
+	repoName = "dineshgowda24/alfred-gcp-workflow"
+)
+
 func NewWorkflow() *aw.Workflow {
-	return aw.New(aw.MagicPrefix(ors.MagicPrefix))
+	return aw.New(aw.MagicPrefix(ors.MagicPrefix), awupdate.GitHub(repoName))
 }
 
 type Runner struct {

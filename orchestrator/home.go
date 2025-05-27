@@ -8,10 +8,12 @@ import (
 
 	aw "github.com/deanishe/awgo"
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
+	"github.com/dineshgowda24/alfred-gcp-workflow/workflow/log"
 )
 
 const (
-	MagicPrefix = "tools:"
+	MagicPrefix  = "tools:"
+	UpdatePrefix = MagicPrefix + "update"
 )
 
 type homeItem struct {
@@ -122,6 +124,20 @@ func (h *HomeHandler) Handle(ctx *Context) error {
 		}
 		if item.AutoComplete != "" {
 			it.Autocomplete(item.AutoComplete)
+		}
+	}
+
+	if ctx.Workflow.UpdateCheckDue() {
+		err := ctx.Workflow.CheckForUpdate()
+		if err != nil {
+			log.Error("failed to check for updates:", err)
+		} else if ctx.Workflow.UpdateAvailable() {
+			ctx.Workflow.NewItem("New version available! ✨🔄").
+				Subtitle("Click to download the latest version of the workflow.").
+				Valid(false).
+				Arg(UpdatePrefix).
+				Autocomplete(UpdatePrefix).
+				Icon(aw.IconInfo)
 		}
 	}
 
