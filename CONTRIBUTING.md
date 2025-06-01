@@ -98,8 +98,6 @@ The workflow is organized around three main concepts:
 
 - Keep contributions focused and atomic (one PR per logical change).
 - Follow the existing code structure and style for consistency.
-- Tests(if possible) and documentation updates are highly appreciated!
-
 
 ## Thank You! 🙏
 

@@ -8,7 +8,12 @@
 
 An Alfred workflow that lets you instantly open Google Cloud services or search GCP resources—fast, simple, and right from your Alfred.
 
- <p align="center"> <img src="./docs/assets/demo.gif" alt="Demo GIF" width="700"/> </p> 
+ <p align="center"> <img src="./docs/assets/demo.gif" alt="Demo GIF" width="700"/> </p>
+
+## Requirements
+
+- [Alfred 3+](https://www.alfredapp.com/) (with Powerpack)
+- [Google Cloud CLI](https://cloud.google.com/sdk/docs/install) installed and authenticated
 
 ## Installation
 
@@ -25,13 +30,13 @@ An Alfred workflow that lets you instantly open Google Cloud services or search 
 - 🔍⚡️ Search live GCP resources across 20+ services, right from Alfred  
 - ⚡ Instantly copy, paste or open GCP Console links without touching your browser 
 - 🧠 Config and region overrides using simple symbols (`@` and `$`)  
-- 🔐 Secure by design — uses your local `gcloud` CLI, never touches credentials  
+- 🔐 Secure by design, uses your local `gcloud` CLI, never touches credentials  
 - 💾 Fast performance with safe caching (customizable via env var)  
-- 🛠️ Built-in tools to clear cache, view logs, or reset internal data  
+- 🛠️ Built-in tools to install new updates, clear cache, view logs, or reset internal data  
 
 ## Design Philosophy
 
-1. This workflow never sees your credentials — authentication is handled entirely by the `gcloud` CLI.
+1. This workflow never sees your credentials, authentication is handled entirely by the `gcloud` CLI.
 2. Only non-sensitive data is cached, such as project names, regions, resource names etc. Jusk enough keep things snappy.
 3. Every command fetches only the non sensitive data it needs, keeping it lightweight and efficient.
 4. Set your `gcloud` path once, and the workflow runs smoothly without surprises.
@@ -67,7 +72,7 @@ An Alfred workflow that lets you instantly open Google Cloud services or search 
 - Compute snapshots  
 - Compute instance templates  
 - Pub/Sub topics and subscriptions  
-_This is not an exhaustive list — if changing the region has no effect, the resource is likely global._
+_This is not an exhaustive list: if changing the region has no effect, the resource is likely global._
 
 
 ### Advanced Usage
