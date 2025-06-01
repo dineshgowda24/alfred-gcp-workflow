@@ -1,8 +1,8 @@
 # Installation
 
-First off — **I'm sorry you're seeing this!**  
+First off, **I'm sorry you're reading this!**  
 You probably ran into an issue during setup, and this page is here to get you back on track.  
-You weren’t supposed to land here, but no worries — I’ll guide you through it step by step. 
+You weren’t supposed to land here, but no worries, I’ll guide you through it step by step. 
 
 ---
 
@@ -53,7 +53,7 @@ Copy the result and paste it into Alfred. If it's correct, you’ll see a ✅ su
 
 Now just hit <kbd>Enter</kbd> or <kbd>Tab</kbd> again to go to the home screen of the workflow.
 
-From here, you can explore services, search resources, or manage configurations — all with Alfred's lightning-fast speed.  
+From here, you can explore services, search resources, or manage configurations, all with Alfred's lightning-fast speed.  
 ![Step 4](assets/docs/home.png)
 
 ---
