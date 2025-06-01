@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
+	"github.com/dineshgowda24/alfred-gcp-workflow/util"
 )
 
 type Cluster struct {
@@ -37,7 +38,7 @@ func (c Cluster) Subtitle() string {
 
 	return fmt.Sprintf(
 		"%s %s | Nodes: %d | %s",
-		icon, c.MasterVersion, c.NodeCount, c.CreatedAt.Local().Format("Jan 2, 2006 15:04 MST"),
+		icon, c.MasterVersion, c.NodeCount, util.FormatLocalTime(c.CreatedAt),
 	)
 }
 

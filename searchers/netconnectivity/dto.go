@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
+	"github.com/dineshgowda24/alfred-gcp-workflow/util"
 )
 
 type VPNTunnel struct {
@@ -84,7 +85,7 @@ func (g VPNGateway) Title() string {
 
 func (g VPNGateway) Subtitle() string {
 	return fmt.Sprintf("IP Version: %s | Network: %s | Created: %s",
-		g.GatewayIPVersion, g.Network, g.CreationTime.Format("Jan 2, 2006 15:04 MST"))
+		g.GatewayIPVersion, g.Network, util.FormatTime(g.CreationTime))
 }
 
 func (g VPNGateway) URL(config *gcloud.Config) string {
@@ -140,7 +141,7 @@ func (r CloudRouter) Title() string {
 
 func (r CloudRouter) Subtitle() string {
 	return fmt.Sprintf("Network: %s | Created: %s",
-		r.Network, r.CreationTime.Format("Jan 2, 2006 15:04 MST"))
+		r.Network, util.FormatTime(r.CreationTime))
 }
 
 func (r CloudRouter) URL(config *gcloud.Config) string {

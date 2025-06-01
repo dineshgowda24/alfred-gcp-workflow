@@ -4,7 +4,7 @@ var _ Handler = (*ErrorHandler)(nil)
 
 type ErrorHandler struct{}
 
-func (h *ErrorHandler) Handle(ctx *Context) error {
+func (e *ErrorHandler) Handle(ctx *Context) error {
 	wf := ctx.Workflow
 	if ctx.Err != nil {
 		wf.NewItem(ctx.Err.Error()).

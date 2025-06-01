@@ -11,7 +11,7 @@ import (
 
 type IntentHandler struct{}
 
-func (h *IntentHandler) Handle(ctx *Context) error {
+func (i *IntentHandler) Handle(ctx *Context) error {
 	wf := ctx.Workflow
 	q := ctx.ParsedQuery
 

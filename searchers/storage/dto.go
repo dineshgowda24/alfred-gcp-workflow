@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
+	"github.com/dineshgowda24/alfred-gcp-workflow/util"
 )
 
 type Bucket struct {
@@ -21,8 +22,7 @@ func (b Bucket) Title() string {
 }
 
 func (b Bucket) Subtitle() string {
-	localTime := b.UpdateTime.Local()
-	return b.LocationType + " | " + b.DefaultStorageClass + " | LastUpdated: " + localTime.Format("Jan 2, 2006 15:04 MST")
+	return b.LocationType + " | " + b.DefaultStorageClass + " | LastUpdated: " + util.FormatLocalTime(b.UpdateTime)
 }
 
 func (b Bucket) URL(config *gcloud.Config) string {

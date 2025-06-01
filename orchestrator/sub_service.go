@@ -12,7 +12,7 @@ var _ Handler = (*SubServiceHandler)(nil)
 
 type SubServiceHandler struct{}
 
-func (h *SubServiceHandler) Handle(ctx *Context) error {
+func (s *SubServiceHandler) Handle(ctx *Context) error {
 	log.Debug("subservice handler started")
 
 	query := ctx.ParsedQuery
@@ -21,16 +21,16 @@ func (h *SubServiceHandler) Handle(ctx *Context) error {
 
 	searcher := ctx.GetSearcher(service, sub)
 	if searcher != nil {
-		return h.handleSearcher(ctx, searcher)
+		return s.handleSearcher(ctx, searcher)
 	}
 
-	h.addFallbackItem(ctx)
+	s.addFallbackItem(ctx)
 	log.Debug("subservice handler completed")
 	ctx.Workflow.SendFeedback()
 	return nil
 }
 
-func (h *SubServiceHandler) handleSearcher(ctx *Context, searcher searchers.Searcher) error {
+func (s *SubServiceHandler) handleSearcher(ctx *Context, searcher searchers.Searcher) error {
 	log.Debugf("running searcher: %s", ctx.ParsedQuery.SubService.Name)
 	sub := ctx.ParsedQuery.SubService
 	wf := ctx.Workflow

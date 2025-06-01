@@ -6,6 +6,7 @@ import (
 	"time"
 
 	gc "github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
+	"github.com/dineshgowda24/alfred-gcp-workflow/util"
 )
 
 type Network struct {
@@ -21,7 +22,7 @@ func (n Network) Title() string {
 }
 
 func (n Network) Subtitle() string {
-	return fmt.Sprintf(" %s | Created: %s", n.RoutingMode, n.CreationTime.Format("Jan 2, 2006 15:04 MST"))
+	return fmt.Sprintf(" %s | Created: %s", n.RoutingMode, util.FormatTime(n.CreationTime))
 }
 
 func (n Network) URL(config *gc.Config) string {
@@ -56,7 +57,7 @@ func (r Route) Title() string {
 }
 
 func (r Route) Subtitle() string {
-	return fmt.Sprintf(" %s | Priority: %d | Created: %s", r.Network, r.Priority, r.CreationTime.Format("Jan 2, 2006 15:04 MST"))
+	return fmt.Sprintf(" %s | Priority: %d | Created: %s", r.Network, r.Priority, util.FormatTime(r.CreationTime))
 }
 
 func (r Route) URL(config *gc.Config) string {
