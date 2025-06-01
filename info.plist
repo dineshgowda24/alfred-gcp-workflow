@@ -262,7 +262,7 @@ More info visit: https://github.com/dineshgowda24/alfred-gcp-workflow</string>
 	<key>variablesdontexport</key>
 	<array/>
 	<key>version</key>
-	<string>v1.0.0-rc4</string>
+	<string>v1.0.0</string>
 	<key>webaddress</key>
 	<string>https://github.com/dineshgowda24/alfred-gcp-workflow</string>
 </dict>
