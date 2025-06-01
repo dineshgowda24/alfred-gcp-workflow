@@ -57,8 +57,6 @@ func (src *source) Downloads() ([]Download, error) {
 		return nil, err
 	}
 
-	log.Println("found", len(src.dls), "downloads")
-
 	return src.dls, nil
 }
 
@@ -81,9 +79,6 @@ func parseReleases(js []byte) ([]Download, error) {
 	if err := json.Unmarshal(js, &rels); err != nil {
 		return nil, err
 	}
-
-	log.Printf("found %d releases", len(rels))
-	log.Println(rels)
 	for _, r := range rels {
 		if len(r.Assets) == 0 {
 			continue

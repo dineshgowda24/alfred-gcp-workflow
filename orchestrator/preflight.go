@@ -19,7 +19,7 @@ func (h *PreFlight) Check(wf *aw.Workflow, result *parser.Result) error {
 
 	cfgFile := config.GetConfigFile()
 	if cfgFile.GCloudPath == "" {
-		wf.NewItem("One quick step and you are golden! 🧙✨").
+		wf.NewItem("Setup gcloud cli path you are golden! 🧙✨").
 			Subtitle("Use: gcloud-path /your/gcloud").
 			Arg("gcloud-path ").
 			Autocomplete("gcloud-path ").
