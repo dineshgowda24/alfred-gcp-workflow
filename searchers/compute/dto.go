@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
+	"github.com/dineshgowda24/alfred-gcp-workflow/util"
 )
 
 type ComputeInstance struct {
@@ -58,7 +59,7 @@ func (i ComputeInstance) Subtitle() string {
 		icon = "❓"
 	}
 
-	return icon + "  CPU: " + i.CPUPlatform + " | Created: " + i.CreationTimestamp.Local().Format("Jan 2, 2006 15:04 MST")
+	return icon + "  CPU: " + i.CPUPlatform + " | Created: " + util.FormatLocalTime(i.CreationTimestamp)
 }
 
 func (i ComputeInstance) URL(config *gcloud.Config) string {
@@ -131,7 +132,7 @@ func (d ComputeDisk) Subtitle() string {
 		icon = "❓"
 	}
 
-	return icon + "  " + strconv.Itoa(d.SizeGb) + " GB (" + strconv.Itoa(d.BlockSize) + " blocks) | Created: " + d.CreationTimestamp.Local().Format("Jan 2, 2006 15:04 MST")
+	return icon + "  " + strconv.Itoa(d.SizeGb) + " GB (" + strconv.Itoa(d.BlockSize) + " blocks) | Created: " + util.FormatLocalTime(d.CreationTimestamp)
 }
 
 func (d ComputeDisk) URL(config *gcloud.Config) string {
@@ -190,7 +191,7 @@ func (i ComputeImage) Subtitle() string {
 		icon = "❓"
 	}
 
-	return icon + "  " + strconv.Itoa(i.DiskSizeGb) + " GB | Created: " + i.CreationTimestamp.Local().Format("Jan 2, 2006 15:04 MST")
+	return icon + "  " + strconv.Itoa(i.DiskSizeGb) + " GB | Created: " + util.FormatLocalTime(i.CreationTimestamp)
 }
 
 func (i ComputeImage) URL(config *gcloud.Config) string {
@@ -221,7 +222,7 @@ func (t ComputeInstanceTemplate) Title() string {
 }
 
 func (t ComputeInstanceTemplate) Subtitle() string {
-	return t.MachineType + " | Created: " + t.CreationTimestamp.Local().Format("Jan 2, 2006 15:04 MST")
+	return t.MachineType + " | Created: " + util.FormatLocalTime(t.CreationTimestamp)
 }
 
 func (t ComputeInstanceTemplate) URL(config *gcloud.Config) string {
@@ -255,7 +256,7 @@ func (m MachineImage) Subtitle() string {
 	}
 
 	return fmt.Sprintf("%s %s | %s | Created: %s",
-		icon, m.MachineType, m.TotalStorage, m.CreationTimestamp.Local().Format("Jan 2, 2006 15:04 MST"))
+		icon, m.MachineType, m.TotalStorage, util.FormatLocalTime(m.CreationTimestamp))
 }
 
 func (m MachineImage) URL(config *gcloud.Config) string {
@@ -318,7 +319,7 @@ func (s Snapshot) Subtitle() string {
 	}
 
 	return fmt.Sprintf("%s Size: %s | Disk Size: %d GB | Created: %s",
-		icon, s.StorageSize, s.DiskSizeGb, s.CreationTimestamp.Local().Format("Jan 2, 2006 15:04 MST"))
+		icon, s.StorageSize, s.DiskSizeGb, util.FormatLocalTime(s.CreationTimestamp))
 }
 
 func (s Snapshot) URL(config *gcloud.Config) string {

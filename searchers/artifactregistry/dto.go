@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
+	"github.com/dineshgowda24/alfred-gcp-workflow/util"
 )
 
 type Repository struct {
@@ -20,7 +21,7 @@ func (r Repository) Title() string {
 }
 
 func (r Repository) Subtitle() string {
-	return fmt.Sprintf("Format: %s  | Last Updated: %s", r.Format, r.UpdateTime.Format("Jan 2, 2006 15:04 MST"))
+	return fmt.Sprintf("Format: %s  | Last Updated: %s", r.Format, util.FormatTime(r.UpdateTime))
 }
 
 func (r Repository) URL(config *gcloud.Config) string {

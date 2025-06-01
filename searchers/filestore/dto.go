@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
+	"github.com/dineshgowda24/alfred-gcp-workflow/util"
 )
 
 type Instance struct {
@@ -36,7 +37,7 @@ func (i Instance) Subtitle() string {
 		icon = "❓"
 	}
 	return fmt.Sprintf("%s %s | %d GB | %s",
-		icon, i.Tier, i.TotalCapacityGb, i.CreatedAt.Format("Jan 2, 2006 15:04 MST"),
+		icon, i.Tier, i.TotalCapacityGb, util.FormatTime(i.CreatedAt),
 	)
 }
 

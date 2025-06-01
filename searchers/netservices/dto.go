@@ -5,6 +5,7 @@ import (
 	"time"
 
 	gc "github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
+	"github.com/dineshgowda24/alfred-gcp-workflow/util"
 )
 
 type DNSZone struct {
@@ -30,7 +31,7 @@ func (d DNSZone) Subtitle() string {
 		icon = "❓"
 	}
 
-	return icon + " " + d.DnsName + " | " + d.CreationTime.Format("Jan 2, 2006 15:04 MST")
+	return icon + " " + d.DnsName + " | " + util.FormatLocalTime(d.CreationTime)
 }
 
 func (d DNSZone) URL(config *gc.Config) string {

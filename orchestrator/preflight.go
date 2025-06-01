@@ -12,7 +12,7 @@ var ErrPreflightCheckFailed = errors.New("preflight check failed")
 
 type PreFlight struct{}
 
-func (h *PreFlight) Check(wf *aw.Workflow, result *parser.Result) error {
+func (r *PreFlight) Check(wf *aw.Workflow, result *parser.Result) error {
 	if result.HasIntent() {
 		return nil
 	}

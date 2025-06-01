@@ -6,6 +6,7 @@ import (
 	"time"
 
 	gc "github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
+	"github.com/dineshgowda24/alfred-gcp-workflow/util"
 )
 
 type Service struct {
@@ -19,7 +20,7 @@ func (s Service) Title() string {
 }
 
 func (s Service) Subtitle() string {
-	return fmt.Sprintf("Location: %s | Created: %s", s.Location, s.CreationTime.Format("Jan 2, 2006 15:04 MST"))
+	return fmt.Sprintf("Location: %s | Created: %s", s.Location, util.FormatTime(s.CreationTime))
 }
 
 func (s Service) URL(config *gc.Config) string {
@@ -74,7 +75,7 @@ func (f Function) Subtitle() string {
 	}
 
 	return fmt.Sprintf("%s %s | %s | Last Updated: %s",
-		icon, version, f.Runtime, f.UpdateTime.Format("Jan 2, 2006 15:04 MST"))
+		icon, version, f.Runtime, util.FormatTime(f.UpdateTime))
 }
 
 func (f Function) URL(config *gc.Config) string {
