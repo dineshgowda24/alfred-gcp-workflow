@@ -41,7 +41,7 @@ An Alfred workflow that lets you instantly open Google Cloud services or search 
 3. Every command fetches only the non sensitive data it needs, keeping it lightweight and efficient.
 4. Set your `gcloud` path once, and the workflow runs smoothly without surprises.
 
-> If you notice anything that doesn't align with this, it's unintentional — please open an issue.
+> If you notice anything that doesn't align with this, it's unintentional, please open an issue 🙏
 
 ## Usage
 
@@ -80,7 +80,7 @@ _This is not an exhaustive list: if changing the region has no effect, the resou
 1. Type `gcp tools:` to list the maintenance options powered by [AwGo Magic Actions](https://pkg.go.dev/github.com/deanishe/awgo#MagicAction).You can use <kbd>Tab</kbd> to navigate between actions like clearing the cache, viewing logs, or resetting internal data folders, then press <kbd>Enter</kbd> to run the selected action. <br>
    <img src="./assets/docs/tools.png" alt="Tools" width="500"/><br>
    _Example: Maintenance tools screen with options like clear cache and view logs._ <br>
-2. The workflow supports [Fuzzy Filtering](https://pkg.go.dev/github.com/deanishe/awgo/fuzzy), so you can quickly find services or resources — even with partial or out-of-order matches.
+2. The workflow supports [Fuzzy Filtering](https://pkg.go.dev/github.com/deanishe/awgo/fuzzy), so you can quickly find services or resources, even with partial or out-of-order matches.
 3. By default, resource searches are cached for 7 days. To customize this duration, set the `ALFRED_GCP_WORKFLOW_CACHE_TTL_SECONDS` environment variable in Alfred. Learn how to do this here: [Alfred Environment Variables Guide](https://www.alfredapp.com/help/workflows/advanced/variables/#environment).
 
 
@@ -123,4 +123,4 @@ If this workflow saved you time or made your day a little easier, consider showi
 
 This workflow is inspired by the amazing [aws-alfred-workflow](https://github.com/rkoval/alfred-aws-console-services-workflow).
 As a past user of that workflow before switching to GCP, I wanted to create a similar experience for GCP users.
-Huge thanks to the original author for the idea and inspiration — without which this workflow wouldn't exist!
+Huge thanks to the original author for the idea and inspiration,  without which this workflow wouldn't exist!
