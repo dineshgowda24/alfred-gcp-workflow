@@ -26,7 +26,8 @@ spinner() {
 prompt_version() {
   bold "Input new version (e.g., 1.2.3):"
   read -r VERSION_INPUT
-  VERSION="v${VERSION_INPUT//v/}"
+  RAW_VERSION="${VERSION_INPUT//v/}"
+  VERSION="v${RAW_VERSION}"
 }
 
 set_package_name() {
@@ -34,8 +35,8 @@ set_package_name() {
 }
 
 update_info_plist() {
-  bold "Updating version in info.plist to ${VERSION}..."
-  /usr/libexec/PlistBuddy -c "Set :version ${VERSION}" info.plist
+  bold "Updating version in info.plist to ${RAW_VERSION}..."
+  /usr/libexec/PlistBuddy -c "Set :version ${RAW_VERSION}" info.plist
 }
 
 commit_version_update() {
