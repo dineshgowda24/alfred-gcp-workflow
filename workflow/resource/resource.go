@@ -204,19 +204,37 @@ func (b *Builder[T]) showCachedErr() bool {
 }
 
 func (b *Builder[T]) load() ([]T, error) {
-	if b.wf.Cache.Expired(b.cacheKey(), cacheTTL) {
-		return nil, ErrCacheExpired
+	key := b.cacheKey()
+	if !b.wf.Cache.Expired(key, cacheTTL) {
+		log.Debug("cache found")
+		return b.loadJSONCache()
 	}
 
-	var resources []T
-	if err := b.wf.Cache.LoadJSON(b.cacheKey(), &resources); err != nil {
+	// Cache expired, but an expired cache file exists.
+	// Run the background job to refresh the cache and return the expired cache.
+	// This allows the user to see the stale data while the background job fetches fresh data.
+	if b.wf.Cache.Exists(key) {
+		log.Info("cache expired, refreshing in background")
+		b.runBackgroundJob()
+		log.Debug("returning expired cache")
+		return b.loadJSONCache()
+	}
+
+	log.Debug("cache expired or not found")
+	return nil, ErrCacheExpired
+}
+
+func (b *Builder[T]) loadJSONCache() ([]T, error) {
+	v := make([]T, 0)
+	if err := b.wf.Cache.LoadJSON(b.cacheKey(), &v); err != nil {
 		log.Error("failed to load cache:", err)
 		if b.delCacheKey() != nil {
 			return nil, err
 		}
 		return nil, err
 	}
-	return resources, nil
+
+	return v, nil
 }
 
 func (b *Builder[T]) delCacheKey() error {
