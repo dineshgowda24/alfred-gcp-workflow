@@ -2,6 +2,7 @@ package searchers
 
 import (
 	aw "github.com/deanishe/awgo"
+
 	"github.com/dineshgowda24/alfred-gcp-workflow/gcloud"
 	"github.com/dineshgowda24/alfred-gcp-workflow/parser"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/artifactregistry"
@@ -11,6 +12,7 @@ import (
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/filestore"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/k8s"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/memorystore"
+	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/monitoring"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/netconnectivity"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/netservices"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/pubsub"
@@ -66,6 +68,7 @@ func GetDefaultRegistry() *Registry {
 			"filestore/instances":           &filestore.InstanceSearcher{},
 			"gke/clusters":                  &k8s.ClusterSearcher{},
 			"memorystore/redis":             &memorystore.RedisInstanceSearcher{},
+			"monitoring/dashboards":         &monitoring.DashboardSearcher{},
 			"netconnectivity/cloudrouter":   &netconnectivity.CloudRouterSearcher{},
 			"netconnectivity/vpngateway":    &netconnectivity.VPNGatewaySearcher{},
 			"netconnectivity/vpntunnel":     &netconnectivity.VPNTunnelSearcher{},
