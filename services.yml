@@ -576,6 +576,12 @@
   description: Infrastructure and application quality checks
   url: https://console.cloud.google.com/monitoring?project={{ .Project }}
   logo_path: assets/gcp/cloud_monitoring.png
+  sub_services:
+    - id: dashboards
+      name: Dashboards
+      description: Custom dashboards for monitoring
+      url: https://console.cloud.google.com/monitoring/dashboards?project={{ .Project }}
+      logo_path: assets/gcp/cloud_monitoring.png
 - id: netconnectivity
   name: Network Connectivity
   description: Network and hybrid connectivity options
