@@ -15,7 +15,7 @@ func (s *DashboardSearcher) Search(
 	wf *aw.Workflow, svc *services.Service, cfg *gc.Config, q *parser.Result,
 ) error {
 	builder := resource.NewBuilder(
-		"storage_buckets",
+		"monitoring_dashboards",
 		wf,
 		cfg,
 		q,
