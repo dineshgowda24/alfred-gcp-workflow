@@ -6,5 +6,6 @@ type Dashboard struct {
 }
 
 func ListMonitoringDashboards(config *Config) ([]Dashboard, error) {
-	return runGCloudCmd[[]Dashboard](config, "monitoring", "dashboards", "list")
+	return runGCloudCmd[[]Dashboard](config,
+	 "monitoring", "dashboards", "list", "--format=json(displayName,name)")
 }
