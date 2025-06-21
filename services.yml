@@ -29,33 +29,33 @@
   name: Apigee
   description: API management platform
   url: https://console.cloud.google.com/apigee?project={{ .Project }}
-  logo_path: assets/gcp/apigee.png
+  logo_path: assets/gcp/apigee_api_platform.png
   sub_services:
     - id: proxies
       name: API Proxies
       description: List of API proxies
       url: https://console.cloud.google.com/apigee/proxies?project={{ .Project }}
-      logo_path: assets/gcp/apigee.png
+      logo_path: assets/gcp/apigee_api_platform.png
     - id: sharedflows
       name: Shared Flows
       description: List of shared flows
       url: https://console.cloud.google.com/apigee/sharedflows?project={{ .Project }}
-      logo_path: assets/gcp/apigee.png
+      logo_path: assets/gcp/apigee_api_platform.png
     - id: integrations
       name: Integrations
       description: List of integrations
       url: https://console.cloud.google.com/apigee/integrations?project={{ .Project }}
-      logo_path: assets/gcp/apigee.png
+      logo_path: assets/gcp/apigee_api_platform.png
     - id: offlinedebug
       name: Offline Debug
       description: List of offline debug sessions
       url: https://console.cloud.google.com/apigee/offline-debug?project={{ .Project }}
-      logo_path: assets/gcp/apigee.png
+      logo_path: assets/gcp/apigee_api_platform.png
     - id: apimonitoring
       name: API Monitoring
       description: List of API monitoring reports
       url: https://console.cloud.google.com/apigee/apimonitoring?project={{ .Project }}
-      logo_path: assets/gcp/apigee.png
+      logo_path: assets/gcp/apigee_api_platform.png
 - id: appengine
   name: App Engine
   description: Managed app platform
