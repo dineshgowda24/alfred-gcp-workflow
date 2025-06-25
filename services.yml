@@ -87,18 +87,18 @@
   name: Google Auth Platform
   description: Manage authentication and authorization
   url: https://console.cloud.google.com/auth?project={{ .Project }}
-  logo_path: assets/gcp/auth_platform.png
+  logo_path: assets/gcp/key_management_service.png
   sub_services:
     - id: branding
       name: Branding
       description: Manage branding for your OAuth consent screen
       url: https://console.cloud.google.com/auth/branding?project={{ .Project }}
-      logo_path: assets/gcp/auth_platform.png
+      logo_path: assets/gcp/key_management_service.png
     - id: clients
       name: OAuth 2.0 Clients
       description: Manage OAuth 2.0 client IDs and secrets
       url: https://console.cloud.google.com/auth/clients?project={{ .Project }}
-      logo_path: assets/gcp/auth_platform.png
+      logo_path: assets/gcp/key_management_service.png
 - id: batch
   name: Batch
   description: Jobs as a service
