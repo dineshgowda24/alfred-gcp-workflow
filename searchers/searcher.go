@@ -10,6 +10,7 @@ import (
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/cloudtask"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/compute"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/filestore"
+	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/iam"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/k8s"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/memorystore"
 	"github.com/dineshgowda24/alfred-gcp-workflow/searchers/monitoring"
@@ -78,6 +79,7 @@ func GetDefaultRegistry() *Registry {
 			"storage/buckets":               &storage.BucketSearcher{},
 			"vpc/networks":                  &vpc.NetworkSearcher{},
 			"vpc/routes":                    &vpc.RouteSearcher{},
+			"iam/roles":                     &iam.RoleSearcher{},
 		},
 	}
 }
