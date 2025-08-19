@@ -17,7 +17,7 @@ type IAMServiceAccount struct {
 	UniqueID    string `json:"uniqueId"`
 }
 
-func ListIAMServiceAccount(config *Config) ([]IAMServiceAccount, error) {
+func ListIAMServiceAccounts(config *Config) ([]IAMServiceAccount, error) {
 	return runGCloudCmd[[]IAMServiceAccount](config,
 		"iam", "service-accounts", "list", "--format=json(displayName,email,uniqueId)")
 }
