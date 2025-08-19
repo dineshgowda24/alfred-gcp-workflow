@@ -41,3 +41,33 @@ func FromGCloudIAMRoles(roles *gcloud.IAMRole) Role {
 		DisplayTitle: roles.Title,
 	}
 }
+
+type Account struct {
+	DisplayName string
+	Email       string
+	UniqueID    string
+}
+
+func (a Account) Title() string {
+	return a.DisplayName
+}
+
+func (a Account) Subtitle() string {
+	return a.Email
+}
+
+func (a Account) UID() string {
+	return a.UniqueID
+}
+
+func (a Account) URL(config *gcloud.Config) string {
+	return "https://console.cloud.google.com/iam-admin/serviceaccounts/details/" + a.UID() + "?project=" + config.Project
+}
+
+func FromGCloudIAMServiceAccount(accounts *gcloud.IAMServiceAccount) Account {
+	return Account{
+		DisplayName: accounts.DisplayName,
+		Email:       accounts.Email,
+		UniqueID:    accounts.UniqueID,
+	}
+}
