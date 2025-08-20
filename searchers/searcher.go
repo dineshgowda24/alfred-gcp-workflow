@@ -80,6 +80,7 @@ func GetDefaultRegistry() *Registry {
 			"vpc/networks":                  &vpc.NetworkSearcher{},
 			"vpc/routes":                    &vpc.RouteSearcher{},
 			"iam/roles":                     &iam.RoleSearcher{},
+			"iam/serviceaccounts":           &iam.ServiceAccountSearcher{},
 		},
 	}
 }

@@ -104,7 +104,7 @@ Here are the GCP resources currently searchable through the workflow:
 | 🏃‍♂️ Cloud Run | Functions (Gen1), Services (Gen2) |
 | 📋 Cloud Tasks | Queues |
 | 📊 Monitoring | Dashboards |
-| 🔐 IAM | Role |
+| 🔐 IAM | Role, Service Accounts |
 
 
 ## Contributing
