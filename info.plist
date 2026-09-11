@@ -256,6 +256,8 @@ More info visit: https://github.com/dineshgowda24/alfred-gcp-workflow</string>
 	<array/>
 	<key>variables</key>
 	<dict>
+		<key>ALFRED_GCP_WORKFLOW_AUTHUSER</key>
+		<string></string>
 		<key>ALFRED_GCP_WORKFLOW_CACHE_TTL_SECONDS</key>
 		<string>604800</string>
 	</dict>

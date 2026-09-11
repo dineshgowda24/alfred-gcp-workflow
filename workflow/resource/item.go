@@ -14,7 +14,7 @@ type Displayable interface {
 func NewItem(wf *aw.Workflow, config *gcloud.Config, item Displayable, icon *aw.Icon) *aw.Item {
 	return wf.NewItem(item.Title()).
 		Subtitle(item.Subtitle()).
-		Arg(item.URL(config)).
+		Arg(gcloud.WithAuthUser(item.URL(config), config)).
 		Icon(icon).
 		Valid(true)
 }
