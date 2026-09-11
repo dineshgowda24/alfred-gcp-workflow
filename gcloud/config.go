@@ -20,6 +20,7 @@ var (
 type Config struct {
 	Name    string
 	Project string
+	Account string
 	Region  *Region
 }
 
@@ -85,11 +86,14 @@ func loadConfig(path string) *Config {
 	}
 
 	name := strings.TrimPrefix(filepath.Base(path), "config_")
-	project := iniFile.Section("core").Key("project").String()
+	core := iniFile.Section("core")
+	project := core.Key("project").String()
+	account := core.Key("account").String()
 
 	return &Config{
 		Name:    name,
 		Project: project,
+		Account: account,
 	}
 }
 

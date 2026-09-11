@@ -31,6 +31,7 @@ var _ Handler = (*HomeHandler)(nil)
 type HomeHandler struct{}
 
 func (h *HomeHandler) Handle(ctx *Context) error {
+	consoleURL := gcloud.WithAuthUser(gcloud.ConsoleURL, ctx.ActiveConfig)
 	items := []*homeItem{
 		{
 			Title:        "Search Services",
@@ -41,8 +42,8 @@ func (h *HomeHandler) Handle(ctx *Context) error {
 		},
 		{
 			Title:        "Open Cloud Console",
-			Subtitle:     "🌐 Launch: " + gcloud.ConsoleURL,
-			Arg:          gcloud.ConsoleURL,
+			Subtitle:     "🌐 Launch: " + consoleURL,
+			Arg:          consoleURL,
 			Icon:         aw.IconHome,
 			Valid:        true,
 			SortPriority: 2,

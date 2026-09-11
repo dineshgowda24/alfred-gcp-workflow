@@ -82,6 +82,10 @@ _This is not an exhaustive list: if changing the region has no effect, the resou
    _Example: Maintenance tools screen with options like clear cache and view logs._ <br>
 2. The workflow supports [Fuzzy Filtering](https://pkg.go.dev/github.com/deanishe/awgo/fuzzy), so you can quickly find services or resources, even with partial or out-of-order matches.
 3. By default, resource searches are cached for 7 days. To customize this duration, set the `ALFRED_GCP_WORKFLOW_CACHE_TTL_SECONDS` environment variable in Alfred. Learn how to do this here: [Alfred Environment Variables Guide](https://www.alfredapp.com/help/workflows/advanced/variables/#environment).
+4. Signed in to multiple Google accounts in your browser? Set the `ALFRED_GCP_WORKFLOW_AUTHUSER` environment variable and every Console link will open with `authuser=<value>` appended, so the right account is used:
+   - `gcloud`: use the `account` of the selected gcloud configuration (follows `@` config overrides). **Recommended.**
+   - An email address (e.g. `me@example.com`) or an account index (e.g. `1`): used as-is for every link.
+   - Leave it empty (default) to open links without an `authuser` parameter.
 
 
 ## 🔍⚡️ Supported Resource Searches

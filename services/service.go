@@ -63,7 +63,7 @@ func (s *Service) Url(config *gcloud.Config) (string, error) {
 		log.Errorf("error executing template for service %s: %v", s.Name, err)
 		return "", err
 	}
-	return buf.String(), nil
+	return gcloud.WithAuthUser(buf.String(), config), nil
 }
 
 func (s *Service) Subtitle(exister Exister) string {
